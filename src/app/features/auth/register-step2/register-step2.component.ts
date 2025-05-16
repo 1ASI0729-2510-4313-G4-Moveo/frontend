@@ -16,16 +16,18 @@ export class RegisterStep2Component {
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group({
+      fullName: ['', Validators.required],
+      phone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required]
-    }, { validators: this.passwordMatchValidator });
+    }, {validators: this.passwordMatchValidator});
   }
 
   passwordMatchValidator(form: FormGroup) {
     const pass = form.get('password')?.value;
     const confirm = form.get('repeatPassword')?.value;
-    return pass === confirm ? null : { mismatch: true };
+    return pass === confirm ? null : {mismatch: true};
   }
 
   get email() {
@@ -39,6 +41,7 @@ export class RegisterStep2Component {
   get repeatPassword() {
     return this.registerForm.get('repeatPassword')!;
   }
+
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -46,12 +49,21 @@ export class RegisterStep2Component {
       console.log('License file selected:', file.name);
     }
   }
+
   onSubmit(): void {
     if (this.registerForm.valid) {
-      // Aquí podrías guardar el usuario...
-      this.router.navigate(['/profile']).then(() => {
-        console.log('Navigation completed');
-      });
+      // Guardar en localStorage
+      const userData = {
+        fullName: this.registerForm.value.fullName,
+        phone: this.registerForm.value.phone,
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password
+      };
+
+      localStorage.setItem('userProfile', JSON.stringify(userData));
+
+      // Redirigir al perfil
+      this.router.navigate(['/profile']);
     }
   }
 }

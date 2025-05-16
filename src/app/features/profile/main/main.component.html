@@ -1,23 +1,10 @@
-<div class="profile-wrapper">
-    <header class="profile-header">
-        <div class="logo">
-            <img src="/assets/moveo.png" alt="Moveo Logo" />
-            <span>MOVEO</span>
-        </div>
-        <nav class="nav-menu">
-            <a href="#">Rent</a>
-            <a href="#">Record</a>
-            <a href="#">Payment</a>
-            <div class="profile-icon">
-                <img src="/assets/person3.png" alt="User Icon" />
-            </div>
-        </nav>
-    </header>
-
+<app-header-bar></app-header-bar>
+<main class="profile-main">
+        <div class="container">
     <main class="profile-content">
         <div class="profile-top">
-            <h1>Hello, Manolo Maracuya</h1>
-            <button class="edit-btn">Edit Profile</button>
+            <h1>Hello, {{ userData?.fullName }}</h1>
+            <button class="action-button" (click)="goToEditProfile()">Edit Profile</button>
         </div>
 
         <div class="profile-data">
@@ -27,8 +14,10 @@
                 <p>Last Ride: 05/03/2025</p>
                 <p>Trips taken: 4</p>
                 <h3>Amount spent: <span>S/ 44.80</span></h3>
-                <p>Email: hola123.gmail.com</p>
-                <button class="change-password">Change Password</button>
+                <p>Email: {{ userData?.email }}</p>
+                <button class="change-password-btn" [routerLink]="['/change-password']">
+                    Change Password
+                </button>
             </div>
 
             <div class="language">

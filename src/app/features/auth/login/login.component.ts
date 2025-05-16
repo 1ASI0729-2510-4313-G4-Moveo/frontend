@@ -16,6 +16,7 @@ import {NgIf, NgOptimizedImage} from "@angular/common";
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  loginError = false;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
@@ -25,10 +26,22 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      // Aquí podrías llamar a tu servicio de auth...
-      this.router.navigate(['/profile']).then(r => {}); // navegar al dashboard
+    const storedUser = localStorage.getItem('userProfile');
+    if (!storedUser) {
+      this.loginError = true;
+      return;
+    }
+
+    const user = JSON.parse(storedUser);
+    const enteredEmail = this.loginForm.value.email;
+    const enteredPassword = this.loginForm.value.password;
+
+    if (user.email === enteredEmail && user.password === enteredPassword) {
+      this.loginError = false;
+      this.router.navigate(['/profile']);
+    } else {
+      this.loginError = true;
     }
   }
 }
+

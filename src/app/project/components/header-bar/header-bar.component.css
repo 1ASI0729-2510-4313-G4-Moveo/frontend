@@ -1,34 +1,48 @@
 .header-bar {
+  background-color: #00c1a4;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #00bfa5;
-  padding-inline: 20px;
-  padding-block: 20px;
+  padding: 0.75rem 2rem;
+  font-family: 'Poppins', sans-serif;
 }
 
-
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
 .logo-Moveo {
-  height: 30px;
-  padding: 10px;
+  height: 32px;
 }
 
+.nav-links {
+  display: flex;
+  gap: 3rem; /* más espacio entre enlaces */
+  font-weight: 600;
+  margin-left: auto;
+  margin-right: 3.5rem; /* empuja los textos a la derecha */
+}
 
 
 .nav-links a {
-  color: rgba(255, 255, 255, 0.7);
+  color: #585858;
   text-decoration: none;
-  padding: 10px;
 }
 
-.nav-links a.active {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 4px;
+.nav-links a:hover {
+  color: #e0e0e0; /* tono suave al pasar el mouse, opcional */
 }
 
 .profile-icon img {
-  height: 24px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 0.4rem;
+  border-radius: 0.5rem;
   cursor: pointer;
 }
+
+
+

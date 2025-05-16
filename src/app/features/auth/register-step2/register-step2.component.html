@@ -12,28 +12,35 @@
             <h1>One more step</h1>
 
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <label>Name and Last Name</label>
+                <input type="text" formControlName="fullName" placeholder="Insert your Name and Last Name" />
+                <div *ngIf="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched" class="error">Required</div>
+
+                <label>Phone Number</label>
+                <input type="tel" formControlName="phone" placeholder="Input your Number" />
+                <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="error">Required</div>
+
                 <label>Email</label>
                 <input type="email" formControlName="email" placeholder="Input your account’s email" />
-                <div *ngIf="email.invalid && email.touched" class="error">Valid email required</div>
+                <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">Valid email required</div>
 
                 <label>Password</label>
                 <input type="password" formControlName="password" placeholder="Input Password" />
-                <div *ngIf="password.invalid && password.touched" class="error">Password is required</div>
+                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error">Required</div>
 
                 <label>Repeat Password</label>
                 <input type="password" formControlName="repeatPassword" placeholder="Repeat Password" />
-                <div *ngIf="repeatPassword.invalid && repeatPassword.touched" class="error">Passwords must match</div>
+                <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('repeatPassword')?.touched" class="error">Passwords must match</div>
 
                 <label class="upload-link">
                     <input type="file" (change)="onFileSelected($event)" hidden />
-                    Take a photo of your driver’s license
+                    Take a photo of your driver's license
                 </label>
 
                 <a href="https://policies.google.com/terms?hl=es" target="_blank">Terms and Conditions</a>
 
                 <button type="submit" [disabled]="registerForm.invalid">Sign Up</button>
             </form>
-
 
             <a routerLink="/login" class="signin-link">Already a member? Sign In</a>
         </div>
@@ -43,4 +50,3 @@
         </div>
     </main>
 </div>
-
