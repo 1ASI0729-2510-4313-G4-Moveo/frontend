@@ -1,0 +1,36 @@
+<div class="payment-container">
+    <h2>Edit<br><span>Payment Info</span></h2>
+
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Card Number -->
+        <div class="input-group" *ngIf="paymentForm.controls['cardNumber'].invalid && paymentForm.controls['cardNumber'].touched">
+            <small class="error">Card number is required</small>
+        </div>
+        <input type="text" formControlName="cardNumber" placeholder="Card Number" />
+
+        <!-- Holder Name -->
+        <div class="input-group" *ngIf="paymentForm.controls['holder'].invalid && paymentForm.controls['holder'].touched">
+            <small class="error">Cardholder name is required</small>
+        </div>
+        <input type="text" formControlName="holder" placeholder="Cardholder Name" />
+
+        <!-- Expiry & CVV -->
+        <div class="input-row">
+            <input type="text" formControlName="expiry" placeholder="MM/YY" />
+            <input type="password" formControlName="cvv" placeholder="CVV" />
+        </div>
+
+        <!-- PayPal Button -->
+        <div class="paypal-button">
+            <button type="button" class="paypal">Connect PayPal</button>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" [disabled]="paymentForm.invalid">Confirm Payment</button>
+
+        <!-- Back Button -->
+        <button type="button" class="back-button" routerLink="/">⬅ Back</button>
+
+    </form>
+</div>

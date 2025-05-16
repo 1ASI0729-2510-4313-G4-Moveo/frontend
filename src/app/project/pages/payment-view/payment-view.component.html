@@ -1,0 +1,20 @@
+<div class="payment-container">
+    <h2>Payment<br><span>Information</span></h2>
+
+    <div class="card-display">
+        <div class="card-top">
+            <span class="card-type">{{ cardType }}</span>
+        </div>
+
+        <div class="card-number">
+            **** **** **** {{ cardNumber }}
+        </div>
+
+        <div class="card-holder">
+            <label>Card Holder</label>
+            <div>{{ cardHolder }}</div>
+        </div>
+    </div>
+
+    <button (click)="onEdit()">Edit Payment Information</button>
+</div>

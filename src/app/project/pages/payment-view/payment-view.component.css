@@ -1,0 +1,75 @@
+.payment-container {
+    text-align: center;
+    background-color: #f5fbfb;
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 420px;
+    margin: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #00bfa5;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+h2 span {
+    font-weight: normal;
+    color: #666;
+}
+
+.card-display {
+    background-color: #00bfa5;
+    color: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    margin-bottom: 1.5rem;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.card-type {
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.card-number {
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.card-holder label {
+    font-size: 0.75rem;
+    color: #ddd;
+}
+
+.card-holder div {
+    font-size: 1rem;
+}
+
+button {
+    background-color: #00bfa5;
+    border: none;
+    padding: 12px 24px;
+    color: white;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #009e8a;
+}

@@ -1,0 +1,53 @@
+.form-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #d6f4f4;
+  text-align: center;
+  border-radius: 8px;
+}
+
+h2 {
+  color: #00bfa5;
+  margin-bottom: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+button {
+  background-color: #00bfa5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #a7e7df;
+  cursor: not-allowed;
+}
+
+.photo-link {
+  margin-bottom: 20px;
+}
+
+.photo-link a {
+  font-size: 13px;
+  color: #00bfa5;
+  text-decoration: underline;
+  cursor: pointer;
+}
