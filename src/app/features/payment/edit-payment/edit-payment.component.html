@@ -1,0 +1,37 @@
+<app-header-bar></app-header-bar>
+
+<div class="edit-payment-container">
+    <h1>Payment<br />Information</h1>
+
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <label>Number of Card</label>
+        <input type="text" formControlName="cardNumber" />
+
+        <label>Holder</label>
+        <input type="text" formControlName="holder" />
+
+        <div class="row">
+            <div class="column">
+                <label>FV</label>
+                <input type="text" formControlName="expiration" />
+            </div>
+            <div class="column">
+                <label>CVV</label>
+                <input type="text" formControlName="cvv" />
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="paymentForm.invalid">
+            Confirm Payment Information
+        </button>
+    </form>
+
+    <div class="paypal-connect">
+        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" />
+        <span>Connect Paypal*</span>
+    </div>
+
+    <p class="disclaimer">
+        The respective commissions are charged.<br />*Charged in US dollars (USD).
+    </p>
+</div>

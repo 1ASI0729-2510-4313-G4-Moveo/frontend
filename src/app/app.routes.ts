@@ -6,11 +6,11 @@ import { RegisterStep3Component } from './features/auth/register-step3/register-
 import { MainComponent } from './features/profile/main/main.component';
 import {ChangePasswordComponent} from "./features/profile/change-password/change-password.component";
 import {EditProfileComponent} from './features/profile/edit-profile/edit-profile.component';
-
 import { RecordListComponent } from './features/record/record-list/record-list.component';
 import { RecordDetailComponent } from './features/record/record-detail/record-detail.component';
 import { RecordConfirmationComponent } from './features/record/record-confirmation/record-confirmation.component';
-
+import { PaymentInfoComponent } from './features/payment/payment-info/payment-info.component';
+import { EditPaymentComponent } from './features/payment/edit-payment/edit-payment.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -24,7 +24,8 @@ export const routes: Routes = [
     { path: 'record', component: RecordListComponent },
     { path: 'record/detail', component: RecordDetailComponent },
     { path: 'record/confirmation', component: RecordConfirmationComponent},
-
+    { path: 'payment', component: PaymentInfoComponent },
+    { path: 'payment/edit', component: EditPaymentComponent },
     // Si tienes una ruta protegida para dashboard:
     // { path: 'profile', component: ProfileComponent }
 ];

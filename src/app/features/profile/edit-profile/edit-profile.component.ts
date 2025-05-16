@@ -13,7 +13,6 @@ export class EditProfileComponent implements OnInit {
   profileForm!: FormGroup;
   constructor(private fb: FormBuilder, private router: Router) {}
 
-
   goBack(): void {
     this.router.navigate(['/profile']);
   }
