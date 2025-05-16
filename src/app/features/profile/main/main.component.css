@@ -1,0 +1,155 @@
+.profile-wrapper {
+    font-family: sans-serif;
+    background-color: white;
+    min-height: 100vh;
+    padding: 0;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #00bfa5;
+    padding: 1rem 3rem;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: white;
+    gap: 0.6rem;
+}
+
+
+.logo img {
+    height: 32px;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.profile-icon img {
+    height: 24px;
+}
+
+
+.profile-content {
+    margin-top: 3rem;
+    padding: 0 2rem;
+}
+
+.profile-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-top h1 {
+    font-size: 2.2rem;
+    color: #00bfa5;
+}
+
+.edit-btn {
+    background-color: #00bfa5;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.profile-data {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+}
+
+.history h2,
+.language h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.history p,
+.language p {
+    margin: 0.3rem 0;
+}
+
+.history h3 {
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.history h3 span {
+    color: #00bfa5;
+}
+
+.change-password-btn {
+    display: inline-block;
+    background-color: #00bfa5;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.change-password-btn:hover {
+    background-color: #00997c;
+}
+
+.lang-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.lang-btn {
+    background-color: #00bfa5;
+    color: white;
+    border: none;
+    padding: 0.4rem 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.action-button {
+    background-color: #00c2a8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #00a891;
+}
