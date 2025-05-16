@@ -1,0 +1,46 @@
+<div class="register-wrapper">
+    <header>
+        <div class="logo">
+            <img src="/assets/moveo.png" alt="Moveo Logo" />
+            <span>MOVEO</span>
+        </div>
+        <button class="signup-button">Sign Up</button>
+    </header>
+
+    <main class="register-box">
+        <div class="form-section">
+            <h1>One more step</h1>
+
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <label>Email</label>
+                <input type="email" formControlName="email" placeholder="Input your account’s email" />
+                <div *ngIf="email.invalid && email.touched" class="error">Valid email required</div>
+
+                <label>Password</label>
+                <input type="password" formControlName="password" placeholder="Input Password" />
+                <div *ngIf="password.invalid && password.touched" class="error">Password is required</div>
+
+                <label>Repeat Password</label>
+                <input type="password" formControlName="repeatPassword" placeholder="Repeat Password" />
+                <div *ngIf="repeatPassword.invalid && repeatPassword.touched" class="error">Passwords must match</div>
+
+                <label class="upload-link">
+                    <input type="file" (change)="onFileSelected($event)" hidden />
+                    Take a photo of your driver’s license
+                </label>
+
+                <a href="https://policies.google.com/terms?hl=es" target="_blank">Terms and Conditions</a>
+
+                <button type="submit" [disabled]="registerForm.invalid">Sign Up</button>
+            </form>
+
+
+            <a routerLink="/login" class="signin-link">Already a member? Sign In</a>
+        </div>
+
+        <div class="image-section">
+            <img src="/assets/car.png" alt="Car Illustration" />
+        </div>
+    </main>
+</div>
+

@@ -1,0 +1,43 @@
+<div class="register-wrapper">
+    <header>
+        <div class="logo">
+            <img src="/assets/moveo.png" alt="Moveo Logo" />
+            <span>MOVEO</span>
+        </div>
+        <button class="signup-button">Sign Up</button>
+    </header>
+
+    <main class="form-container">
+        <h1>Only for security</h1>
+
+        <form [formGroup]="securityForm" (ngSubmit)="onSubmit()">
+            <label>Name and Last Name</label>
+            <input type="text" formControlName="fullName" placeholder="Input your Name and Last Name" />
+            <div *ngIf="fullName.invalid && fullName.touched" class="error">Required</div>
+
+            <label>ID or Identification</label>
+            <input type="text" formControlName="id" placeholder="Input ID" />
+            <div *ngIf="id.invalid && id.touched" class="error">Required</div>
+
+            <label>Phone Number</label>
+            <input type="tel" formControlName="phone" placeholder="Input your Number" />
+            <div *ngIf="phone.invalid && phone.touched" class="error">Required</div>
+
+            <label class="upload-link">
+                <input type="file" (change)="onInsuranceSelected($event)" hidden />
+                Take a photo or send a PDF of your car insurance
+            </label>
+
+            <label class="upload-link">
+                <input type="file" (change)="onCardSelected($event)" hidden />
+                Take a photo of your Car ownership card
+            </label>
+
+            <button type="submit" [disabled]="securityForm.invalid">Sign Up</button>
+        </form>
+
+        <a routerLink="/login" class="signin-link">Already a member? Sign In</a>
+    </main>
+</div>
+>
+
