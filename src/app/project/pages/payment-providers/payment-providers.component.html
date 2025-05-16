@@ -1,0 +1,21 @@
+<div class="form-container">
+  <h2>Lets Begin</h2>
+  <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+      <input formControlName="brand" type="text" placeholder="Brand" />
+      <input formControlName="model" type="text" placeholder="Model" />
+      <input formControlName="year" type="number" placeholder="Year" />
+      <input formControlName="licensePlate" type="text" placeholder="License plate" />
+      <input formControlName="color" type="text" placeholder="Color" />
+      <input formControlName="numberOfSeats" type="number" placeholder="Number of Seats" />
+      <input formControlName="transmission" type="text" placeholder="(Manual/Automatic)" />
+      <input formControlName="pickupPlace" type="text" placeholder="PickUp Place" />
+    </div>
+
+    <div class="photo-link">
+      <a href="#">Take a photo of your Car</a>
+    </div>
+
+    <button type="submit" [disabled]="carForm.invalid">Submit</button>
+  </form>
+</div>
