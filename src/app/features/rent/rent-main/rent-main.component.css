@@ -1,0 +1,67 @@
+.rent-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.rent-main-wrapper .rent-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #00bfa6;
+}
+
+mat-card {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+}
+
+.hours-section {
+    margin-bottom: 1.5rem;
+}
+
+.available-cars {
+    margin-top: 1.5rem;
+}
+
+.car-list {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.car-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.car-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.rent-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.calculate-btn {
+    width: 30%;
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    background: #00bfa6;
+    color: #fff;
+}
+
+mat-form-field {
+    width: 30%;
+    margin-top: 0.5rem;
+}

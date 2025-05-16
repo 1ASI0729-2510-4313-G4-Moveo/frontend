@@ -1,0 +1,40 @@
+<app-header-bar></app-header-bar>
+
+<div class="rent-main-wrapper">
+    <mat-card>
+        <mat-card-header class="rent-header">
+            <mat-card-title class="rent-title">Let's Begin</mat-card-title>
+            <mat-card-subtitle >Provide access to Localization in web browser</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="hours-section">
+                <h3>Hours</h3>
+                <p>Total hours to Rent</p>
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" [(ngModel)]="rentalHours" placeholder="Enter hours">
+                    <mat-icon matSuffix>access_time</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="available-cars">
+                <h3>Available cars</h3>
+
+                <mat-divider></mat-divider>
+
+                <div class="car-list">
+                    <div *ngFor="let car of cars" class="car-item">
+                        <div class="car-info">
+                            <strong>{{car.name}}</strong>
+                            <span>${{car.price}} ({{car.reviews}} review)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions class="rent-actions">
+            <button mat-raised-button color="primary" class="calculate-btn">Calculate</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

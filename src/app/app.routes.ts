@@ -6,6 +6,7 @@ import { RegisterStep3Component } from './features/auth/register-step3/register-
 import { MainComponent } from './features/profile/main/main.component';
 import {ChangePasswordComponent} from "./features/profile/change-password/change-password.component";
 import {EditProfileComponent} from './features/profile/edit-profile/edit-profile.component';
+import {RentMainComponent} from "./features/rent/rent-main/rent-main.component";
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const routes: Routes = [
     { path: 'profile', component: MainComponent },
     { path: 'change-password', component: ChangePasswordComponent},
     { path: 'edit-profile', component: EditProfileComponent },
+    { path: 'rent', component: RentMainComponent },
     // Si tienes una ruta protegida para dashboard:
     // { path: 'profile', component: ProfileComponent }
 ];
