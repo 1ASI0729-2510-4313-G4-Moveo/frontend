@@ -7,6 +7,11 @@ import { MainComponent } from './features/profile/main/main.component';
 import {ChangePasswordComponent} from "./features/profile/change-password/change-password.component";
 import {EditProfileComponent} from './features/profile/edit-profile/edit-profile.component';
 
+import { RecordListComponent } from './features/record/record-list/record-list.component';
+import { RecordDetailComponent } from './features/record/record-detail/record-detail.component';
+import { RecordConfirmationComponent } from './features/record/record-confirmation/record-confirmation.component';
+
+
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
@@ -16,6 +21,10 @@ export const routes: Routes = [
     { path: 'profile', component: MainComponent },
     { path: 'change-password', component: ChangePasswordComponent},
     { path: 'edit-profile', component: EditProfileComponent },
+    { path: 'record', component: RecordListComponent },
+    { path: 'record/detail', component: RecordDetailComponent },
+    { path: 'record/confirmation', component: RecordConfirmationComponent},
+
     // Si tienes una ruta protegida para dashboard:
     // { path: 'profile', component: ProfileComponent }
 ];

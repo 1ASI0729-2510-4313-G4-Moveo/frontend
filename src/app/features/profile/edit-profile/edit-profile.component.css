@@ -57,3 +57,14 @@ button:disabled {
     background-color: #c0c0c0;
     cursor: not-allowed;
 }
+
+.back-button {
+    margin: 1rem;
+    cursor: pointer;
+}
+
+.back-button img {
+    width: 24px;
+    height: 24px;
+}
+

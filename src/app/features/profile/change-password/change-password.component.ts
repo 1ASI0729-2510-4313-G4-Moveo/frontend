@@ -22,6 +22,10 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
+  goBack(): void {
+    this.router.navigate(['/profile']);
+  }
+
   ngOnInit(): void {
     this.passwordForm = this.fb.group({
       actualPassword: ['', Validators.required],

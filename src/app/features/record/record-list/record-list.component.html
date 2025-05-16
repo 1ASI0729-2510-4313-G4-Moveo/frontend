@@ -1,0 +1,22 @@
+<app-header-bar></app-header-bar>
+
+<main class="record-content">
+    <h1>Records Information</h1>
+
+    <div class="car-list">
+        <div class="car-item" *ngFor="let car of cars" (click)="viewDetail(car)">
+            <img [src]="car.image" alt="car" class="car-img" />
+            <div class="car-info">
+                <h2>{{ car.model }} – {{ car.plate }}</h2>
+                <p>
+                    Hours: {{ car.hours }} – Price: S/{{ car.price }} – Pickup Point: {{ car.pickup }}
+                    <strong>... See more information</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-arrow">
+        <img src="assets/arrowdown.png" alt="arrow" />
+    </div>
+</main>
