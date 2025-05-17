@@ -1,69 +1,64 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register-step2',
   standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register-step2.component.html',
-  styleUrls: ['./register-step2.component.css'],
-  imports: [ReactiveFormsModule, NgIf, RouterLink]
+  styleUrls: ['./register-step2.component.css']
 })
 export class RegisterStep2Component {
   registerForm: FormGroup;
   selectedFile: File | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+      private fb: FormBuilder,
+      private authService: AuthService,
+      private router: Router
+  ) {
     this.registerForm = this.fb.group({
       fullName: ['', Validators.required],
       phone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required]
-    }, {validators: this.passwordMatchValidator});
+    }, { validators: this.passwordMatchValidator });
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    const pass = form.get('password')?.value;
-    const confirm = form.get('repeatPassword')?.value;
-    return pass === confirm ? null : {mismatch: true};
-  }
-
-  get email() {
-    return this.registerForm.get('email')!;
-  }
-
-  get password() {
-    return this.registerForm.get('password')!;
-  }
-
-  get repeatPassword() {
-    return this.registerForm.get('repeatPassword')!;
+  passwordMatchValidator(form: FormGroup): ValidationErrors | null {
+    const password = form.get('password')?.value;
+    const repeatPassword = form.get('repeatPassword')?.value;
+    return password === repeatPassword ? null : { mismatch: true };
   }
 
   onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
-      console.log('License file selected:', file.name);
-    }
+    this.selectedFile = event.target.files[0];
   }
 
   onSubmit(): void {
-    if (this.registerForm.valid) {
-      // Guardar en localStorage
-      const userData = {
-        fullName: this.registerForm.value.fullName,
-        phone: this.registerForm.value.phone,
-        email: this.registerForm.value.email,
-        password: this.registerForm.value.password
-      };
+    if (this.registerForm.invalid) return;
 
-      localStorage.setItem('userProfile', JSON.stringify(userData));
+    const { fullName, phone, email, password } = this.registerForm.value;
 
-      // Redirigir al perfil
-      this.router.navigate(['/profile']);
-    }
+    const newUser = {
+      name: fullName,
+      phone,
+      email,
+      password
+    };
+
+    this.authService.register(newUser).subscribe({
+      next: (user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.router.navigate(['/profile']);
+      },
+      error: () => {
+        alert('Error al registrar usuario.');
+      }
+    });
   }
 }

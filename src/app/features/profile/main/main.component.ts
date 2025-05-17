@@ -14,17 +14,19 @@ import {Router} from "@angular/router";
   styleUrl: './main.component.css'
 })
 export class MainComponent implements OnInit {
-  userData: any;
-
+  userName: string = '';
+  userEmail: string = '';
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    const data = localStorage.getItem('userProfile');
-    if (data) {
-      this.userData = JSON.parse(data);
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      this.userName = user.name;    // MockAPI guarda como "name"
+      this.userEmail = user.email;
     }
   }
-
+  
   goToEditProfile(): void {
     this.router.navigate(['/edit-profile']);
   }
