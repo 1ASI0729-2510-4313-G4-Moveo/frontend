@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {HeaderBarComponent} from './project/components/header-bar/header-bar.component';
-import {PaymentProvidersComponent} from './project/pages/payment-providers/payment-providers.component';
+import {HeaderBarComponent} from './public/components/header-bar/header-bar.component';
+import {PaymentProvidersComponent} from './public/pages/payment-providers/payment-providers.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderBarComponent, PaymentProvidersComponent,],
+  imports: [RouterOutlet, ],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.css'

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ba19baeb-b95a-4923-bd4b-2501002736dd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/auth.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/login/login.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/login/login.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/login/login.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/login/login.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step1/register-step1.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step1/register-step1.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step1/register-step1.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step1/register-step1.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step1/register-step1.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step1/register-step1.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step1/register-step1.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step1/register-step1.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step2/register-step2.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step2/register-step2.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step2/register-step2.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step2/register-step2.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step2/register-step2.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step2/register-step2.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step2/register-step2.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step2/register-step2.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step3/register-step3.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step3/register-step3.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step3/register-step3.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step3/register-step3.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step3/register-step3.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step3/register-step3.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/auth/register-step3/register-step3.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register-step3/register-step3.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/payment/edit-payment/edit-payment.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/payment/edit-payment/edit-payment.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/payment/edit-payment/edit-payment.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/payment/edit-payment/edit-payment.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/payment/edit-payment/edit-payment.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/payment/edit-payment/edit-payment.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/payment/edit-payment/edit-payment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/payment/edit-payment/edit-payment.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/payment/payment-info/payment-info.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/payment/payment-info/payment-info.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/payment/payment-info/payment-info.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/payment/payment-info/payment-info.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/payment/payment-info/payment-info.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/payment/payment-info/payment-info.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/payment/payment-info/payment-info.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/payment/payment-info/payment-info.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/change-password/change-password.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/change-password/change-password.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/change-password/change-password.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/change-password/change-password.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/change-password/change-password.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/change-password/change-password.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/change-password/change-password.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/change-password/change-password.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/edit-profile/edit-profile.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/edit-profile/edit-profile.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/edit-profile/edit-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/edit-profile/edit-profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/edit-profile/edit-profile.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/edit-profile/edit-profile.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/edit-profile/edit-profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/edit-profile/edit-profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/main/main.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/main/main.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/main/main.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/main/main.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/main/main.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/main/main.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/main/main.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/main/main.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/profile/profile.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/profile.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-confirmation/record-confirmation.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-confirmation/record-confirmation.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-confirmation/record-confirmation.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-confirmation/record-confirmation.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-confirmation/record-confirmation.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-confirmation/record-confirmation.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-confirmation/record-confirmation.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-confirmation/record-confirmation.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-detail/record-detail.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-detail/record-detail.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-detail/record-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-detail/record-detail.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-detail/record-detail.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-detail/record-detail.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-detail/record-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-detail/record-detail.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-list/record-list.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-list/record-list.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-list/record-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-list/record-list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-list/record-list.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-list/record-list.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/features/record/record-list/record-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/record/record-list/record-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/project/components/header-bar/header-bar.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/public/components/header-bar/header-bar.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/project/components/header-bar/header-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/public/components/header-bar/header-bar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/project/components/header-bar/header-bar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/public/components/header-bar/header-bar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/project/pages/payment-providers/payment-providers.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/public/pages/payment-providers/payment-providers.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/project/pages/payment-providers/payment-providers.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/public/pages/payment-providers/payment-providers.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/project/pages/payment-providers/payment-providers.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/public/pages/payment-providers/payment-providers.component.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2xBSFxnqBQWJHz54CHtn7FmVPjn" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "wip/clean-organization",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Anghel/UPC/ciclo5/open-source/ea4313u201912401",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.Angular CLI Server.executor": "Run",
+    "ts.external.directory.path": "D:\\Anghel\\UPC\\ciclo5\\open-source\\TF\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Anghel\UPC\ciclo5\open-source\TF\frontend\src\app\public" />
+      <recent name="D:\Anghel\UPC\ciclo5\open-source\TF\frontend\src\app\public\pages" />
+      <recent name="D:\Anghel\UPC\ciclo5\open-source\TF\frontend\src\app" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.Angular CLI Server">
+    <configuration name="Angular Application" type="JavascriptDebugType" uri="http://localhost:4200">
+      <method v="2" />
+    </configuration>
+    <configuration name="Angular CLI Server" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-WS-243.26053.12" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ba19baeb-b95a-4923-bd4b-2501002736dd" name="Changes" comment="" />
+      <created>1747409873390</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1747409873390</updated>
+      <workItem from="1747409874556" duration="3931000" />
+      <workItem from="1747504420397" duration="3908000" />
+      <workItem from="1747775719565" duration="27000" />
+      <workItem from="1749085548407" duration="898000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

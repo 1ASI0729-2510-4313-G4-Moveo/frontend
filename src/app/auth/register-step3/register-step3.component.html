@@ -1,0 +1,56 @@
+<div class="register-wrapper">
+    <header>
+        <div class="logo">
+            <img src="assets/moveo.png" alt="Moveo Logo" />
+            <span>MOVEO</span>
+        </div>
+        <button class="signup-button">Sign Up</button>
+    </header>
+
+    <main class="register-box">
+        <div class="form-section">
+            <h1>Only for security</h1>
+
+            <form [formGroup]="securityForm" (ngSubmit)="onSubmit()">
+                <label>Name and Last Name</label>
+                <input type="text" formControlName="fullName" placeholder="Insert your Name and Last Name" />
+                <div *ngIf="securityForm.get('fullName')?.invalid && securityForm.get('fullName')?.touched" class="error">Required</div>
+
+                <label>Phone Number</label>
+                <input type="tel" formControlName="phone" placeholder="Input your Number" />
+                <div *ngIf="securityForm.get('phone')?.invalid && securityForm.get('phone')?.touched" class="error">Required</div>
+
+                <label>ID or Identification</label>
+                <input type="text" formControlName="id" placeholder="Input ID" />
+                <div *ngIf="securityForm.get('id')?.invalid && securityForm.get('id')?.touched" class="error">Required</div>
+
+                <label>Email</label>
+                <input type="email" formControlName="email" placeholder="Input your account’s email" />
+                <div *ngIf="securityForm.get('email')?.invalid && securityForm.get('email')?.touched" class="error">Valid email required</div>
+
+                <label>Password</label>
+                <input type="password" formControlName="password" placeholder="Input Password" />
+                <div *ngIf="securityForm.get('password')?.invalid && securityForm.get('password')?.touched" class="error">Required</div>
+
+                <label>Repeat Password</label>
+                <input type="password" formControlName="repeatPassword" placeholder="Repeat Password" />
+                <div *ngIf="securityForm.hasError('mismatch') && securityForm.get('repeatPassword')?.touched" class="error">Passwords must match</div>
+
+                <label class="upload-link">
+                    <input type="file" (change)="onInsuranceSelected($event)" hidden />
+                    Take a photo or send a PDF of your car insurance
+                </label>
+
+                <label class="upload-link">
+                    <input type="file" (change)="onCardSelected($event)" hidden />
+                    Take a photo of your Car ownership card
+                </label>
+
+                <button type="submit" [disabled]="securityForm.invalid">Sign Up</button>
+            </form>
+
+            <a routerLink="/login" class="signin-link">Already a member? Sign In</a>
+        </div>
+    </main>
+</div>
+
