@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HeaderBarProviderComponent} from "../../../project/components/header-bar-provider/header-bar-provider.component";
@@ -9,7 +9,7 @@ import {HeaderBarProviderComponent} from "../../../project/components/header-bar
   templateUrl: './provide-profile-edit.component.html',
   styleUrl: './provide-profile-edit.component.css'
 })
-export class ProvideProfileEditComponent {
+export class ProvideProfileEditComponent implements OnInit {
   profileForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router) {
@@ -21,7 +21,7 @@ export class ProvideProfileEditComponent {
   }
 
   ngOnInit(): void {
-    const userData = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    const userData = JSON.parse(localStorage.getItem('userProfileProvide') || '{}');
 
     this.profileForm = this.fb.group({
       fullName: [userData.fullName || '', Validators.required],
@@ -34,7 +34,7 @@ export class ProvideProfileEditComponent {
     if (this.profileForm.valid) {
       const updatedProfile = this.profileForm.value;
       localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
-      this.router.navigate(['/profile']);
+      this.router.navigate(['/provider/profile']);
     }
   }
 }
