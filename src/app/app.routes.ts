@@ -11,6 +11,15 @@ import { RecordDetailComponent } from './features/record/record-detail/record-de
 import { RecordConfirmationComponent } from './features/record/record-confirmation/record-confirmation.component';
 import { PaymentInfoComponent } from './features/payment/payment-info/payment-info.component';
 import { EditPaymentComponent } from './features/payment/edit-payment/edit-payment.component';
+import {RentComponent} from "./features/rent/rent-list/rent.component";
+import {RentConfirmComponent} from "./features/rent/rent-confirm/rent-confirm.component";
+import {RentFinalConfirmComponent} from "./features/rent/rent-final-confirm/rent-final-confirm.component";
+import {RentCancelComponent} from "./features/rent/rent-cancel/rent-cancel.component";
+import {ProviderProfileComponent} from "./features/provide/provider-profile/provider-profile.component";
+import {ProvideComponent} from "./features/provide/provide-form-car/provide.component";
+import {ProvideSuccessComponent} from "./features/provide/provide-success/provide-success.component";
+import {ProvidePaymentComponent} from "./features/provide/provide-payment/provide-payment.component";
+import {ProvideProfileEditComponent} from "./features/provide/provide-profile-edit/provide-profile-edit.component";
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -22,10 +31,19 @@ export const routes: Routes = [
     { path: 'change-password', component: ChangePasswordComponent},
     { path: 'edit-profile', component: EditProfileComponent },
     { path: 'record', component: RecordListComponent },
-    { path: 'record/detail', component: RecordDetailComponent },
-    { path: 'record/confirmation', component: RecordConfirmationComponent},
+    { path: 'record/detail/:id', component: RecordDetailComponent },
+    { path: 'record/confirmation/:id', component: RecordConfirmationComponent},
     { path: 'payment', component: PaymentInfoComponent },
     { path: 'payment/edit', component: EditPaymentComponent },
+    { path: 'rent', component: RentComponent },
+    { path: 'rent/confirm/:id', component: RentConfirmComponent },
+    { path: 'rent/final-confirm/:id', component: RentFinalConfirmComponent },
+    { path: 'rent/cancel/:id', component: RentCancelComponent},
+    { path: 'provider/profile', component: ProviderProfileComponent },
+    { path : 'provide', component: ProvideComponent},
+    {path : 'provide/success', component: ProvideSuccessComponent},
+    {path : 'provide/payment', component: ProvidePaymentComponent},
+    {path : 'provide/profile/edit', component: ProvideProfileEditComponent}
     // Si tienes una ruta protegida para dashboard:
     // { path: 'profile', component: ProfileComponent }
 ];
