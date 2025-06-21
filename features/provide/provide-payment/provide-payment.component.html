@@ -1,0 +1,14 @@
+<app-header-bar-provider></app-header-bar-provider>
+<div class="payment-provide-container">
+    <h1 class="title">Payment<br />Information</h1>
+    <div class="info-row">
+        <div class="info-left">
+            <p class="label"><strong>Card Number:</strong> {{ cardNumber }}</p>
+            <p class="label"><strong>Holder:</strong> {{ holder }}</p>
+        </div>
+        <div class="info-right">
+            <p class="visa">VISA</p>
+        </div>
+    </div>
+    <button class="edit-button" (click)="goToEditProvide()">Edit Payment Information</button>
+</div>

@@ -1,0 +1,32 @@
+<app-header-bar></app-header-bar>
+<main class="profile-main">
+        <div class="container">
+    <main class="profile-content">
+        <div class="profile-top">
+            <h1>Hello, {{ userName }}</h1>
+            <button class="action-button" (click)="goToEditProfile()">Edit Profile</button>
+        </div>
+
+        <div class="profile-data">
+            <div class="history">
+                <h2>History</h2>
+                <p>Hours Traveled: 13.5</p>
+                <p>Last Ride: 05/03/2025</p>
+                <p>Trips taken: 4</p>
+                <h3>Amount spent: <span>S/ 44.80</span></h3>
+                <p>Email: {{ userEmail }}</p>
+                <button class="change-password-btn" [routerLink]="['/change-password']">
+                    Change Password
+                </button>
+            </div>
+
+            <div class="language">
+                <h2>Language:</h2>
+                <div class="lang-buttons">
+                    <button class="lang-btn">EN</button>
+                    <button class="lang-btn">ES</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

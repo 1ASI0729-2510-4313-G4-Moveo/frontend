@@ -1,0 +1,33 @@
+<app-header-bar></app-header-bar>
+
+<div class="record-detail-wrapper">
+    <button class="back-button" (click)="goBack()">
+        <img src="/assets/arrowleft.png" alt="Back" />
+    </button>
+
+    <div class="record-detail">
+        <div class="info-left">
+            <h2>{{ car.model }} – {{ car.plate }}</h2>
+
+            <div class="info-grid">
+                <div><strong>Date</strong><p>{{ car.date }}</p></div>
+                <div><strong>Start Hour</strong><p>{{ car.startHour }}</p></div>
+                <div><strong>End Hour</strong><p>{{ car.endHour }}</p></div>
+                <div><strong>Price</strong><p>S/ {{ car.price }}</p></div>
+                <div class="pickup"><strong>Pickup Point</strong><p>{{ car.pickup }}</p></div>
+            </div>
+
+            <h3>More Information</h3>
+            <div class="info-grid">
+                <div><strong>Distance Travelled</strong><p>{{ car.distance }}</p></div>
+                <div><strong>Rating</strong><p>{{ car.rating }}</p></div>
+                <div class="reservation"><strong>Reservation ID</strong><p>{{ car.reservationId }}</p></div>
+            </div>
+        </div>
+
+        <div class="info-right">
+            <img [src]="car.image" [alt]="car.model" />
+            <button class="archive-btn" (click)="archiveRecord()">Archive it</button>
+        </div>
+    </div>
+</div>

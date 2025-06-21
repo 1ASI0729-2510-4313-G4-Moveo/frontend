@@ -1,0 +1,28 @@
+<app-header-bar-provider></app-header-bar-provider>
+
+<div class="success-container">
+    <h2 class="success-title">Your car was successfully listed</h2>
+
+    <div class="success-details">
+        <div>
+            <p><strong>Brand</strong><br>{{ latestCar.brand }}</p>
+            <p><strong>License plate</strong><br>{{ latestCar.licensePlate }}</p>
+            <p><strong>(Manual/Automatic)</strong><br>{{ latestCar.transmission }}</p>
+        </div>
+
+        <div>
+            <p><strong>Model</strong><br>{{ latestCar.model }}</p>
+            <p><strong>Color</strong><br>{{ latestCar.color }}</p>
+        </div>
+
+        <div>
+            <p><strong>Year</strong><br>{{ latestCar.year }}</p>
+            <p><strong>Number of Seats</strong><br>{{ latestCar.seats }}</p>
+            <p><strong>PickUp Place</strong><br>{{ latestCar.pickupPlace }}</p>
+        </div>
+    </div>
+
+    <img *ngIf="latestCar.image" [src]="latestCar.image" alt="Car photo" class="car-image" />
+
+    <button (click)="goBack()" class="back-button">Back</button>
+</div>
