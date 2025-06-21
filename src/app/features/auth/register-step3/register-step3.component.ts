@@ -2,6 +2,7 @@
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
 import { NgIf } from '@angular/common';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register-step3',
@@ -14,12 +15,14 @@ export class RegisterStep3Component {
   securityForm: FormGroup;
   insuranceFile: File | null = null;
   cardFile: File | null = null;
+
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value;
     const confirm = form.get('repeatPassword')?.value;
-    return password === confirm ? null : { mismatch: true };
+    return password === confirm ? null : {mismatch: true};
   }
-  constructor(private fb: FormBuilder, private router: Router) {
+
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.securityForm = this.fb.group({
       fullName: ['', Validators.required],
       phone: ['', Validators.required],
@@ -27,15 +30,17 @@ export class RegisterStep3Component {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required]
-    }, { validators: this.passwordMatchValidator });
+    }, {validators: this.passwordMatchValidator});
   }
 
   get fullName() {
     return this.securityForm.get('fullName')!;
   }
+
   get id() {
     return this.securityForm.get('id')!;
   }
+
   get phone() {
     return this.securityForm.get('phone')!;
   }
@@ -57,16 +62,23 @@ export class RegisterStep3Component {
       console.log('Card file:', this.cardFile?.name);
 
       const userData = {
-        fullName: this.securityForm.value.fullName,
+        name: this.securityForm.value.fullName,
         phone: this.securityForm.value.phone,
         id: this.securityForm.value.id,
         email: this.securityForm.value.email,
-        password: this.securityForm.value.password
+        password: this.securityForm.value.password,
+        type: 'provider'
       };
 
-      localStorage.setItem('userProfile', JSON.stringify(userData));
-
-      this.router.navigate(['/profile']);
+      this.authService.register(userData).subscribe({
+        next: (user) => {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.router.navigate(['/provider/profile']);
+        },
+        error: () => {
+          alert('Error al registrar proveedor.');
+        }
+      });
     }
   }
 }

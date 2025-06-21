@@ -1,0 +1,31 @@
+<app-header-bar></app-header-bar>
+
+<div class="back-wrapper">
+    <img src="/assets/arrowleft.png" alt="Back" class="back-icon" (click)="goBack()" />
+</div>
+<div class="cancel-container">
+    <h2>Your travel was canceled</h2>
+
+    <div class="details-box">
+        <h3>Canceled Travel Details</h3>
+
+        <div class="grid">
+            <div>
+                <p><strong>Time</strong></p>
+                <p>{{ hours }} hours</p>
+            </div>
+            <div>
+                <p><strong>Car Chose:</strong></p>
+                <p>{{ carName }} {{ plate }}</p>
+            </div>
+            <div>
+                <p><strong>Price</strong></p>
+                <p>{{ price }} S/.</p>
+            </div>
+            <div>
+                <p><strong>Pickup location</strong></p>
+                <p>{{ pickupLocation }}</p>
+            </div>
+        </div>
+    </div>
+</div>

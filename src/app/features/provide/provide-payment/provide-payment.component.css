@@ -1,0 +1,52 @@
+.payment-provide-container {
+    background-color: #d0ecec;
+    height: 100vh;
+    padding: 40px;
+    text-align: center;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #00bfa6;
+    margin-bottom: 40px;
+    line-height: 1.2;
+}
+
+.info-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 100px;
+    margin-bottom: 40px;
+}
+
+.info-left {
+    text-align: right;
+}
+
+.info-right {
+    text-align: left;
+    margin-top: 3px;
+}
+
+.label {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.visa {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.edit-button {
+    background-color: #00bfa6;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    cursor: pointer;
+}

@@ -58,3 +58,14 @@ button {
     color: #555;
     margin-top: 2rem;
 }
+button:hover {
+    background-color: #019e8d;
+    box-shadow: 0 0 12px rgba(0, 191, 166, 0.6);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}

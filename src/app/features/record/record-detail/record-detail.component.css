@@ -24,7 +24,6 @@
     margin: auto;
 }
 
-
 .info-left {
     max-width: 55%;
 }
@@ -67,14 +66,12 @@
     margin-top: 2rem;
 }
 
-
 .info-right img {
     width: 620px;
     max-width: 100%;
     border-radius: 8px;
     margin-bottom: 2rem;
 }
-
 
 .archive-btn {
     background-color: #00bfa5;
@@ -91,4 +88,3 @@
 .archive-btn:hover {
     background-color: #00997f;
 }
-
