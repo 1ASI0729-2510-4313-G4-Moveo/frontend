@@ -1,6 +1,5 @@
 <app-header-bar></app-header-bar>
 
-
 <div class="confirmation-container">
     <div class="header">
         <button class="back-button" (click)="goBack()">
@@ -8,29 +7,29 @@
         </button>
         <h1 class="title">Your record was successfully archived</h1>
         <p class="subtitle">Your record information will be sent to your email address:</p>
-        <p class="email">hola123&#64;gmail.com</p>
+        <p class="email">{{ email }}</p>
     </div>
 
     <div class="record-details">
         <div class="details-left">
             <h2>Record Details</h2>
             <div class="detail-row">
-                <div><strong>Date</strong><br />05/03/2025</div>
-                <div><strong>Start Hour</strong><br />2:00pm</div>
-                <div><strong>End Hour</strong><br />7:00pm</div>
-                <div><strong>Distance Travelled</strong><br />21.7 km</div>
-                <div><strong>Rating</strong><br />4.85 Points</div>
+                <div><strong>Date</strong><br />{{ car.date }}</div>
+                <div><strong>Start Hour</strong><br />{{ car.startHour }}</div>
+                <div><strong>End Hour</strong><br />{{ car.endHour }}</div>
+                <div><strong>Distance Travelled</strong><br />{{ car.distance }}</div>
+                <div><strong>Rating</strong><br />{{ car.rating }}</div>
             </div>
             <div class="detail-row">
-                <div><strong>Price</strong><br />S/ 15.30</div>
-                <div><strong>Pickup Point</strong><br />Playa De Estacionamiento Alcanfore</div>
-                <div><strong>Reservation ID</strong><br />MV–002154</div>
+                <div><strong>Price</strong><br />S/ {{ car.price }}</div>
+                <div><strong>Pickup Point</strong><br />{{ car.pickup }}</div>
+                <div><strong>Reservation ID</strong><br />{{ car.reservationId }}</div>
             </div>
         </div>
 
         <div class="details-right">
-            <h3><strong>Toyota Corolla – CZT–728</strong></h3>
-            <img src="/assets/car1.png" alt="Toyota" />
+            <h3><strong>{{ car.model }} – {{ car.plate }}</strong></h3>
+            <img [src]="car.image" [alt]="car.model" />
         </div>
     </div>
 

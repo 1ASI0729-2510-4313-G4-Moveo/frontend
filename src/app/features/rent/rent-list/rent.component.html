@@ -1,0 +1,21 @@
+<app-header-bar></app-header-bar>
+
+<div class="rent-container">
+    <h2>Lets Begin</h2>
+    <p>Provide access to Localization in web browser</p>
+
+    <label for="hours" class="label-hours">Hours</label>
+    <input id="hours" type="number" [(ngModel)]="hours" placeholder="Total hours to Rent" />
+
+    <h3>Available cars</h3>
+    <div class="car-carousel">
+        <div class="car" *ngFor="let car of cars" (click)="selectCar(car)" [class.selected]="selectedCar?.id === car.id">
+            <img [src]="car.image" [alt]="car.model" />
+            <p>{{ car.model }}</p>
+            <p>⭐ {{ car.rating }} ({{ car.reviews }} reseñas)</p>
+        </div>
+    </div>
+
+    <button class="calculate-btn" (click)="calculateRent()">Calculate</button>
+    <a>Rent for route</a>
+</div>

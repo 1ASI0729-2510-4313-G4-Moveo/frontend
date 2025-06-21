@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {HeaderBarComponent} from "../../../project/components/header-bar/header-bar.component";
 
@@ -10,11 +10,24 @@ import {HeaderBarComponent} from "../../../project/components/header-bar/header-
   ],
   styleUrls: ['./payment-info.component.css']
 })
-export class PaymentInfoComponent {
+export class PaymentInfoComponent implements OnInit {
+  cardNumber: string = '';
+  holder: string = '';
+
   constructor(private router: Router) {}
+
+  ngOnInit() {
+    const paymentData = localStorage.getItem('paymentInfo');
+    if (paymentData) {
+      const parsedData = JSON.parse(paymentData);
+      this.cardNumber = parsedData.cardNumber;
+      this.holder = parsedData.holder;
+    }
+  }
 
   goToEdit() {
     this.router.navigate(['/payment/edit']);
   }
 }
+
 

@@ -48,7 +48,8 @@ export class RegisterStep2Component {
       name: fullName,
       phone,
       email,
-      password
+      password,
+      type: 'user'
     };
 
     this.authService.register(newUser).subscribe({

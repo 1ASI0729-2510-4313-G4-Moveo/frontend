@@ -13,6 +13,7 @@ import {Router} from "@angular/router";
 export class RecordListComponent {
   cars = [
     {
+      id: 1,
       model: 'Toyota Corolla',
       plate: 'CZT–728',
       hours: 5,
@@ -21,6 +22,7 @@ export class RecordListComponent {
       image: 'assets/car1.png'
     },
     {
+      id: 2,
       model: 'Kia Rio',
       plate: 'B7J–889',
       hours: 3,
@@ -29,6 +31,7 @@ export class RecordListComponent {
       image: 'assets/car2.png'
     },
     {
+      id: 3,
       model: 'Hyundai Accent',
       plate: 'C3M–210',
       hours: 1,
@@ -37,6 +40,7 @@ export class RecordListComponent {
       image: 'assets/car3.png'
     },
     {
+      id: 4,
       model: 'Chevrolet Spark',
       plate: 'E9X–547',
       hours: 4.5,
@@ -48,6 +52,6 @@ export class RecordListComponent {
 
   constructor(private router: Router) {}
   viewDetail(car: any): void {
-    this.router.navigate(['/record/detail'], {state: {car}});
+    this.router.navigate(['/record/detail', car.id]);
   }
 }

@@ -1,0 +1,54 @@
+<app-header-bar></app-header-bar>
+
+<div class="header-wrapper">
+    <button class="back-button" (click)="router.navigate(['/rent'])">
+        <img src="/assets/arrowleft.png" alt="Back" />
+    </button>
+</div>
+
+<div class="confirmation-wrapper" *ngIf="data">
+    <div class="left">
+        <p class="time"><strong>Time:</strong> {{ data.hours }} Hours</p>
+        <p class="car"><strong>Car Choosed:</strong> {{ data.model }}</p>
+
+        <div class="car-img-group">
+            <img [src]="data.image" alt="car" />
+            <img [src]="data.image" alt="car" />
+            <img [src]="data.image" alt="car" />
+        </div>
+
+        <p class="price"><strong>Price:</strong> {{ data.total }} S/.</p>
+        <p class="note">Based on: Time + Car Choosed</p>
+
+        <button class="rent-button" [disabled]="!selectedPlace" (click)="confirmRent()">
+            Rent
+        </button>
+    </div>
+
+    <div class="right">
+        <h3>Where do you want it?</h3>
+        <div class="map">
+            <iframe width="100%" height="100%" style="border:0"
+                    allowfullscreen loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d975.1583520315637!2d-77.03519221421094!3d-12.08751351857761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c88f03cdefed%3A0xf49c8d74ee398cf3!2sUniversidad%20de%20Lima!5e0!3m2!1ses-419!2spe!4v1718720000000">
+            </iframe>
+        </div>
+
+        <p class="note">Recommendations based on your ubication</p>
+
+        <button
+                class="pickup-button"
+                [class.selected]="isSelected('Playa de Estacionamiento Luis Alache Ascencio')"
+                (click)="togglePickup('Playa de Estacionamiento Luis Alache Ascencio')">
+            Playa de Estacionamiento Luis Alache Ascencio
+        </button>
+
+        <button
+                class="pickup-button"
+                [class.selected]="isSelected('Playa De Estacionamiento Alcanfores')"
+                (click)="togglePickup('Playa De Estacionamiento Alcanfores')">
+            Playa De Estacionamiento Alcanfores
+        </button>
+    </div>
+</div>

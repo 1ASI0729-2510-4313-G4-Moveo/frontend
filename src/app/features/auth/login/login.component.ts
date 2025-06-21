@@ -9,17 +9,21 @@ import {AuthService} from "../auth.service";
   templateUrl: './login.component.html',
   imports: [
     ReactiveFormsModule,
-    NgIf,
-    RouterLink,
-    NgOptimizedImage
+      NgIf,
+      RouterLink,
+      NgOptimizedImage
   ],
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  loginError = false;
+  loginError: boolean = false;
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {
+  constructor(
+      private fb: FormBuilder,
+      private authService: AuthService,
+      private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -27,20 +31,33 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    const {email, password} = this.loginForm.value;
+    if (this.loginForm.invalid) return;
 
-    this.authService.login(email, password).subscribe(users => {
-      const user = users.find(u => u.email === email && u.password === password);
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login().subscribe(users => {
+      const user = users.find((u: any) =>
+          u.email === email && u.password === password
+      );
+
       if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('userId', user.id);
+        localStorage.setItem('userName', user.name);
+        localStorage.setItem('email', user.email);
+        localStorage.setItem('type', user.type);
+        localStorage.setItem('phone', user.phone);
+
+
+        if (user.type === 'provider') {
+          this.router.navigate(['/provider/profile']);
+        } else {
+          this.router.navigate(['/rent']);
+        }
+
         this.loginError = false;
-        this.router.navigate(['/profile']);
       } else {
         this.loginError = true;
       }
-    }, error => {
-      console.error('API error:', error);
-      this.loginError = true;
     });
   }
 }

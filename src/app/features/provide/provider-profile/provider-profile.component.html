@@ -1,0 +1,37 @@
+<app-header-bar-provider></app-header-bar-provider>
+
+<main class="provider-profile">
+    <div class="container">
+        <h1>Hello, {{ providerName }}</h1>
+        <p>{{ providerEmail }}</p>
+
+        <section class="stats">
+            <div class="card">
+                <h3>Cars Listed</h3>
+                <p>{{ stats.carsListed }}</p>
+            </div>
+            <div class="card">
+                <h3>Total Earnings</h3>
+                <p>$ {{ stats.totalEarnings }}</p>
+            </div>
+            <div class="card">
+                <h3>Last Rented</h3>
+                <p>{{ stats.lastRented }}</p>
+            </div>
+            <div class="card">
+                <h3>Cars Sold</h3>
+                <p>{{ stats.carsSold }}</p>
+            </div>
+            <div class="card">
+                <h3>Bookings</h3>
+                <p>{{ stats.bookings }}</p>
+            </div>
+            <div class="card">
+                <h3>Avg. Rating</h3>
+                <p>{{ stats.avgRating }}/5</p>
+            </div>
+        </section>
+
+        <button class="edit-btn" (click)="goToEditProfile()">Edit Profile</button>
+    </div>
+</main>

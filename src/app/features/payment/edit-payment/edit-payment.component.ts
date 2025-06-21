@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import {HeaderBarComponent} from "../../../project/components/header-bar/header-bar.component";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-edit-payment',
@@ -10,7 +11,8 @@ import {HeaderBarComponent} from "../../../project/components/header-bar/header-
   standalone: true,
   imports: [
     HeaderBarComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ]
 })
 export class EditPaymentComponent {
@@ -27,8 +29,13 @@ export class EditPaymentComponent {
 
   onSubmit() {
     if (this.paymentForm.valid) {
-      console.log(this.paymentForm.value);
+      const paymentData = this.paymentForm.value;
+      localStorage.setItem('paymentInfo', JSON.stringify(paymentData));
       this.router.navigate(['/payment']);
     }
+  }
+
+  connectPaypal() {
+    window.open('https://www.paypal.com', '_blank');
   }
 }
