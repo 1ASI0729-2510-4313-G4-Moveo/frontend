@@ -20,6 +20,8 @@ import {ProvideComponent} from "./features/provide/provide-form-car/provide.comp
 import {ProvideSuccessComponent} from "./features/provide/provide-success/provide-success.component";
 import {ProvidePaymentComponent} from "./features/provide/provide-payment/provide-payment.component";
 import {ProvideProfileEditComponent} from "./features/provide/provide-profile-edit/provide-profile-edit.component";
+import {ProvidePaymentEditComponent} from "./features/provide/provide-payment-edit/provide-payment-edit.component";
+import {YourCarsComponent} from "./features/yourcars/your-cars.component";
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -41,9 +43,11 @@ export const routes: Routes = [
     { path: 'rent/cancel/:id', component: RentCancelComponent},
     { path: 'provider/profile', component: ProviderProfileComponent },
     { path : 'provide', component: ProvideComponent},
-    {path : 'provide/success', component: ProvideSuccessComponent},
-    {path : 'provide/payment', component: ProvidePaymentComponent},
-    {path : 'provide/profile/edit', component: ProvideProfileEditComponent}
+    { path : 'provide/success', component: ProvideSuccessComponent},
+    { path : 'provide/payment', component: ProvidePaymentComponent},
+    { path : 'provide/profile/edit', component: ProvideProfileEditComponent},
+    { path : 'provide/payment/edit', component: ProvidePaymentEditComponent},
+    { path : 'provide/your-cars', component: YourCarsComponent},
     // Si tienes una ruta protegida para dashboard:
     // { path: 'profile', component: ProfileComponent }
 ];
