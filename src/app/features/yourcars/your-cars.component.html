@@ -1,0 +1,18 @@
+<app-header-bar-provider></app-header-bar-provider>
+
+<div class="your-cars-container">
+    <h2 class="your-cars-title">Your Provided Cars</h2>
+
+    <div class="car-item" *ngFor="let car of cars" (click)="viewDetails(car.id)">
+        <img [src]="car.image" alt="{{car.model}}" class="car-image">
+        <div class="car-info">
+            <h3>{{ car.name }} – {{ car.plate }}</h3>
+            <p *ngIf="car.status === 'in_use'">(IN USE).</p>
+            <p *ngIf="car.status !== 'in_use'">Travels: {{ car.travels }}</p>
+            <span class="see-more">See More Information...</span>
+        </div>
+    </div>
+
+    <div class="arrow-down">↓</div>
+</div>
+
