@@ -1,6 +1,7 @@
 import { Component, type OnInit, type OnDestroy } from "@angular/core"
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms"
-import { Router } from "@angular/router"
+import
+{ Router } from "@angular/router"
 import { Subject, takeUntil, debounceTime, distinctUntilChanged } from "rxjs"
 import { CommonModule } from "@angular/common"
 

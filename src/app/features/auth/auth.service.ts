@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core"
 import { HttpClient } from "@angular/common/http"
-import { BehaviorSubject, type Observable, tap } from "rxjs"
+import { BehaviorSubject, Observable, tap } from "rxjs"
 import { Router } from "@angular/router"
 
 export interface User {
     id: string
     email: string
-    password: string
     name: string
     phone: string
     type: "user" | "provider"
     avatar?: string
     isVerified?: boolean
+    password?: string
 }
 
 @Injectable({
@@ -98,7 +98,6 @@ export class AuthService {
     }
 
     getToken(): string | null {
-        // En un escenario real, aquí retornarías el JWT token
         return localStorage.getItem("currentUser") ? "mock-token" : null
     }
 

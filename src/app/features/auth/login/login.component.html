@@ -1,37 +1,119 @@
-<div class="login-wrapper">
-    <header>
-        <div class="logo">
+<div class="login-container">
+    <div class="login-left">
+        <div class="logo-section">
             <img src="/assets/moveo.png" alt="Moveo Logo" />
-            <span>MOVEO</span>
+            <h1>MOVEO</h1>
         </div>
 
-        <button class="signup-button">Sign Up</button>
-    </header>
+        <div class="login-form">
+            <div class="form-header">
+                <h2>Welcome Back</h2>
+                <p>Sign in to continue your journey</p>
+            </div>
 
-    <main class="login-box">
-        <div class="login-form-section">
-            <h1>Welcome Back</h1>
+            <div class="user-type-selector">
+                <h3>I am a:</h3>
+                <div class="user-type-cards">
+                    <div class="user-type-card"
+                         [class.selected]="selectedUserType === 'user'"
+                         (click)="selectUserType('user')">
+                        <mat-icon>person</mat-icon>
+                        <h3>Renter</h3>
+                        <p>I want to rent a car</p>
+                    </div>
+                    <div class="user-type-card"
+                         [class.selected]="selectedUserType === 'provider'"
+                         (click)="selectUserType('provider')">
+                        <mat-icon>directions_car</mat-icon>
+                        <h3>Car Owner</h3>
+                        <p>I want to rent out my car</p>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="loginError" class="error-message">
+                <mat-icon>error</mat-icon>
+                <span>Invalid email, password, or user type. Please try again.</span>
+            </div>
 
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <label>Email</label>
-                <input type="email" formControlName="email" placeholder="Input your account’s email" />
-                <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error">Valid email required</div>
+                <div class="form-fields">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email Address</mat-label>
+                        <input matInput
+                               type="email"
+                               formControlName="email"
+                               placeholder="Enter your email">
+                        <mat-icon matSuffix>email</mat-icon>
+                        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+                            Email is required
+                        </mat-error>
+                        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+                            Please enter a valid email
+                        </mat-error>
+                    </mat-form-field>
 
-                <label>Password</label>
-                <input type="password" formControlName="password" placeholder="Input Password" />
-                <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">Password is required</div>
-                <div *ngIf="loginError" class="error">
-                    Incorrect email or password
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput
+                               [type]="hidePassword ? 'password' : 'text'"
+                               formControlName="password"
+                               placeholder="Enter your password">
+                        <button mat-icon-button
+                                matSuffix
+                                (click)="hidePassword = !hidePassword"
+                                type="button">
+                            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                            Password is required
+                        </mat-error>
+                    </mat-form-field>
                 </div>
 
-                <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
+                <button mat-raised-button
+                        color="primary"
+                        class="login-button"
+                        type="submit"
+                        [disabled]="loginForm.invalid || !selectedUserType || isLoading">
+                    <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                    <span *ngIf="!isLoading">Sign In</span>
+                </button>
             </form>
 
-            <a routerLink="/register-step1" class="signup-link">Not a member yet? Sign Up</a>
-        </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
 
-        <div class="login-image-section">
-            <img src="/assets/car.png" alt="Car Illustration" />
+            <div class="register-link">
+                <p>Don't have an account? <a routerLink="/register-step1">Create Account</a></p>
+            </div>
         </div>
-    </main>
+    </div>
+
+    <div class="login-right">
+        <div class="welcome-content">
+            <h2>Start Your Journey</h2>
+            <p>Join thousands of users who trust Moveo for their transportation needs</p>
+
+            <ul class="features-list">
+                <li>
+                    <mat-icon>check_circle</mat-icon>
+                    <span>Safe & Verified Vehicles</span>
+                </li>
+                <li>
+                    <mat-icon>check_circle</mat-icon>
+                    <span>24/7 Customer Support</span>
+                </li>
+                <li>
+                    <mat-icon>check_circle</mat-icon>
+                    <span>Flexible Rental Options</span>
+                </li>
+                <li>
+                    <mat-icon>check_circle</mat-icon>
+                    <span>Earn Money with Your Car</span>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
