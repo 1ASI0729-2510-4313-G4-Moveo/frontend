@@ -45,7 +45,7 @@ export const routes: Routes = [
     { path : 'provide', component: ProvideComponent},
     { path : 'provide/success', component: ProvideSuccessComponent},
     { path : 'provide/payment', component: ProvidePaymentComponent},
-    { path : 'provide/profile/edit', component: ProvideProfileEditComponent},
+    { path : 'provider/profile/edit', component: ProvideProfileEditComponent},
     { path : 'provide/payment/edit', component: ProvidePaymentEditComponent},
     { path : 'provide/your-cars', component: YourCarsComponent},
     // Si tienes una ruta protegida para dashboard:
