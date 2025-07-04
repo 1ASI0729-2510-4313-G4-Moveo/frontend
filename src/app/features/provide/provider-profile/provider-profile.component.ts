@@ -28,6 +28,6 @@ export class ProviderProfileComponent implements OnInit {
   }
 
   goToEditProfile() {
-    window.location.href = '/provide/profile/edit';
+    window.location.href = '/provider/profile/edit';
   }
 }
