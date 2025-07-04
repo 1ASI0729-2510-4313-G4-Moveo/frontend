@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderBarProviderComponent} from "../../../project/components/header-bar-provider/header-bar-provider.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-provider-profile',
@@ -21,6 +22,9 @@ export class ProviderProfileComponent implements OnInit {
     avgRating: 4.6
   };
 
+  constructor(private router: Router) {
+  }
+
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     this.providerName = user.name || 'Provider';
@@ -28,6 +32,6 @@ export class ProviderProfileComponent implements OnInit {
   }
 
   goToEditProfile() {
-    window.location.href = '/provider/profile/edit';
+    this.router.navigate(['/provider/profile/edit']);
   }
 }
