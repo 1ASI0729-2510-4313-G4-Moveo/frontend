@@ -1,21 +1,149 @@
 <app-header-bar></app-header-bar>
 
 <div class="rent-container">
-    <h2>Lets Begin</h2>
-    <p>Provide access to Localization in web browser</p>
+    <div class="header-section">
+        <h2>Find Your Perfect Ride</h2>
+        <p>Choose from our wide selection of vehicles for your next adventure</p>
+    </div>
 
-    <label for="hours" class="label-hours">Hours</label>
-    <input id="hours" type="number" [(ngModel)]="hours" placeholder="Total hours to Rent" />
+    <div class="search-section">
+        <form class="search-form" [formGroup]="searchForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Hours</mat-label>
+                <input matInput type="number" formControlName="hours" placeholder="Total hours to rent">
+                <mat-icon matSuffix>schedule</mat-icon>
+            </mat-form-field>
 
-    <h3>Available cars</h3>
-    <div class="car-carousel">
-        <div class="car" *ngFor="let car of cars" (click)="selectCar(car)" [class.selected]="selectedCar?.id === car.id">
-            <img [src]="car.image" [alt]="car.model" />
-            <p>{{ car.model }}</p>
-            <p>⭐ {{ car.rating }} ({{ car.reviews }} reseñas)</p>
+            <mat-form-field appearance="outline">
+                <mat-label>Brand</mat-label>
+                <mat-select formControlName="brand">
+                    <mat-option value="">All Brands</mat-option>
+                    <mat-option *ngFor="let brand of availableBrands" [value]="brand">
+                        {{ brand }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Transmission</mat-label>
+                <mat-select formControlName="transmission">
+                    <mat-option value="">Any</mat-option>
+                    <mat-option value="Automatic">Automatic</mat-option>
+                    <mat-option value="Manual">Manual</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Min Seats</mat-label>
+                <mat-select formControlName="seats">
+                    <mat-option value="">Any</mat-option>
+                    <mat-option [value]="2">2+</mat-option>
+                    <mat-option [value]="4">4+</mat-option>
+                    <mat-option [value]="5">5+</mat-option>
+                    <mat-option [value]="7">7+</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Pickup Location</mat-label>
+                <mat-select formControlName="pickupPlace">
+                    <mat-option value="">Any Location</mat-option>
+                    <mat-option *ngFor="let location of availableLocations" [value]="location">
+                        {{ location }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class="price-range">
+                <mat-label>Price Range (S/ per hour)</mat-label>
+                <mat-slider min="0" max="10" step="0.5" discrete>
+                    <input matSliderStartThumb formControlName="minPrice">
+                    <input matSliderEndThumb formControlName="maxPrice">
+                </mat-slider>
+            </div>
+        </form>
+
+        <div class="filter-chips" *ngIf="activeFilters.length > 0">
+            <mat-chip-set>
+                <mat-chip *ngFor="let filter of activeFilters"
+                          (removed)="removeFilter(filter.key)"
+                          [removable]="true">
+                    {{ filter.label }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-set>
+        </div>
+
+        <div class="search-actions">
+            <button mat-raised-button color="primary" (click)="applyFilters()">
+                <mat-icon>search</mat-icon>
+                Search Cars
+            </button>
+            <button mat-button (click)="clearFilters()">
+                <mat-icon>clear</mat-icon>
+                Clear Filters
+            </button>
         </div>
     </div>
 
-    <button class="calculate-btn" (click)="calculateRent()">Calculate</button>
-    <a>Rent for route</a>
+    <div class="cars-section">
+        <div *ngIf="loading" class="loading-spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+
+        <div *ngIf="!loading && filteredCars.length === 0" class="no-cars">
+            <mat-icon>directions_car</mat-icon>
+            <h3>No cars found</h3>
+            <p>Try adjusting your search criteria</p>
+        </div>
+
+        <div class="cars-grid" *ngIf="!loading && filteredCars.length > 0">
+            <div class="car-card"
+                 *ngFor="let car of filteredCars"
+                 (click)="selectCar(car)"
+                 [class.selected]="selectedCar?.id === car.id">
+
+                <img [src]="car.image" [alt]="car.model" class="car-image">
+
+                <div class="car-content">
+                    <div class="car-header">
+                        <h3 class="car-title">{{ car.brand }} {{ car.model }}</h3>
+                        <div class="car-price">S/ {{ car.pricePerHour }}/hr</div>
+                    </div>
+
+                    <div class="car-details">
+                        <div><mat-icon>event_seat</mat-icon> {{ car.seats }} seats</div>
+                        <div><mat-icon>settings</mat-icon> {{ car.transmission }}</div>
+                        <div><mat-icon>palette</mat-icon> {{ car.color }}</div>
+                        <div><mat-icon>calendar_today</mat-icon> {{ car.year }}</div>
+                    </div>
+
+                    <div class="car-rating">
+                        <mat-icon>star</mat-icon>
+                        <span>{{ car.rating }} ({{ car.reviews }} reviews)</span>
+                    </div>
+
+                    <div class="car-features">
+                        <span class="feature-chip" *ngFor="let feature of car.features">
+                            {{ feature }}
+                        </span>
+                    </div>
+
+                    <div class="pickup-location">
+                        <mat-icon>location_on</mat-icon>
+                        <small>{{ car.pickupPlace }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-section" *ngIf="!loading">
+        <button class="calculate-btn"
+                (click)="calculateRent()"
+                [disabled]="!selectedCar || !searchForm.get('hours')?.value">
+            <mat-icon>calculate</mat-icon>
+            Calculate & Continue
+        </button>
+    </div>
 </div>
