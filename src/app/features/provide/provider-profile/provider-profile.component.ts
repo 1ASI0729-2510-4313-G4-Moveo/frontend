@@ -28,7 +28,6 @@ export class ProviderProfileComponent implements OnInit {
   }
 
   goToEditProfile() {
-    // Ajusta la ruta si tu edit está en otra carpeta
-    window.location.href = 'provide/profile/edit';
+    window.location.href = '/provide/profile/edit';
   }
 }
