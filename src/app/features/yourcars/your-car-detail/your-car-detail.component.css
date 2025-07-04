@@ -1,0 +1,86 @@
+.car-detail-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 24px;
+    color: #0b0d20;
+    font-family: 'Poppins', sans-serif;
+}
+
+.car-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.car-info-block {
+    flex: 1;
+}
+
+.car-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 24px;
+}
+
+.car-data-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    gap: 10px 30px;
+}
+
+.car-image {
+    width: 260px;
+    margin-top: 20px;
+}
+
+.car-status,
+.car-travels {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #00bfa6;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.section-title {
+    margin-top: 40px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+@media (max-width: 768px) {
+    .car-header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .car-image {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+}

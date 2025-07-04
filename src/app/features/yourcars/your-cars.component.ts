@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import {HeaderBarProviderComponent} from "../../project/components/header-bar-provider/header-bar-provider.component";
 import {CommonModule} from '@angular/common';
 
@@ -51,9 +51,9 @@ export class YourCarsComponent {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   viewDetails(id: number) {
-    this.router.navigate(['/your-cars/details', id]);
+    this.router.navigate(['details', id], { relativeTo: this.route });
   }
 }

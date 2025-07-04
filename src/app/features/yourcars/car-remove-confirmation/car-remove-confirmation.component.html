@@ -1,0 +1,24 @@
+<app-header-bar-provider></app-header-bar-provider>
+
+<div class="remove-container" *ngIf="car">
+    <h2 class="success-title">Your car is succesfully removed</h2>
+    <p class="email-msg">
+        Your record information will be sent to your email address:<br>
+        <strong>{{ car.email }}</strong>
+    </p>
+
+    <div class="record-section">
+        <h3 class="record-title">Record Details</h3>
+        <div class="record-grid">
+            <div>Date</div><div>{{ car.date }}</div>
+            <div>Pickup Point</div><div>{{ car.pickupPoint }}</div>
+            <div>Distance Travelled</div><div>{{ car.distance }}</div>
+            <div>Revenue</div><div>{{ car.revenue }}</div>
+            <div>Incidents</div><div>{{ car.incidents }}</div>
+            <div>Reservation ID</div><div>{{ car.reservationId }}</div>
+            <div>Average Rating</div><div>{{ car.rating }}</div>
+            <div class="car-name">{{ car.name }} – {{ car.plate }}</div>
+            <div><img [src]="car.image" alt="car" class="car-img"></div>
+        </div>
+    </div>
+</div>

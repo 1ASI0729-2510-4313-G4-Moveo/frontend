@@ -1,0 +1,52 @@
+<app-header-bar-provider></app-header-bar-provider>
+
+<div class="car-detail-container" *ngIf="car">
+    <div class="car-header">
+        <div class="car-info-block">
+            <h2 class="car-name">{{ car.name }} - {{ car.plate }}</h2>
+
+            <div class="car-data-grid">
+                <ng-container *ngIf="car.status === 'in_use'; else availableInfo">
+                    <div>Date</div><div>{{ car.date }}</div>
+                    <div>Start Hour</div><div>{{ car.startHour }}</div>
+                    <div>End Hour</div><div>{{ car.endHour }}</div>
+                    <div>Price</div><div>{{ car.price }}</div>
+                    <div>Pickup Point</div><div>{{ car.pickupPoint }}</div>
+                </ng-container>
+
+                <ng-template #availableInfo>
+                    <div>Last Use</div><div>{{ car.date }}</div>
+                    <div>Location</div><div>{{ car.location }}</div>
+                    <div>Revenue</div><div>{{ car.revenue }}</div>
+                    <div>Incidents</div><div>{{ car.incidents }}</div>
+                </ng-template>
+            </div>
+        </div>
+
+        <img [src]="car.image" alt="car" class="car-image">
+    </div>
+
+    <div class="car-status" *ngIf="car.status === 'in_use'">IN USE</div>
+    <div class="car-travels" *ngIf="car.travels"> {{ car.travels }} Travels </div>
+
+    <div class="section-title">More Information</div>
+
+    <div class="car-data-grid">
+        <div *ngIf="car.status !== 'in_use'">Last Renter's Name</div>
+        <div *ngIf="car.status !== 'in_use'">{{ car.renterName }}</div>
+        <div *ngIf="car.status === 'in_use'">Renter's Name</div>
+        <div *ngIf="car.status === 'in_use'">{{ car.renterName }}</div>
+
+        <div>Rating</div><div>{{ car.rating }}</div>
+        <div>Reservation ID</div><div>{{ car.reservationId }}</div>
+        <div>Distance Travelled</div><div>{{ car.distance }}</div>
+    </div>
+
+    <div class="buttons">
+        <button *ngIf="car.status === 'in_use'" (click)="goBack()">Back</button>
+        <ng-container *ngIf="car.travels">
+            <button (click)="removeCar()">Remove</button>
+            <button (click)="editCar()">Edit</button>
+        </ng-container>
+    </div>
+</div>
