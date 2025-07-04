@@ -1,1 +1,49 @@
-<p>provide-payment-edit works!</p>
+<app-header-bar-provider></app-header-bar-provider>
+
+<div class="edit-payment-provider-container">
+    <h1>Payment<br />Information</h1>
+
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <label>Number of Card</label>
+        <input type="text" formControlName="cardNumber" />
+        <div *ngIf="paymentForm.get('cardNumber')?.touched && paymentForm.get('cardNumber')?.invalid" style="color: red; font-size: 0.8rem;">
+            Card number must be 16 digits.
+        </div>
+
+        <label>Holder</label>
+        <input type="text" formControlName="holder" />
+        <div *ngIf="paymentForm.get('holder')?.touched && paymentForm.get('holder')?.invalid" style="color: red; font-size: 0.8rem;">
+            Holder is required.
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <label>FV</label>
+                <input type="text" formControlName="expiration" />
+                <div *ngIf="paymentForm.get('expiration')?.touched && paymentForm.get('expiration')?.invalid" style="color: red; font-size: 0.8rem;">
+                    Expiration date is required.
+                </div>
+            </div>
+            <div class="column">
+                <label>CVV</label>
+                <input type="text" formControlName="cvv" />
+                <div *ngIf="paymentForm.get('cvv')?.touched && paymentForm.get('cvv')?.invalid" style="color: red; font-size: 0.8rem;">
+                    CVV must be at least 3 digits.
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="paymentForm.invalid">
+            Confirm Payment Information
+        </button>
+    </form>
+
+    <div class="paypal-connect" (click)="connectPaypal()" style="cursor: pointer;">
+        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" />
+        <span>Connect Paypal*</span>
+    </div>
+
+    <p class="disclaimer">
+        The respective commissions are charged.<br />*Charged in US dollars (USD).
+    </p>
+</div>
