@@ -24,6 +24,7 @@ import {ProvidePaymentEditComponent} from "./features/provide/provide-payment-ed
 import {YourCarsComponent} from "./features/yourcars/your-cars.component";
 import {YourCarDetailComponent} from "./features/yourcars/your-car-detail/your-car-detail.component";
 import {CarRemoveConfirmationComponent} from "./features/yourcars/car-remove-confirmation/car-remove-confirmation.component";
+import {YourCarEditComponent} from "./features/yourcars/your-car-edit/your-car-edit.component";
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -52,6 +53,7 @@ export const routes: Routes = [
     { path : 'provide/your-cars', component: YourCarsComponent},
     { path : 'provide/your-cars/details/:id', component: YourCarDetailComponent},
     { path : 'provide/your-cars/remove/:id', component: CarRemoveConfirmationComponent},
+    { path : 'provide/your-cars/edit/:id', component: YourCarEditComponent},
     // Si tienes una ruta protegida para dashboard:
     // { path: 'profile', component: ProfileComponent }
 ];
