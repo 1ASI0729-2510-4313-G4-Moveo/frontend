@@ -2,6 +2,11 @@
 
 <div class="car-detail-container" *ngIf="car">
     <div class="car-header">
+        <img
+                src="/assets/arrowleft.png"
+                alt="Back"
+                class="go-back-icon"
+                (click)="goBack()" />
         <div class="car-info-block">
             <h2 class="car-name">{{ car.name }} - {{ car.plate }}</h2>
 

@@ -69,15 +69,14 @@ export class YourCarDetailComponent implements OnInit {
       name: 'Chevrolet Spark',
       plate: 'E9X-547',
       date: '08/03/2025',
-      startHour: '9:00am',
-      endHour: '4:30pm',
-      price: 'S/ 19.90',
-      pickupPoint: 'Parqueo Real Plaza Salaverry',
-      renterName: 'Jorge Ramírez',
-      rating: '4.9 Points',
-      reservationId: 'MV-002300',
-      distance: '35.2 km',
-      status: 'in_use',
+      location: 'Estacionamiento Mall Aventura Santa Anita',
+      revenue: 'S/ 272.30',
+      incidents: 0,
+      renterName: 'Fernando Flores',
+      rating: '4.2 Points',
+      reservationId: 'MV-002154',
+      distance: '432.7 km',
+      travels: 12,
       image: '/assets/car4.png'
     }
   ];
@@ -94,7 +93,7 @@ export class YourCarDetailComponent implements OnInit {
   }
 
   editCar() {
-    alert('Edit option clicked');
+    this.router.navigate(['../../edit', this.carId], { relativeTo: this.route });
   }
 
   removeCar() {

@@ -1,0 +1,40 @@
+<app-header-bar-provider></app-header-bar-provider>
+
+<div class="edit-container" *ngIf="carForm">
+    <h2 class="edit-title">Edit {{ car.name }} - {{ car.plate }} information</h2>
+
+    <form [formGroup]="carForm" class="edit-grid">
+        <div>
+            <label>Brand</label>
+            <input formControlName="brand" readonly />
+        </div>
+        <div>
+            <label>Model</label>
+            <input formControlName="model" readonly />
+        </div>
+        <div>
+            <label>Year</label>
+            <input formControlName="year" readonly />
+        </div>
+        <div>
+            <label>License plate</label>
+            <input formControlName="plate" readonly />
+        </div>
+        <div>
+            <label>Color</label>
+            <input formControlName="color" readonly />
+        </div>
+        <div>
+            <label>Number of Seats</label>
+            <input formControlName="seats" readonly />
+        </div>
+        <div class="transmission">
+            (Manual/Automatic)
+            <input formControlName="transmission" readonly />
+        </div>
+    </form>
+
+    <div class="photo-link">
+        <a href="#" (click)="takePhoto()">Take a photo of your Car</a>
+    </div>
+</div>

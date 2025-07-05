@@ -84,3 +84,11 @@ button:hover {
         flex-direction: column;
     }
 }
+.go-back-icon {
+    width: 32px;
+    height: auto;
+    cursor: pointer;
+    position: absolute;
+    top: 90px;
+    left: 24px;
+}

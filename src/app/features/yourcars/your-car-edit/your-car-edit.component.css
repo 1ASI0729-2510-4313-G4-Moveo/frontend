@@ -1,0 +1,51 @@
+.edit-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 24px;
+    font-family: 'Poppins', sans-serif;
+    color: #0b0d20;
+    text-align: center;
+}
+
+.edit-title {
+    font-size: 22px;
+    margin-bottom: 32px;
+}
+
+.edit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 24px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+input[readonly] {
+    background-color: #f3f3f3;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.transmission {
+    grid-column: 1 / 4;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.photo-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.photo-link a {
+    color: #00bfa6;
+    text-decoration: underline;
+    cursor: pointer;
+}
