@@ -1,55 +1,313 @@
-.record-content {
+.record-container {
     padding: 2rem;
-    text-align: center;
-    background-color: white;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
 }
 
-.record-content h1 {
-    color: #00bfa5;
-    font-size: 1.8rem;
+.header-section {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header-section h1 {
+    font-size: 3rem;
+    color: #00bfa6;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 191, 166, 0.1);
+}
+
+.header-section p {
+    font-size: 1.2rem;
+    color: #666;
     margin-bottom: 2rem;
 }
 
-.car-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    max-width: 900px;
-    margin: auto;
+.stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto 3rem;
 }
 
-.car-item {
+.stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+}
+
+.stat-card mat-icon {
+    font-size: 2.5rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    color: #00bfa6;
+    margin-bottom: 1rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.records-section {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.filter-btn.active {
+    border-color: #00bfa6;
+    background: #00bfa6;
+    color: white;
+}
+
+.filter-btn:hover:not(.active) {
+    border-color: #00bfa6;
+    color: #00bfa6;
+}
+
+.records-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.record-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.record-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.record-header {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #00bfa6 0%, #00a693 100%);
+    color: white;
+}
+
+.record-status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.record-status.completed {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4caf50;
+}
+
+.record-status.active {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.record-status.cancelled {
+    background: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+}
+
+.record-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.record-date {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0.5rem 0 0;
+}
+
+.record-content {
+    padding: 1.5rem;
+}
+
+.record-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.detail-item {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 1rem;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
 }
 
-.car-img {
-    width: 100px;
-    height: auto;
+.detail-item mat-icon {
+    font-size: 1rem;
+    color: #00bfa6;
+}
+
+.record-car {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.car-image {
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
     border-radius: 8px;
 }
 
-.car-info h2 {
-    margin: 0;
-    font-size: 1.4rem;
-    color: #111;
-    text-align: left;
+.car-info h4 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+    color: #333;
 }
 
 .car-info p {
-    margin: 0.5rem 0 0;
+    margin: 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.record-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.action-btn {
+    flex: 1;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.primary-btn {
+    background: #00bfa6;
+    color: white;
+}
+
+.primary-btn:hover {
+    background: #00a693;
+}
+
+.secondary-btn {
+    background: #f0f0f0;
     color: #333;
-    font-size: 0.95rem;
-    text-align: left;
 }
 
-.scroll-arrow {
-    margin-top: 3rem;
+.secondary-btn:hover {
+    background: #e0e0e0;
 }
 
-.scroll-arrow img {
-    height: 28px;
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.no-records {
+    text-align: center;
+    padding: 4rem;
+    color: #666;
+}
+
+.no-records mat-icon {
+    font-size: 5rem;
+    height: 5rem;
+    width: 5rem;
+    color: #ccc;
+    margin-bottom: 1.5rem;
+}
+
+.no-records h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .record-container {
+        padding: 1rem;
+    }
+
+    .header-section h1 {
+        font-size: 2.2rem;
+    }
+
+    .records-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .record-details {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+
+    .filter-buttons {
+        justify-content: center;
+    }
 }

@@ -5,35 +5,50 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 2rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .logo-section {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo-section:hover {
+  transform: scale(1.05);
 }
 
 .logo-Moveo {
   height: 32px;
 }
 
-.nav-links {
-  display: flex;
-  gap: 3rem; /* más espacio entre enlaces */
-  font-weight: 600;
-  margin-left: auto;
-  margin-right: 3.5rem; /* empuja los textos a la derecha */
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
+.nav-links {
+  display: flex;
+  gap: 3rem;
+  font-weight: 600;
+  margin-left: auto;
+  margin-right: 3.5rem;
+}
 
 .nav-links a {
-  color: #585858;
+  color: white;
   text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
 
 .nav-links a:hover {
-  color: #e0e0e0; /* tono suave al pasar el mouse, opcional */
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 .profile-icon img {
@@ -42,7 +57,20 @@
   padding: 0.4rem;
   border-radius: 0.5rem;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
+.profile-icon img:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
 
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
 
+  .header-bar {
+    padding: 0.75rem 1rem;
+  }
+}

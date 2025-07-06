@@ -6,18 +6,19 @@
 
 .header-section {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .header-section h2 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: #00bfa6;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 191, 166, 0.1);
 }
 
 .header-section p {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #666;
     margin-bottom: 2rem;
 }
@@ -26,44 +27,51 @@
     max-width: 1200px;
     margin: 0 auto 3rem;
     background: white;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
 .search-form {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .filter-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
 }
 
 .cars-section {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
 .cars-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
     gap: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .car-card {
     background: white;
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     cursor: pointer;
+    border: 3px solid transparent;
 }
 
 .car-card:hover {
@@ -72,68 +80,140 @@
 }
 
 .car-card.selected {
-    border: 3px solid #00bfa6;
+    border-color: #00bfa6;
     transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0, 191, 166, 0.2);
 }
 
 .car-image {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
+    position: relative;
+}
+
+.car-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: linear-gradient(135deg, #00bfa6 0%, #00a693 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
 .car-content {
-    padding: 1.5rem;
+    padding: 2rem;
 }
 
 .car-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .car-title {
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: #333;
     margin: 0;
 }
 
 .car-price {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #00bfa6;
+    text-align: right;
+}
+
+.car-price .period {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 400;
 }
 
 .car-details {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
     gap: 0.5rem;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #666;
+}
+
+.detail-item mat-icon {
+    font-size: 1.1rem;
+    color: #00bfa6;
 }
 
 .car-rating {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.rating-stars {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.star {
+    color: #ffc107;
+    font-size: 1rem;
+}
+
+.rating-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-left: auto;
 }
 
 .car-features {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .feature-chip {
-    background: #f0f9ff;
-    color: #0369a1;
-    padding: 0.25rem 0.5rem;
-    border-radius: 12px;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #1976d2;
+    padding: 0.4rem 0.8rem;
+    border-radius: 16px;
     font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.pickup-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: #f0fdfc;
+    border-radius: 12px;
+    border-left: 4px solid #00bfa6;
+}
+
+.pickup-location mat-icon {
+    color: #00bfa6;
+}
+
+.pickup-location small {
+    color: #666;
+    font-size: 0.9rem;
 }
 
 .action-section {
@@ -144,19 +224,23 @@
 .calculate-btn {
     background: linear-gradient(135deg, #00bfa6 0%, #00a693 100%);
     color: white;
-    padding: 1rem 3rem;
-    font-size: 1.1rem;
+    padding: 1.2rem 4rem;
+    font-size: 1.2rem;
     font-weight: 600;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(0, 191, 166, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 191, 166, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 auto;
 }
 
 .calculate-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 191, 166, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 191, 166, 0.4);
 }
 
 .calculate-btn:disabled {
@@ -170,24 +254,42 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 300px;
 }
 
 .no-cars {
     text-align: center;
-    padding: 3rem;
+    padding: 4rem;
     color: #666;
 }
 
 .no-cars mat-icon {
-    font-size: 4rem;
-    height: 4rem;
-    width: 4rem;
+    font-size: 5rem;
+    height: 5rem;
+    width: 5rem;
     color: #ccc;
+    margin-bottom: 1.5rem;
+}
+
+.no-cars h3 {
+    font-size: 1.5rem;
     margin-bottom: 1rem;
+    color: #333;
 }
 
 @media (max-width: 768px) {
+    .rent-container {
+        padding: 1rem;
+    }
+
+    .header-section h2 {
+        font-size: 2.2rem;
+    }
+
+    .search-section {
+        padding: 1.5rem;
+    }
+
     .search-form {
         grid-template-columns: 1fr;
     }
@@ -198,5 +300,9 @@
 
     .car-details {
         grid-template-columns: 1fr;
+    }
+
+    .search-actions {
+        flex-direction: column;
     }
 }

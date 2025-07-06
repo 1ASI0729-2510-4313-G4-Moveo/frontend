@@ -1,22 +1,133 @@
 <app-header-bar></app-header-bar>
 
-<main class="record-content">
-    <h1>Records Information</h1>
+<div class="record-container">
+    <div class="header-section">
+        <h1>My Travel Records</h1>
+        <p>Track your rental history and manage your bookings</p>
+    </div>
 
-    <div class="car-list">
-        <div class="car-item" *ngFor="let car of cars" (click)="viewDetail(car)">
-            <img [src]="car.image" alt="car" class="car-img" />
-            <div class="car-info">
-                <h2>{{ car.model }} – {{ car.plate }}</h2>
-                <p>
-                    Hours: {{ car.hours }} – Price: S/{{ car.price }} – Pickup Point: {{ car.pickup }}
-                    <strong>... See more information</strong>
-                </p>
-            </div>
+    <div class="stats-overview">
+        <div class="stat-card">
+            <mat-icon>schedule</mat-icon>
+            <div class="stat-value">{{ totalHours }}</div>
+            <div class="stat-label">Total Hours</div>
+        </div>
+        <div class="stat-card">
+            <mat-icon>directions_car</mat-icon>
+            <div class="stat-value">{{ totalTrips }}</div>
+            <div class="stat-label">Total Trips</div>
+        </div>
+        <div class="stat-card">
+            <mat-icon>attach_money</mat-icon>
+            <div class="stat-value">S/ {{ totalSpent }}</div>
+            <div class="stat-label">Total Spent</div>
+        </div>
+        <div class="stat-card">
+            <mat-icon>star</mat-icon>
+            <div class="stat-value">{{ averageRating }}</div>
+            <div class="stat-label">Avg Rating</div>
         </div>
     </div>
 
-    <div class="scroll-arrow">
-        <img src="/assets/arrowdown.png" alt="arrow" />
+    <div class="records-section">
+        <div class="section-header">
+            <h2 class="section-title">Booking History</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn"
+                        [class.active]="selectedFilter === 'all'"
+                        (click)="filterRecords('all')">
+                    All
+                </button>
+                <button class="filter-btn"
+                        [class.active]="selectedFilter === 'active'"
+                        (click)="filterRecords('active')">
+                    Active
+                </button>
+                <button class="filter-btn"
+                        [class.active]="selectedFilter === 'completed'"
+                        (click)="filterRecords('completed')">
+                    Completed
+                </button>
+                <button class="filter-btn"
+                        [class.active]="selectedFilter === 'cancelled'"
+                        (click)="filterRecords('cancelled')">
+                    Cancelled
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="loading" class="loading-container">
+            <mat-spinner diameter="60"></mat-spinner>
+        </div>
+
+        <div *ngIf="!loading && filteredRecords.length === 0" class="no-records">
+            <mat-icon>history</mat-icon>
+            <h3>No records found</h3>
+            <p>You haven't made any bookings yet. Start by renting a car!</p>
+            <button mat-raised-button color="primary" routerLink="/rent">
+                <mat-icon>directions_car</mat-icon>
+                Browse Cars
+            </button>
+        </div>
+
+        <div class="records-grid" *ngIf="!loading && filteredRecords.length > 0">
+            <div class="record-card" *ngFor="let record of filteredRecords" (click)="viewDetail(record)">
+                <div class="record-header">
+                    <div class="record-status" [class]="record.status">
+                        {{ getStatusLabel(record.status) }}
+                    </div>
+                    <h3 class="record-title">{{ record.carDetails?.brand }} {{ record.carDetails?.model }}</h3>
+                    <p class="record-date">{{ formatDate(record.startDate) }}</p>
+                </div>
+
+                <div class="record-content">
+                    <div class="record-details">
+                        <div class="detail-item">
+                            <mat-icon>schedule</mat-icon>
+                            <span>{{ record.hours }} hours</span>
+                        </div>
+                        <div class="detail-item">
+                            <mat-icon>attach_money</mat-icon>
+                            <span>S/ {{ record.totalPrice }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <mat-icon>location_on</mat-icon>
+                            <span>{{ record.pickupLocation }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <mat-icon>payment</mat-icon>
+                            <span>{{ record.paymentMethod }}</span>
+                        </div>
+                    </div>
+
+                    <div class="record-car" *ngIf="record.carDetails">
+                        <img [src]="record.carDetails.image" [alt]="record.carDetails.model" class="car-image">
+                        <div class="car-info">
+                            <h4>{{ record.carDetails.brand }} {{ record.carDetails.model }}</h4>
+                            <p>{{ record.carDetails.licensePlate }}</p>
+                        </div>
+                    </div>
+
+                    <div class="record-actions">
+                        <button class="action-btn primary-btn" (click)="viewDetail(record); $event.stopPropagation()">
+                            <mat-icon>visibility</mat-icon>
+                            View Details
+                        </button>
+                        <button class="action-btn secondary-btn"
+                                *ngIf="record.status === 'completed' && !record.rating"
+                                (click)="rateBooking(record); $event.stopPropagation()">
+                            <mat-icon>star</mat-icon>
+                            Rate Trip
+                        </button>
+                        <button class="action-btn secondary-btn"
+                                *ngIf="record.status === 'active'"
+                                (click)="cancelBooking(record); $event.stopPropagation()">
+                            <mat-icon>cancel</mat-icon>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</main>
+</div>

@@ -1,7 +1,6 @@
-import { Component, type OnInit, type OnDestroy } from "@angular/core"
+import { Component, OnInit, OnDestroy } from "@angular/core"
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms"
-import
-{ Router } from "@angular/router"
+import { Router } from "@angular/router"
 import { Subject, takeUntil, debounceTime, distinctUntilChanged } from "rxjs"
 import { CommonModule } from "@angular/common"
 
@@ -117,6 +116,10 @@ export class RentComponent implements OnInit, OnDestroy {
 
   selectCar(car: Car): void {
     this.selectedCar = this.selectedCar?.id === car.id ? null : car
+  }
+
+  getStars(rating: number): number[] {
+    return Array(Math.floor(rating)).fill(0)
   }
 
   applyFilters(): void {

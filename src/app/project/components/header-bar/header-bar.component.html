@@ -1,7 +1,7 @@
 <header class="header-bar">
-    <div class="logo-section">
+    <div class="logo-section" (click)="toggleSidebar()">
         <img class="logo-Moveo" src="/assets/moveo2.png" alt="Moveo logo" />
-        <span>MOVEO</span>
+        <span class="logo-text">MOVEO</span>
     </div>
     <nav class="nav-links">
         <a routerLink="/rent">Rent</a>
@@ -15,3 +15,4 @@
     </div>
 </header>
 
+<app-sidebar [isOpen]="sidebarOpen" (closeEvent)="closeSidebar()"></app-sidebar>

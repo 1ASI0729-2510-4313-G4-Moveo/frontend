@@ -1,14 +1,76 @@
 <app-header-bar></app-header-bar>
+
 <div class="payment-container">
-    <h1 class="title">Payment<br />Information</h1>
-    <div class="info-row">
-        <div class="info-left">
-            <p class="label"><strong>Card Number:</strong> {{ cardNumber }}</p>
-            <p class="label"><strong>Holder:</strong> {{ holder }}</p>
+    <div class="header-section">
+        <h1>Payment Methods</h1>
+        <p>Manage your payment options for seamless transactions</p>
+    </div>
+
+    <div class="payment-content">
+        <div class="add-payment-section">
+            <button class="add-payment-btn" (click)="addPaymentMethod()">
+                <mat-icon>add</mat-icon>
+                <span>Add New Payment Method</span>
+            </button>
         </div>
-        <div class="info-right">
-            <p class="visa">VISA</p>
+
+        <div *ngIf="loading" class="loading-container">
+            <mat-spinner diameter="60"></mat-spinner>
+        </div>
+
+        <div *ngIf="!loading && paymentMethods.length === 0" class="no-payments">
+            <mat-icon>payment</mat-icon>
+            <h3>No payment methods added</h3>
+            <p>Add a payment method to start making bookings</p>
+        </div>
+
+        <div class="payment-methods-grid" *ngIf="!loading && paymentMethods.length > 0">
+            <div class="payment-card"
+                 *ngFor="let method of paymentMethods"
+                 [class.default]="method.isDefault">
+
+                <div class="card-header">
+                    <div class="card-type">
+                        <mat-icon>{{ getCardIcon(method.type) }}</mat-icon>
+                        <span class="card-type-text">{{ getCardTypeLabel(method.type) }}</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="action-btn edit-btn" (click)="editPaymentMethod(method)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button class="action-btn delete-btn" (click)="deletePaymentMethod(method)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-details">
+                    <div class="card-number">
+                        •••• •••• •••• {{ getLastFourDigits(method.cardNumber) }}
+                    </div>
+                    <div class="card-info">
+                        <div class="info-item">
+                            <span class="info-label">Cardholder</span>
+                            <span class="info-value">{{ method.holderName }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Expires</span>
+                            <span class="info-value">{{ method.expiryDate }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button class="set-default-btn"
+                            *ngIf="!method.isDefault"
+                            (click)="setAsDefault(method)">
+                        Set as Default
+                    </button>
+                    <span class="card-added-date">
+                        Added {{ formatDate(method.createdAt) }}
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
-    <button class="edit-button" (click)="goToEdit()">Edit Payment Information</button>
 </div>

@@ -3,7 +3,7 @@
 <div class="rent-container">
     <div class="header-section">
         <h2>Find Your Perfect Ride</h2>
-        <p>Choose from our wide selection of vehicles for your next adventure</p>
+        <p>Choose from our premium selection of vehicles for your next adventure</p>
     </div>
 
     <div class="search-section">
@@ -88,13 +88,13 @@
 
     <div class="cars-section">
         <div *ngIf="loading" class="loading-spinner">
-            <mat-spinner></mat-spinner>
+            <mat-spinner diameter="60"></mat-spinner>
         </div>
 
         <div *ngIf="!loading && filteredCars.length === 0" class="no-cars">
             <mat-icon>directions_car</mat-icon>
             <h3>No cars found</h3>
-            <p>Try adjusting your search criteria</p>
+            <p>Try adjusting your search criteria to find available vehicles</p>
         </div>
 
         <div class="cars-grid" *ngIf="!loading && filteredCars.length > 0">
@@ -103,24 +103,44 @@
                  (click)="selectCar(car)"
                  [class.selected]="selectedCar?.id === car.id">
 
-                <img [src]="car.image" [alt]="car.model" class="car-image">
+                <div style="position: relative;">
+                    <img [src]="car.image" [alt]="car.model" class="car-image">
+                    <div class="car-badge">Available</div>
+                </div>
 
                 <div class="car-content">
                     <div class="car-header">
                         <h3 class="car-title">{{ car.brand }} {{ car.model }}</h3>
-                        <div class="car-price">S/ {{ car.pricePerHour }}/hr</div>
+                        <div class="car-price">
+                            S/ {{ car.pricePerHour }}
+                            <div class="period">per hour</div>
+                        </div>
                     </div>
 
                     <div class="car-details">
-                        <div><mat-icon>event_seat</mat-icon> {{ car.seats }} seats</div>
-                        <div><mat-icon>settings</mat-icon> {{ car.transmission }}</div>
-                        <div><mat-icon>palette</mat-icon> {{ car.color }}</div>
-                        <div><mat-icon>calendar_today</mat-icon> {{ car.year }}</div>
+                        <div class="detail-item">
+                            <mat-icon>event_seat</mat-icon>
+                            <span>{{ car.seats }} seats</span>
+                        </div>
+                        <div class="detail-item">
+                            <mat-icon>settings</mat-icon>
+                            <span>{{ car.transmission }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <mat-icon>palette</mat-icon>
+                            <span>{{ car.color }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <mat-icon>calendar_today</mat-icon>
+                            <span>{{ car.year }}</span>
+                        </div>
                     </div>
 
                     <div class="car-rating">
-                        <mat-icon>star</mat-icon>
-                        <span>{{ car.rating }} ({{ car.reviews }} reviews)</span>
+                        <div class="rating-stars">
+                            <mat-icon class="star" *ngFor="let star of getStars(car.rating)">star</mat-icon>
+                        </div>
+                        <span class="rating-text">{{ car.rating }} ({{ car.reviews }} reviews)</span>
                     </div>
 
                     <div class="car-features">
@@ -138,12 +158,12 @@
         </div>
     </div>
 
-    <div class="action-section" *ngIf="!loading">
+    <div class="action-section" *ngIf="!loading && filteredCars.length > 0">
         <button class="calculate-btn"
                 (click)="calculateRent()"
                 [disabled]="!selectedCar || !searchForm.get('hours')?.value">
             <mat-icon>calculate</mat-icon>
-            Calculate & Continue
+            <span>Calculate & Continue</span>
         </button>
     </div>
 </div>
