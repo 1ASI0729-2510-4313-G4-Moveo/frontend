@@ -4,6 +4,7 @@ import { Router, RouterLink } from "@angular/router"
 import { CommonModule } from "@angular/common"
 import { AuthService } from "../auth.service"
 import { MatSnackBar } from "@angular/material/snack-bar"
+import { MatDialog } from "@angular/material/dialog"
 
 // Angular Material Imports
 import { MatFormFieldModule } from "@angular/material/form-field"
@@ -11,6 +12,8 @@ import { MatInputModule } from "@angular/material/input"
 import { MatButtonModule } from "@angular/material/button"
 import { MatIconModule } from "@angular/material/icon"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
+import { MatCheckboxModule } from "@angular/material/checkbox"
+import { TermsDialogComponent } from "../terms-dialog/terms-dialog.component"
 
 @Component({
   selector: "app-register-step3",
@@ -26,30 +29,36 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatCheckboxModule,
   ],
 })
 export class RegisterStep3Component {
   securityForm: FormGroup
   insuranceFile: File | null = null
   cardFile: File | null = null
+  selectedFile: File | null = null
+  photoPreview: string | null = null
   isLoading = false
   hidePassword = true
   hideRepeatPassword = true
+  hasReadTerms = false
 
   constructor(
       private fb: FormBuilder,
       private router: Router,
       private authService: AuthService,
       private snackBar: MatSnackBar,
+      private dialog: MatDialog,
   ) {
     this.securityForm = this.fb.group(
         {
           fullName: ["", [Validators.required, Validators.minLength(2)]],
           phone: ["", [Validators.required, Validators.pattern(/^\+?[0-9]{9,15}$/)]],
-          id: ["", [Validators.required, Validators.minLength(8)]],
+          dni: ["", [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
           email: ["", [Validators.required, Validators.email]],
           password: ["", [Validators.required, Validators.minLength(6)]],
           repeatPassword: ["", Validators.required],
+          acceptTerms: [false, Validators.requiredTrue],
         },
         { validators: this.passwordMatchValidator },
     )
@@ -71,12 +80,39 @@ export class RegisterStep3Component {
     if (file) this.cardFile = file
   }
 
+  onPhotoSelected(event: any): void {
+    const file = event.target.files[0]
+    if (file) {
+      this.selectedFile = file
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        this.photoPreview = e.target?.result as string
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  openTermsDialog(event: Event): void {
+    event.preventDefault()
+    const dialogRef = this.dialog.open(TermsDialogComponent, {
+      width: "600px",
+      maxHeight: "80vh",
+    })
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === "accepted") {
+        this.hasReadTerms = true
+        this.securityForm.get("acceptTerms")?.enable()
+      }
+    })
+  }
+
   onSubmit(): void {
     if (this.securityForm.invalid) return
 
     this.isLoading = true
 
-    const { fullName, phone, id, email, password } = this.securityForm.value
+    const { fullName, phone, dni, email, password } = this.securityForm.value
 
     // First check if email already exists
     this.authService.checkEmailExists(email).subscribe({
@@ -94,10 +130,12 @@ export class RegisterStep3Component {
         const userData = {
           name: fullName,
           phone: phone,
+          dni: dni,
           email: email,
           password: password,
           type: "provider" as const,
-          licenseNumber: id,
+          licenseNumber: dni,
+          avatar: this.photoPreview || undefined,
         }
 
         this.authService.register(userData).subscribe({

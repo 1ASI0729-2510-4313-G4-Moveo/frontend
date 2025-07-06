@@ -1,7 +1,7 @@
 .register-wrapper {
     font-family: sans-serif;
-    background-color: white;
-    height: 100vh;
+    background: linear-gradient(135deg, #00bfa6 0%, #00a693 50%, #008a7a 100%);
+    min-height: 100vh;
     padding: 2rem;
     box-sizing: border-box;
 }
@@ -35,13 +35,19 @@ header {
     border-radius: 5px;
     font-weight: 500;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.signup-button:hover {
+    background-color: #00a693;
+    transform: translateY(-2px);
 }
 
 .register-box {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    max-width: 900px;
+    max-width: 1000px;
     margin: auto;
 }
 
@@ -52,46 +58,132 @@ header {
 
 .form-section {
     text-align: center;
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .form-section h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #00bfa5;
     margin-bottom: 0.5rem;
 }
 
 .form-section p {
     margin-bottom: 2rem;
+    color: #666;
+    font-size: 1.1rem;
 }
 
-.options {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
+.user-type-selector h3 {
+    font-size: 1.3rem;
     margin-bottom: 1.5rem;
+    color: #333;
 }
 
-button[type="submit"] {
-    background-color: #00bfa5;
-    color: white;
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 5px;
+.user-type-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.user-type-card {
+    padding: 2rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    background: white;
+}
+
+.user-type-card:hover {
+    border-color: #00bfa6;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 191, 166, 0.2);
+}
+
+.user-type-card.selected {
+    border-color: #00bfa6;
+    background: linear-gradient(135deg, #f0fdfc 0%, #e6fffa 100%);
+    box-shadow: 0 8px 25px rgba(0, 191, 166, 0.3);
+    transform: translateY(-4px);
+}
+
+.user-type-card mat-icon {
+    font-size: 3rem;
+    height: 3rem;
+    width: 3rem;
+    color: #00bfa6;
     margin-bottom: 1rem;
 }
 
-button[disabled] {
-    background-color: #ccc;
+.user-type-card h3 {
+    margin: 1rem 0 0.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.user-type-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.continue-button {
+    background: linear-gradient(135deg, #00bfa6 0%, #00a693 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 191, 166, 0.3);
+}
+
+.continue-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 191, 166, 0.4);
+}
+
+.continue-button:disabled {
+    background: #ccc;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 .signin-link {
     color: #00bfa5;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
 .signin-link:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .register-box {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .user-type-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .form-section {
+        padding: 2rem;
+    }
 }

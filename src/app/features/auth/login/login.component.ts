@@ -7,11 +7,14 @@ import { AuthService } from "../auth.service"
 // Angular Material Imports
 import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatInputModule } from "@angular/material/input"
+import { MatSelectModule } from "@angular/material/select"
 import { MatButtonModule } from "@angular/material/button"
 import { MatIconModule } from "@angular/material/icon"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatCardModule } from "@angular/material/card"
+import { MatMenuModule } from "@angular/material/menu"
 import { MatSnackBar } from "@angular/material/snack-bar"
+import { MatDialog } from "@angular/material/dialog"
 
 @Component({
   selector: "app-login",
@@ -24,16 +27,17 @@ import { MatSnackBar } from "@angular/material/snack-bar"
     RouterLink,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatMenuModule,
   ],
 })
 export class LoginComponent {
   loginForm: FormGroup
   loginError = false
-  selectedUserType: "user" | "provider" | null = null
   hidePassword = true
   isLoading = false
 
@@ -42,27 +46,24 @@ export class LoginComponent {
       private authService: AuthService,
       private router: Router,
       private snackBar: MatSnackBar,
+      private dialog: MatDialog,
   ) {
     this.loginForm = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", Validators.required],
+      userType: ["", Validators.required],
     })
   }
 
-  selectUserType(type: "user" | "provider"): void {
-    this.selectedUserType = type
-    this.loginError = false
-  }
-
   onSubmit(): void {
-    if (this.loginForm.invalid || !this.selectedUserType) return
+    if (this.loginForm.invalid) return
 
     this.isLoading = true
     this.loginError = false
 
-    const { email, password } = this.loginForm.value
+    const { email, password, userType } = this.loginForm.value
 
-    this.authService.loginUser(email, password, this.selectedUserType).subscribe({
+    this.authService.loginUser(email, password, userType).subscribe({
       next: (user) => {
         this.snackBar.open(`Welcome back, ${user.name}!`, "Close", {
           duration: 3000,
@@ -86,6 +87,20 @@ export class LoginComponent {
         })
         this.isLoading = false
       },
+    })
+  }
+
+  showAbout(): void {
+    this.snackBar.open("Moveo - Your trusted car rental platform", "Close", {
+      duration: 3000,
+      panelClass: ["info-snackbar"],
+    })
+  }
+
+  showHelp(): void {
+    this.snackBar.open("Contact us at support@moveo.com for help", "Close", {
+      duration: 3000,
+      panelClass: ["info-snackbar"],
     })
   }
 }

@@ -1,32 +1,106 @@
 <app-header-bar></app-header-bar>
-<main class="profile-main">
-        <div class="container">
-    <main class="profile-content">
-        <div class="profile-top">
-            <h1>Hello, {{ userName }}</h1>
-            <button class="action-button" (click)="goToEditProfile()">Edit Profile</button>
-        </div>
 
-        <div class="profile-data">
-            <div class="history">
-                <h2>History</h2>
-                <p>Hours Traveled: 13.5</p>
-                <p>Last Ride: 05/03/2025</p>
-                <p>Trips taken: 4</p>
-                <h3>Amount spent: <span>S/ 44.80</span></h3>
-                <p>Email: {{ userEmail }}</p>
-                <button class="change-password-btn" [routerLink]="['/change-password']">
-                    Change Password
-                </button>
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="avatar-section">
+                <img *ngIf="userAvatar; else avatarPlaceholder"
+                     [src]="userAvatar"
+                     alt="Profile Avatar"
+                     class="avatar" />
+                <ng-template #avatarPlaceholder>
+                    <div class="avatar-placeholder">
+                        <mat-icon>person</mat-icon>
+                    </div>
+                </ng-template>
             </div>
 
-            <div class="language">
-                <h2>Language:</h2>
-                <div class="lang-buttons">
-                    <button class="lang-btn">EN</button>
-                    <button class="lang-btn">ES</button>
+            <div class="user-info">
+                <h1>Hello, {{ userName }}!</h1>
+                <p><mat-icon>email</mat-icon> {{ userEmail }}</p>
+                <p><mat-icon>phone</mat-icon> {{ userPhone }}</p>
+                <p *ngIf="userDni"><mat-icon>badge</mat-icon> DNI: {{ userDni }}</p>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <mat-icon>schedule</mat-icon>
+                    <h3>Hours Traveled</h3>
+                    <div class="stat-value">{{ userStats.hoursTraveled }}</div>
+                    <div class="stat-label">Total hours</div>
+                </div>
+
+                <div class="stat-card">
+                    <mat-icon>directions_car</mat-icon>
+                    <h3>Trips Taken</h3>
+                    <div class="stat-value">{{ userStats.tripsTaken }}</div>
+                    <div class="stat-label">Completed trips</div>
+                </div>
+
+                <div class="stat-card">
+                    <mat-icon>attach_money</mat-icon>
+                    <h3>Amount Spent</h3>
+                    <div class="stat-value">S/ {{ userStats.amountSpent }}</div>
+                    <div class="stat-label">Total spent</div>
+                </div>
+
+                <div class="stat-card">
+                    <mat-icon>event</mat-icon>
+                    <h3>Last Ride</h3>
+                    <div class="stat-value">{{ userStats.lastRide }}</div>
+                    <div class="stat-label">Most recent</div>
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <div class="action-card" (click)="goToEditProfile()">
+                    <mat-icon>edit</mat-icon>
+                    <h4>Edit Profile</h4>
+                    <p>Update your personal information</p>
+                </div>
+
+                <div class="action-card" (click)="goToChangePassword()">
+                    <mat-icon>lock</mat-icon>
+                    <h4>Change Password</h4>
+                    <p>Update your account security</p>
+                </div>
+
+                <div class="action-card" (click)="goToPayment()">
+                    <mat-icon>payment</mat-icon>
+                    <h4>Payment Methods</h4>
+                    <p>Manage your payment options</p>
+                </div>
+
+                <div class="action-card" (click)="uploadPhoto()">
+                    <mat-icon>photo_camera</mat-icon>
+                    <h4>Update Photo</h4>
+                    <p>Change your profile picture</p>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>Quick Settings</h3>
+                <div class="settings-grid">
+                    <div class="setting-item" (click)="toggleLanguage()">
+                        <mat-icon>language</mat-icon>
+                        <span>Language: {{ currentLanguage }}</span>
+                    </div>
+
+                    <div class="setting-item" (click)="toggleNotifications()">
+                        <mat-icon>notifications</mat-icon>
+                        <span>Notifications: {{ notificationsEnabled ? 'On' : 'Off' }}</span>
+                    </div>
+
+                    <div class="setting-item" (click)="logout()">
+                        <mat-icon>logout</mat-icon>
+                        <span>Sign Out</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 </div>
+
+<input #fileInput type="file" (change)="onPhotoSelected($event)" accept="image/*" hidden />

@@ -8,30 +8,36 @@
     </header>
 
     <main class="register-box">
-        <img src="/assets/person.png" alt="General Icon" class="icon" />
-
         <div class="form-section">
             <h1>Welcome</h1>
             <p>First. Let's get to know each other!</p>
 
-            <form (ngSubmit)="onSubmit()">
-                <div class="options">
-                    <label>
-                        <input type="radio" name="role" value="general" [(ngModel)]="selectedRole" required />
-                        General
-                    </label>
-                    <label>
-                        <input type="radio" name="role" value="supplier" [(ngModel)]="selectedRole" required />
-                        Car supplier
-                    </label>
+            <div class="user-type-selector">
+                <h3>I am a:</h3>
+                <div class="user-type-cards">
+                    <div class="user-type-card"
+                         [class.selected]="selectedRole === 'user'"
+                         (click)="selectRole('user')">
+                        <mat-icon>person</mat-icon>
+                        <h3>Renter</h3>
+                        <p>I want to rent a car</p>
+                    </div>
+                    <div class="user-type-card"
+                         [class.selected]="selectedRole === 'provider'"
+                         (click)="selectRole('provider')">
+                        <mat-icon>directions_car</mat-icon>
+                        <h3>Car Owner</h3>
+                        <p>I want to rent out my car</p>
+                    </div>
                 </div>
+            </div>
 
-                <button type="submit" [disabled]="!selectedRole">Sign Up</button>
-            </form>
+            <button class="continue-button" [disabled]="!selectedRole" (click)="onSubmit()">
+                <mat-icon>arrow_forward</mat-icon>
+                Continue
+            </button>
 
             <a routerLink="/login" class="signin-link">Already a member? Sign In</a>
         </div>
-
-        <img src="/assets/persondriver.png" alt="Supplier Icon" class="icon" />
     </main>
 </div>

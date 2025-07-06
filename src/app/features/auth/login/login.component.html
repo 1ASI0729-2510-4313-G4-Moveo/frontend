@@ -1,39 +1,46 @@
 <div class="login-container">
-    <div class="login-left">
-        <div class="logo-section">
-            <img src="/assets/moveo.png" alt="Moveo Logo" />
-            <h1>MOVEO</h1>
-        </div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
 
-        <div class="login-form">
+    <div class="user-menu">
+        <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-button">
+            <mat-icon>menu</mat-icon>
+            <span>Menu</span>
+        </button>
+        <mat-menu #userMenu="matMenu">
+            <button mat-menu-item routerLink="/register-step1">
+                <mat-icon>person_add</mat-icon>
+                <span>Create Account</span>
+            </button>
+            <button mat-menu-item (click)="showAbout()">
+                <mat-icon>info</mat-icon>
+                <span>About Moveo</span>
+            </button>
+            <button mat-menu-item (click)="showHelp()">
+                <mat-icon>help</mat-icon>
+                <span>Help & Support</span>
+            </button>
+        </mat-menu>
+    </div>
+
+    <div class="login-content">
+        <div class="login-card">
+            <div class="logo-section">
+                <img src="/assets/moveo.png" alt="Moveo Logo" />
+                <h1>MOVEO</h1>
+            </div>
+
             <div class="form-header">
                 <h2>Welcome Back</h2>
                 <p>Sign in to continue your journey</p>
             </div>
 
-            <div class="user-type-selector">
-                <h3>I am a:</h3>
-                <div class="user-type-cards">
-                    <div class="user-type-card"
-                         [class.selected]="selectedUserType === 'user'"
-                         (click)="selectUserType('user')">
-                        <mat-icon>person</mat-icon>
-                        <h3>Renter</h3>
-                        <p>I want to rent a car</p>
-                    </div>
-                    <div class="user-type-card"
-                         [class.selected]="selectedUserType === 'provider'"
-                         (click)="selectUserType('provider')">
-                        <mat-icon>directions_car</mat-icon>
-                        <h3>Car Owner</h3>
-                        <p>I want to rent out my car</p>
-                    </div>
-                </div>
-            </div>
-
             <div *ngIf="loginError" class="error-message">
                 <mat-icon>error</mat-icon>
-                <span>Invalid email, password, or user type. Please try again.</span>
+                <span>Invalid email or password. Please try again.</span>
             </div>
 
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -69,13 +76,31 @@
                             Password is required
                         </mat-error>
                     </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>I am a</mat-label>
+                        <mat-select formControlName="userType" placeholder="Select user type">
+                            <mat-option value="user">
+                                <mat-icon>person</mat-icon>
+                                Renter - I want to rent a car
+                            </mat-option>
+                            <mat-option value="provider">
+                                <mat-icon>directions_car</mat-icon>
+                                Car Owner - I want to rent out my car
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon matSuffix>account_circle</mat-icon>
+                        <mat-error *ngIf="loginForm.get('userType')?.hasError('required')">
+                            Please select user type
+                        </mat-error>
+                    </mat-form-field>
                 </div>
 
                 <button mat-raised-button
                         color="primary"
                         class="login-button"
                         type="submit"
-                        [disabled]="loginForm.invalid || !selectedUserType || isLoading">
+                        [disabled]="loginForm.invalid || isLoading">
                     <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
                     <span *ngIf="!isLoading">Sign In</span>
                 </button>
@@ -88,32 +113,6 @@
             <div class="register-link">
                 <p>Don't have an account? <a routerLink="/register-step1">Create Account</a></p>
             </div>
-        </div>
-    </div>
-
-    <div class="login-right">
-        <div class="welcome-content">
-            <h2>Start Your Journey</h2>
-            <p>Join thousands of users who trust Moveo for their transportation needs</p>
-
-            <ul class="features-list">
-                <li>
-                    <mat-icon>check_circle</mat-icon>
-                    <span>Safe & Verified Vehicles</span>
-                </li>
-                <li>
-                    <mat-icon>check_circle</mat-icon>
-                    <span>24/7 Customer Support</span>
-                </li>
-                <li>
-                    <mat-icon>check_circle</mat-icon>
-                    <span>Flexible Rental Options</span>
-                </li>
-                <li>
-                    <mat-icon>check_circle</mat-icon>
-                    <span>Earn Money with Your Car</span>
-                </li>
-            </ul>
         </div>
     </div>
 </div>

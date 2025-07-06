@@ -14,6 +14,7 @@ export interface User {
     password?: string
     createdAt?: string
     lastLogin?: string
+    dni?: string
     providerInfo?: {
         licenseNumber?: string
         rating?: number
@@ -30,6 +31,8 @@ export interface RegisterUserData {
     phone: string
     type: "user" | "provider"
     licenseNumber?: string
+    dni?: string
+    avatar?: string
 }
 
 @Injectable({
@@ -89,10 +92,11 @@ export class AuthService {
             name: userData.name,
             phone: userData.phone,
             type: userData.type,
+            dni: userData.dni,
             isVerified: false,
             createdAt: new Date().toISOString(),
             lastLogin: new Date().toISOString(),
-            avatar: `https://i.pravatar.cc/150?u=${userData.email}`,
+            avatar: userData.avatar || `https://i.pravatar.cc/150?u=${userData.email}`,
             ...(userData.type === "provider" && {
                 providerInfo: {
                     licenseNumber: userData.licenseNumber || "",
@@ -122,6 +126,7 @@ export class AuthService {
         localStorage.setItem("email", user.email)
         localStorage.setItem("type", user.type)
         localStorage.setItem("phone", user.phone)
+        if (user.dni) localStorage.setItem("dni", user.dni)
         this.currentUserSubject.next(user)
     }
 
@@ -132,6 +137,7 @@ export class AuthService {
         localStorage.removeItem("email")
         localStorage.removeItem("type")
         localStorage.removeItem("phone")
+        localStorage.removeItem("dni")
         this.currentUserSubject.next(null)
         this.router.navigate(["/login"])
     }
