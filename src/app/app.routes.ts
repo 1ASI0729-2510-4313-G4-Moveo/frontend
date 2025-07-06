@@ -26,12 +26,12 @@ import { authGuard } from "./core/guards/auth.guard"
 import { roleGuard } from "./core/guards/role.guard"
 
 export const routes: Routes = [
-    { path: "", redirectTo: "rent", pathMatch: "full" },
+    { path: "", redirectTo: "login", pathMatch: "full" },
     { path: "login", component: LoginComponent },
     { path: "register-step1", component: RegisterStep1Component },
     { path: "register-step2", component: RegisterStep2Component },
     { path: "register-step3", component: RegisterStep3Component },
-    { path: "rent", component: RentComponent },
+    { path: "rent", component: RentComponent, canActivate: [authGuard] },
     { path: "rent/confirm/:id", component: RentConfirmComponent, canActivate: [authGuard] },
     { path: "rent/final-confirm/:id", component: RentFinalConfirmComponent, canActivate: [authGuard] },
     { path: "rent/cancel/:id", component: RentCancelComponent, canActivate: [authGuard] },

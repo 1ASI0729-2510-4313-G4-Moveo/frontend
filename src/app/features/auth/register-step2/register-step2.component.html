@@ -12,37 +12,91 @@
             <h1>One more step</h1>
 
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <label>Name and Last Name</label>
-                <input type="text" formControlName="fullName" placeholder="Insert your Name and Last Name" />
-                <div *ngIf="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched" class="error">Required</div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Name and Last Name</mat-label>
+                    <input matInput formControlName="fullName" placeholder="Insert your Name and Last Name" />
+                    <mat-icon matSuffix>person</mat-icon>
+                    <mat-error *ngIf="registerForm.get('fullName')?.hasError('required')">
+                        Name is required
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('fullName')?.hasError('minlength')">
+                        Name must be at least 2 characters
+                    </mat-error>
+                </mat-form-field>
 
-                <label>Phone Number</label>
-                <input type="tel" formControlName="phone" placeholder="Input your Number" />
-                <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="error">Required</div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput formControlName="phone" placeholder="Input your Number" />
+                    <mat-icon matSuffix>phone</mat-icon>
+                    <mat-error *ngIf="registerForm.get('phone')?.hasError('required')">
+                        Phone number is required
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('phone')?.hasError('pattern')">
+                        Please enter a valid phone number
+                    </mat-error>
+                </mat-form-field>
 
-                <label>Email</label>
-                <input type="email" formControlName="email" placeholder="Input your account’s email" />
-                <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">Valid email required</div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" formControlName="email" placeholder="Input your account's email" />
+                    <mat-icon matSuffix>email</mat-icon>
+                    <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+                        Email is required
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+                        Please enter a valid email
+                    </mat-error>
+                </mat-form-field>
 
-                <label>Password</label>
-                <input type="password" formControlName="password" placeholder="Input Password" />
-                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error">Required</div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Input Password" />
+                    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+                        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+                        Password is required
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+                        Password must be at least 6 characters
+                    </mat-error>
+                </mat-form-field>
 
-                <label>Repeat Password</label>
-                <input type="password" formControlName="repeatPassword" placeholder="Repeat Password" />
-                <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('repeatPassword')?.touched" class="error">Passwords must match</div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Repeat Password</mat-label>
+                    <input matInput [type]="hideRepeatPassword ? 'password' : 'text'" formControlName="repeatPassword" placeholder="Repeat Password" />
+                    <button mat-icon-button matSuffix (click)="hideRepeatPassword = !hideRepeatPassword" type="button">
+                        <mat-icon>{{hideRepeatPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="registerForm.hasError('mismatch') && registerForm.get('repeatPassword')?.touched">
+                        Passwords must match
+                    </mat-error>
+                </mat-form-field>
 
-                <label class="upload-link">
-                    <input type="file" (change)="onFileSelected($event)" hidden />
-                    Take a photo of your driver's license
-                </label>
+                <div class="file-upload">
+                    <label class="upload-link">
+                        <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+                        <mat-icon>camera_alt</mat-icon>
+                        Take a photo of your driver's license
+                    </label>
+                </div>
 
-                <a href="https://policies.google.com/terms?hl=es" target="_blank">Terms and Conditions</a>
+                <div class="terms-link">
+                    <a href="https://policies.google.com/terms?hl=es" target="_blank">
+                        <mat-icon>description</mat-icon>
+                        Terms and Conditions
+                    </a>
+                </div>
 
-                <button type="submit" [disabled]="registerForm.invalid">Sign Up</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid || isLoading" class="submit-button">
+                    <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                    <span *ngIf="!isLoading">Sign Up</span>
+                </button>
             </form>
 
-            <a routerLink="/login" class="signin-link">Already a member? Sign In</a>
+            <div class="signin-link">
+                <a routerLink="/login">Already a member? Sign In</a>
+            </div>
         </div>
 
         <div class="image-section">

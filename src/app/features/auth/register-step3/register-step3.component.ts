@@ -1,85 +1,130 @@
-  import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
-import { NgIf } from '@angular/common';
-import { AuthService } from '../auth.service';
+import { Component } from "@angular/core"
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms"
+import { Router, RouterLink } from "@angular/router"
+import { CommonModule } from "@angular/common"
+import { AuthService } from "../auth.service"
+import { MatSnackBar } from "@angular/material/snack-bar"
+
+// Angular Material Imports
+import { MatFormFieldModule } from "@angular/material/form-field"
+import { MatInputModule } from "@angular/material/input"
+import { MatButtonModule } from "@angular/material/button"
+import { MatIconModule } from "@angular/material/icon"
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 
 @Component({
-  selector: 'app-register-step3',
+  selector: "app-register-step3",
   standalone: true,
-  templateUrl: './register-step3.component.html',
-  styleUrls: ['./register-step3.component.css'],
-  imports: [ReactiveFormsModule, NgIf, RouterLink]
+  templateUrl: "./register-step3.component.html",
+  styleUrls: ["./register-step3.component.css"],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+  ],
 })
 export class RegisterStep3Component {
-  securityForm: FormGroup;
-  insuranceFile: File | null = null;
-  cardFile: File | null = null;
+  securityForm: FormGroup
+  insuranceFile: File | null = null
+  cardFile: File | null = null
+  isLoading = false
+  hidePassword = true
+  hideRepeatPassword = true
+
+  constructor(
+      private fb: FormBuilder,
+      private router: Router,
+      private authService: AuthService,
+      private snackBar: MatSnackBar,
+  ) {
+    this.securityForm = this.fb.group(
+        {
+          fullName: ["", [Validators.required, Validators.minLength(2)]],
+          phone: ["", [Validators.required, Validators.pattern(/^\+?[0-9]{9,15}$/)]],
+          id: ["", [Validators.required, Validators.minLength(8)]],
+          email: ["", [Validators.required, Validators.email]],
+          password: ["", [Validators.required, Validators.minLength(6)]],
+          repeatPassword: ["", Validators.required],
+        },
+        { validators: this.passwordMatchValidator },
+    )
+  }
 
   passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password')?.value;
-    const confirm = form.get('repeatPassword')?.value;
-    return password === confirm ? null : {mismatch: true};
-  }
-
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
-    this.securityForm = this.fb.group({
-      fullName: ['', Validators.required],
-      phone: ['', Validators.required],
-      id: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      repeatPassword: ['', Validators.required]
-    }, {validators: this.passwordMatchValidator});
-  }
-
-  get fullName() {
-    return this.securityForm.get('fullName')!;
-  }
-
-  get id() {
-    return this.securityForm.get('id')!;
-  }
-
-  get phone() {
-    return this.securityForm.get('phone')!;
+    const password = form.get("password")?.value
+    const confirm = form.get("repeatPassword")?.value
+    return password === confirm ? null : { mismatch: true }
   }
 
   onInsuranceSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) this.insuranceFile = file;
+    const file = event.target.files[0]
+    if (file) this.insuranceFile = file
   }
 
   onCardSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) this.cardFile = file;
+    const file = event.target.files[0]
+    if (file) this.cardFile = file
   }
 
   onSubmit(): void {
-    if (this.securityForm.valid) {
-      console.log('Form submitted:', this.securityForm.value);
-      console.log('Insurance file:', this.insuranceFile?.name);
-      console.log('Card file:', this.cardFile?.name);
+    if (this.securityForm.invalid) return
 
-      const userData = {
-        name: this.securityForm.value.fullName,
-        phone: this.securityForm.value.phone,
-        id: this.securityForm.value.id,
-        email: this.securityForm.value.email,
-        password: this.securityForm.value.password,
-        type: 'provider'
-      };
+    this.isLoading = true
 
-      this.authService.register(userData).subscribe({
-        next: (user) => {
-          localStorage.setItem('user', JSON.stringify(user));
-          this.router.navigate(['/provider/profile']);
-        },
-        error: () => {
-          alert('Error al registrar proveedor.');
+    const { fullName, phone, id, email, password } = this.securityForm.value
+
+    // First check if email already exists
+    this.authService.checkEmailExists(email).subscribe({
+      next: (exists) => {
+        if (exists) {
+          this.snackBar.open("Email already exists. Please use a different email.", "Close", {
+            duration: 5000,
+            panelClass: ["error-snackbar"],
+          })
+          this.isLoading = false
+          return
         }
-      });
-    }
+
+        // Proceed with registration
+        const userData = {
+          name: fullName,
+          phone: phone,
+          email: email,
+          password: password,
+          type: "provider" as const,
+          licenseNumber: id,
+        }
+
+        this.authService.register(userData).subscribe({
+          next: (user) => {
+            this.snackBar.open("Provider registration successful! Welcome to Moveo!", "Close", {
+              duration: 3000,
+              panelClass: ["success-snackbar"],
+            })
+            this.router.navigate(["/provider/profile"])
+            this.isLoading = false
+          },
+          error: (error) => {
+            this.snackBar.open(error.message || "Registration failed. Please try again.", "Close", {
+              duration: 5000,
+              panelClass: ["error-snackbar"],
+            })
+            this.isLoading = false
+          },
+        })
+      },
+      error: () => {
+        this.snackBar.open("Error checking email. Please try again.", "Close", {
+          duration: 5000,
+          panelClass: ["error-snackbar"],
+        })
+        this.isLoading = false
+      },
+    })
   }
 }
-

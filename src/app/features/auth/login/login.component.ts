@@ -11,6 +11,7 @@ import { MatButtonModule } from "@angular/material/button"
 import { MatIconModule } from "@angular/material/icon"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatCardModule } from "@angular/material/card"
+import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
   selector: "app-login",
@@ -40,6 +41,7 @@ export class LoginComponent {
       private fb: FormBuilder,
       private authService: AuthService,
       private router: Router,
+      private snackBar: MatSnackBar,
   ) {
     this.loginForm = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
@@ -60,34 +62,28 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.value
 
-    this.authService.login().subscribe({
-      next: (users) => {
-        const user = users.find(
-            (u: any) => u.email === email && u.password === password && u.type === this.selectedUserType,
-        )
+    this.authService.loginUser(email, password, this.selectedUserType).subscribe({
+      next: (user) => {
+        this.snackBar.open(`Welcome back, ${user.name}!`, "Close", {
+          duration: 3000,
+          panelClass: ["success-snackbar"],
+        })
 
-        if (user) {
-          localStorage.setItem("userId", user.id)
-          localStorage.setItem("userName", user.name)
-          localStorage.setItem("email", user.email)
-          localStorage.setItem("type", user.type)
-          localStorage.setItem("phone", user.phone)
-
-          // Redirect based on user type
-          if (user.type === "provider") {
-            this.router.navigate(["/provider/profile"])
-          } else {
-            this.router.navigate(["/rent"])
-          }
-
-          this.loginError = false
+        // Redirect based on user type
+        if (user.type === "provider") {
+          this.router.navigate(["/provider/profile"])
         } else {
-          this.loginError = true
+          this.router.navigate(["/rent"])
         }
+
         this.isLoading = false
       },
-      error: () => {
+      error: (error) => {
         this.loginError = true
+        this.snackBar.open(error.message || "Login failed", "Close", {
+          duration: 5000,
+          panelClass: ["error-snackbar"],
+        })
         this.isLoading = false
       },
     })
