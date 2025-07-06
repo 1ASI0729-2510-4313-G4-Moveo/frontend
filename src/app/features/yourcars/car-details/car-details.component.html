@@ -1,0 +1,296 @@
+<app-header-bar-provider></app-header-bar-provider>
+
+<div class="car-details-container">
+    <div class="header-section">
+        <button mat-icon-button (click)="goBack()" class="back-btn">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h2 class="page-title">Vehicle Details</h2>
+        <div class="header-actions">
+            <button
+                    mat-raised-button
+                    [color]="car?.isAvailable ? 'warn' : 'primary'"
+                    (click)="toggleAvailability()"
+                    [disabled]="loading"
+            >
+                <mat-icon>{{ car?.isAvailable ? 'visibility_off' : 'visibility' }}</mat-icon>
+                {{ car?.isAvailable ? 'Make Unavailable' : 'Make Available' }}
+            </button>
+            <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="toggleEdit()"
+                    [disabled]="loading"
+            >
+                <mat-icon>{{ editing ? 'cancel' : 'edit' }}</mat-icon>
+                {{ editing ? 'Cancel' : 'Edit' }}
+            </button>
+        </div>
+    </div>
+
+    <div class="loading-container" *ngIf="loading && !car">
+        <mat-icon class="spinning">refresh</mat-icon>
+        <p>Loading vehicle details...</p>
+    </div>
+
+    <div class="content-section" *ngIf="car">
+        <mat-tab-group>
+            <!-- Overview Tab -->
+            <mat-tab label="Overview">
+                <div class="tab-content">
+                    <div class="car-overview">
+                        <div class="car-image-section">
+                            <img [src]="car.image" [alt]="car.brand + ' ' + car.model" class="car-main-image">
+                            <div class="car-status-badge" [class]="getStatusClass()">
+                                <mat-icon>{{ car.isAvailable ? 'check_circle' : 'cancel' }}</mat-icon>
+                                {{ getStatusText() }}
+                            </div>
+                        </div>
+
+                        <div class="car-info-section">
+                            <h1 class="car-title">{{ car.brand }} {{ car.model }}</h1>
+                            <p class="car-year">{{ car.year }}</p>
+
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <mat-icon>confirmation_number</mat-icon>
+                                    <div>
+                                        <span class="info-label">License Plate</span>
+                                        <span class="info-value">{{ car.licensePlate }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <mat-icon>palette</mat-icon>
+                                    <div>
+                                        <span class="info-label">Color</span>
+                                        <span class="info-value">{{ car.color }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <mat-icon>airline_seat_recline_normal</mat-icon>
+                                    <div>
+                                        <span class="info-label">Seats</span>
+                                        <span class="info-value">{{ car.seats }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <mat-icon>settings</mat-icon>
+                                    <div>
+                                        <span class="info-label">Transmission</span>
+                                        <span class="info-value">{{ car.transmission }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <mat-icon>location_on</mat-icon>
+                                    <div>
+                                        <span class="info-label">Pickup Location</span>
+                                        <span class="info-value">{{ car.pickupPlace }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <mat-icon>attach_money</mat-icon>
+                                    <div>
+                                        <span class="info-label">Price per Hour</span>
+                                        <span class="info-value">${{ car.pricePerHour }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="info-item" *ngIf="car.fuelType">
+                                    <mat-icon>local_gas_station</mat-icon>
+                                    <div>
+                                        <span class="info-label">Fuel Type</span>
+                                        <span class="info-value">{{ car.fuelType }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="info-item" *ngIf="car.mileage">
+                                    <mat-icon>speed</mat-icon>
+                                    <div>
+                                        <span class="info-label">Mileage</span>
+                                        <span class="info-value">{{ car.mileage }} km</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="rating-section" *ngIf="car.rating">
+                                <mat-icon>star</mat-icon>
+                                <span class="rating-value">{{ car.rating }}</span>
+                                <span class="rating-reviews">({{ car.reviews || 0 }} reviews)</span>
+                            </div>
+
+                            <div class="description-section" *ngIf="car.description">
+                                <h3>Description</h3>
+                                <p>{{ car.description }}</p>
+                            </div>
+
+                            <div class="features-section" *ngIf="car.features && car.features.length > 0">
+                                <h3>Features</h3>
+                                <mat-chip-set>
+                                    <mat-chip *ngFor="let feature of car.features">{{ feature }}</mat-chip>
+                                </mat-chip-set>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- Edit Tab -->
+            <mat-tab label="Edit Details" [disabled]="!editing">
+                <div class="tab-content" *ngIf="editing">
+                    <form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="edit-form">
+                        <div class="form-grid">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Brand</mat-label>
+                                <input matInput formControlName="brand" required>
+                                <mat-error *ngIf="carForm.get('brand')?.hasError('required')">
+                                    Brand is required
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Model</mat-label>
+                                <input matInput formControlName="model" required>
+                                <mat-error *ngIf="carForm.get('model')?.hasError('required')">
+                                    Model is required
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Year</mat-label>
+                                <input matInput type="number" formControlName="year" required>
+                                <mat-error *ngIf="carForm.get('year')?.hasError('required')">
+                                    Year is required
+                                </mat-error>
+                                <mat-error *ngIf="carForm.get('year')?.hasError('min') || carForm.get('year')?.hasError('max')">
+                                    Year must be between 1990 and {{ new Date().getFullYear() + 1 }}
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>License Plate</mat-label>
+                                <input matInput formControlName="licensePlate" required>
+                                <mat-error *ngIf="carForm.get('licensePlate')?.hasError('required')">
+                                    License plate is required
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Color</mat-label>
+                                <input matInput formControlName="color" required>
+                                <mat-error *ngIf="carForm.get('color')?.hasError('required')">
+                                    Color is required
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Number of Seats</mat-label>
+                                <input matInput type="number" formControlName="seats" required>
+                                <mat-error *ngIf="carForm.get('seats')?.hasError('required')">
+                                    Number of seats is required
+                                </mat-error>
+                                <mat-error *ngIf="carForm.get('seats')?.hasError('min') || carForm.get('seats')?.hasError('max')">
+                                    Seats must be between 2 and 8
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Transmission</mat-label>
+                                <mat-select formControlName="transmission" required>
+                                    <mat-option *ngFor="let option of transmissionOptions" [value]="option">
+                                        {{ option }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="carForm.get('transmission')?.hasError('required')">
+                                    Transmission is required
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Pickup Location</mat-label>
+                                <input matInput formControlName="pickupPlace" required>
+                                <mat-error *ngIf="carForm.get('pickupPlace')?.hasError('required')">
+                                    Pickup location is required
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Price per Hour ($)</mat-label>
+                                <input matInput type="number" step="0.01" formControlName="pricePerHour" required>
+                                <mat-error *ngIf="carForm.get('pricePerHour')?.hasError('required')">
+                                    Price is required
+                                </mat-error>
+                                <mat-error *ngIf="carForm.get('pricePerHour')?.hasError('min')">
+                                    Price must be at least $1
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Fuel Type</mat-label>
+                                <mat-select formControlName="fuelType">
+                                    <mat-option value="">Select fuel type</mat-option>
+                                    <mat-option *ngFor="let option of fuelTypeOptions" [value]="option">
+                                        {{ option }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Mileage (km)</mat-label>
+                                <input matInput type="number" formControlName="mileage">
+                                <mat-error *ngIf="carForm.get('mileage')?.hasError('min')">
+                                    Mileage cannot be negative
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="description" rows="4"
+                                      placeholder="Describe your vehicle's features and condition..."></textarea>
+                        </mat-form-field>
+
+                        <div class="availability-toggle">
+                            <mat-slide-toggle formControlName="isAvailable">
+                                Available for rent
+                            </mat-slide-toggle>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" mat-button (click)="toggleEdit()">Cancel</button>
+                            <button type="submit" mat-raised-button color="primary" [disabled]="!carForm.valid || loading">
+                                <mat-icon>save</mat-icon>
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </mat-tab>
+
+            <!-- Danger Zone Tab -->
+            <mat-tab label="Danger Zone">
+                <div class="tab-content">
+                    <mat-card class="danger-zone">
+                        <mat-card-header>
+                            <mat-card-title>
+                                <mat-icon>warning</mat-icon>
+                                Danger Zone
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p>Once you delete a vehicle, there is no going back. Please be certain.</p>
+                            <button mat-raised-button color="warn" (click)="deleteCar()" [disabled]="loading">
+                                <mat-icon>delete_forever</mat-icon>
+                                Delete Vehicle
+                            </button>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

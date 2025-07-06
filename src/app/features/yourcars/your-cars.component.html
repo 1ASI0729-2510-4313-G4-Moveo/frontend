@@ -1,18 +1,117 @@
 <app-header-bar-provider></app-header-bar-provider>
 
 <div class="your-cars-container">
-    <h2 class="your-cars-title">Your Provided Cars</h2>
+    <div class="header-section">
+        <h2 class="your-cars-title">Your Vehicle Fleet</h2>
+        <button mat-raised-button color="primary" class="add-car-btn" (click)="addNewCar()">
+            <mat-icon>add</mat-icon>
+            Add New Vehicle
+        </button>
+    </div>
 
-    <div class="car-item" *ngFor="let car of cars" (click)="viewDetails(car.id)">
-        <img [src]="car.image" alt="{{car.model}}" class="car-image">
-        <div class="car-info">
-            <h3>{{ car.name }} – {{ car.plate }}</h3>
-            <p *ngIf="car.status === 'in_use'">(IN USE).</p>
-            <p *ngIf="car.status !== 'in_use'">Travels: {{ car.travels }}</p>
-            <span class="see-more">See More Information...</span>
+    <div class="loading-container" *ngIf="loading">
+        <div class="loading-spinner">
+            <mat-icon class="spinning">refresh</mat-icon>
+            <p>Loading your vehicles...</p>
         </div>
     </div>
 
-    <div class="arrow-down">↓</div>
-</div>
+    <div class="empty-state" *ngIf="!loading && cars.length === 0">
+        <mat-icon class="empty-icon">directions_car</mat-icon>
+        <h3>No vehicles found</h3>
+        <p>Start earning by adding your first vehicle to the platform</p>
+        <button mat-raised-button color="primary" (click)="addNewCar()">
+            <mat-icon>add</mat-icon>
+            Add Your First Vehicle
+        </button>
+    </div>
 
+    <div class="cars-grid" *ngIf="!loading && cars.length > 0">
+        <mat-card class="car-card" *ngFor="let car of cars" (click)="viewDetails(car.id)">
+            <div class="car-card-header">
+                <img [src]="car.image" [alt]="car.brand + ' ' + car.model" class="car-image">
+                <div class="car-actions">
+                    <button
+                            mat-icon-button
+                            [class]="getStatusClass(car)"
+                            (click)="toggleAvailability(car, $event)"
+                            [title]="car.isAvailable ? 'Make Unavailable' : 'Make Available'"
+                    >
+                        <mat-icon>{{ car.isAvailable ? 'visibility' : 'visibility_off' }}</mat-icon>
+                    </button>
+                    <button
+                            mat-icon-button
+                            class="delete-btn"
+                            (click)="deleteCar(car, $event)"
+                            title="Delete Vehicle"
+                    >
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <mat-card-content>
+                <div class="car-info">
+                    <h3 class="car-title">{{ car.brand }} {{ car.model }}</h3>
+                    <p class="car-year">{{ car.year }}</p>
+                    <p class="car-plate">{{ car.licensePlate }}</p>
+
+                    <div class="car-details">
+                        <div class="detail-item">
+                            <mat-icon>location_on</mat-icon>
+                            <span>{{ car.pickupPlace }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <mat-icon>attach_money</mat-icon>
+                            <span>${{ car.pricePerHour }}/hour</span>
+                        </div>
+                        <div class="detail-item">
+                            <mat-icon>star</mat-icon>
+                            <span>{{ car.rating || 'No ratings' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="car-features">
+                        <mat-chip-set>
+                            <mat-chip>{{ car.transmission }}</mat-chip>
+                            <mat-chip>{{ car.seats }} seats</mat-chip>
+                            <mat-chip *ngIf="car.fuelType">{{ car.fuelType }}</mat-chip>
+                        </mat-chip-set>
+                    </div>
+
+                    <div class="car-status">
+                        <span [class]="getStatusClass(car)">
+                            <mat-icon>{{ car.isAvailable ? 'check_circle' : 'cancel' }}</mat-icon>
+                            {{ getStatusText(car) }}
+                        </span>
+                    </div>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button color="primary">
+                    <mat-icon>visibility</mat-icon>
+                    View Details
+                </button>
+                <button mat-button>
+                    <mat-icon>edit</mat-icon>
+                    Edit
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <div class="stats-section" *ngIf="!loading && cars.length > 0">
+        <h3>Fleet Summary</h3>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <mat-icon>directions_car</mat-icon>
+                <div class="stat-content">
+                    <span class="stat-number">{{ cars.length }}</span>
+                    <span class="stat-label">Total Vehicles</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
