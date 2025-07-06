@@ -115,7 +115,15 @@ export class RentComponent implements OnInit, OnDestroy {
   }
 
   selectCar(car: Car): void {
-    this.selectedCar = this.selectedCar?.id === car.id ? null : car
+    // Navigate directly to rent confirmation when car is clicked
+    const hours = this.searchForm.get("hours")?.value
+    if (!hours || hours <= 0) {
+      this.notificationService.showError("Please enter valid hours")
+      return
+    }
+
+    localStorage.setItem("rentHours", hours.toString())
+    this.router.navigate(["/rent/confirm", car.id])
   }
 
   getStars(rating: number): number[] {
@@ -202,22 +210,5 @@ export class RentComponent implements OnInit, OnDestroy {
       maxPrice: 10,
     })
     this.selectedCar = null
-  }
-
-  calculateRent(): void {
-    if (!this.selectedCar || !this.searchForm.get("hours")?.value) {
-      this.notificationService.showError("Please select a car and enter valid hours")
-      return
-    }
-
-    const hours = this.searchForm.get("hours")?.value
-    if (hours <= 0) {
-      this.notificationService.showError("Please enter a valid number of hours")
-      return
-    }
-
-    localStorage.setItem("rentHours", hours.toString())
-    this.notificationService.showSuccess("Proceeding to confirmation...")
-    this.router.navigate(["/rent/confirm", this.selectedCar.id])
   }
 }

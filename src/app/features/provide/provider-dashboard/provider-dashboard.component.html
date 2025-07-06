@@ -1,0 +1,164 @@
+<app-header-bar-provider></app-header-bar-provider>
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Provider Dashboard</h1>
+        <p>Welcome back, {{ providerName }}! Here's your business overview</p>
+    </div>
+
+    <!-- No Cars State -->
+    <div class="no-cars-state" *ngIf="!loading && userCars.length === 0">
+        <div class="no-cars-card">
+            <mat-icon>directions_car_filled</mat-icon>
+            <h2>No Vehicles Listed Yet</h2>
+            <p>Start earning by adding your first vehicle to the Moveo platform</p>
+            <button mat-raised-button color="primary" class="add-car-btn" (click)="goToAddCar()">
+                <mat-icon>add</mat-icon>
+                Add Your First Vehicle
+            </button>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-content" *ngIf="!loading && userCars.length > 0">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <mat-icon>directions_car</mat-icon>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ stats.totalCars }}</h3>
+                    <p>Total Vehicles</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon active">
+                    <mat-icon>check_circle</mat-icon>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ stats.activeCars }}</h3>
+                    <p>Active Vehicles</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon bookings">
+                    <mat-icon>event</mat-icon>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ stats.totalBookings }}</h3>
+                    <p>Total Bookings</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon earnings">
+                    <mat-icon>attach_money</mat-icon>
+                </div>
+                <div class="stat-content">
+                    <h3>S/ {{ stats.monthlyEarnings.toFixed(2) }}</h3>
+                    <p>This Month</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon rating">
+                    <mat-icon>star</mat-icon>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ stats.averageRating.toFixed(1) }}</h3>
+                    <p>Average Rating</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon total">
+                    <mat-icon>account_balance_wallet</mat-icon>
+                </div>
+                <div class="stat-content">
+                    <h3>S/ {{ stats.totalEarnings.toFixed(2) }}</h3>
+                    <p>Total Earnings</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h2>Quick Actions</h2>
+            <div class="actions-grid">
+                <div class="action-card" (click)="goToAddCar()">
+                    <mat-icon>add_circle</mat-icon>
+                    <h3>Add New Vehicle</h3>
+                    <p>List a new car for rent</p>
+                </div>
+
+                <div class="action-card" (click)="goToMyCars()">
+                    <mat-icon>garage</mat-icon>
+                    <h3>Manage Fleet</h3>
+                    <p>View and edit your vehicles</p>
+                </div>
+
+                <div class="action-card">
+                    <mat-icon>analytics</mat-icon>
+                    <h3>View Analytics</h3>
+                    <p>Detailed performance reports</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Vehicles -->
+        <div class="my-vehicles">
+            <div class="section-header">
+                <h2>My Vehicles</h2>
+                <button mat-button (click)="goToMyCars()">View All</button>
+            </div>
+            <div class="vehicles-grid">
+                <div class="vehicle-card" *ngFor="let car of userCars.slice(0, 3)" (click)="goToCarDetails(car.id)">
+                    <img [src]="car.image" [alt]="car.model" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3>{{ car.brand }} {{ car.model }}</h3>
+                        <p class="vehicle-plate">{{ car.licensePlate }}</p>
+                        <div class="vehicle-stats">
+                            <span class="price">S/ {{ car.pricePerHour }}/hr</span>
+                            <span class="rating">
+                                <mat-icon>star</mat-icon>
+                                {{ car.rating || 0 }}
+                            </span>
+                        </div>
+                        <div class="vehicle-status" [class]="car.isAvailable ? 'available' : 'unavailable'">
+                            {{ car.isAvailable ? 'Available' : 'In Use' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Bookings -->
+        <div class="recent-bookings">
+            <h2>Recent Bookings</h2>
+            <div class="bookings-list">
+                <div class="booking-item" *ngFor="let booking of recentBookings">
+                    <div class="booking-info">
+                        <h4>{{ booking.carModel }}</h4>
+                        <p>{{ booking.customerName }}</p>
+                        <small>{{ booking.date }}</small>
+                    </div>
+                    <div class="booking-earnings">
+                        <span class="amount">S/ {{ booking.earnings.toFixed(2) }}</span>
+                        <span class="status" [style.color]="getStatusColor(booking.status)">
+                            {{ booking.status }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="loading">
+        <mat-icon>hourglass_empty</mat-icon>
+        <p>Loading dashboard...</p>
+    </div>
+</div>

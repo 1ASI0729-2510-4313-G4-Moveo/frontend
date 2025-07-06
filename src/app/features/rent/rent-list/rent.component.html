@@ -100,8 +100,7 @@
         <div class="cars-grid" *ngIf="!loading && filteredCars.length > 0">
             <div class="car-card"
                  *ngFor="let car of filteredCars"
-                 (click)="selectCar(car)"
-                 [class.selected]="selectedCar?.id === car.id">
+                 (click)="selectCar(car)">
 
                 <div style="position: relative;">
                     <img [src]="car.image" [alt]="car.model" class="car-image">
@@ -112,7 +111,7 @@
                     <div class="car-header">
                         <h3 class="car-title">{{ car.brand }} {{ car.model }}</h3>
                         <div class="car-price">
-                            S/ {{ car.pricePerHour }}
+                            S/ {{ car.pricePerHour.toFixed(2) }}
                             <div class="period">per hour</div>
                         </div>
                     </div>
@@ -140,7 +139,7 @@
                         <div class="rating-stars">
                             <mat-icon class="star" *ngFor="let star of getStars(car.rating)">star</mat-icon>
                         </div>
-                        <span class="rating-text">{{ car.rating }} ({{ car.reviews }} reviews)</span>
+                        <span class="rating-text">{{ car.rating.toFixed(1) }} ({{ car.reviews }} reviews)</span>
                     </div>
 
                     <div class="car-features">
@@ -156,14 +155,5 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="action-section" *ngIf="!loading && filteredCars.length > 0">
-        <button class="calculate-btn"
-                (click)="calculateRent()"
-                [disabled]="!selectedCar || !searchForm.get('hours')?.value">
-            <mat-icon>calculate</mat-icon>
-            <span>Calculate & Continue</span>
-        </button>
     </div>
 </div>

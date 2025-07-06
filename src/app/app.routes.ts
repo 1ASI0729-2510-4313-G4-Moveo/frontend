@@ -16,6 +16,7 @@ import { RentConfirmComponent } from "./features/rent/rent-confirm/rent-confirm.
 import { RentFinalConfirmComponent } from "./features/rent/rent-final-confirm/rent-final-confirm.component"
 import { RentCancelComponent } from "./features/rent/rent-cancel/rent-cancel.component"
 import { ProviderProfileComponent } from "./features/provide/provider-profile/provider-profile.component"
+import { ProviderDashboardComponent } from "./features/provide/provider-dashboard/provider-dashboard.component"
 import { ProvideComponent } from "./features/provide/provide-form-car/provide.component"
 import { ProvideSuccessComponent } from "./features/provide/provide-success/provide-success.component"
 import { ProvidePaymentComponent } from "./features/provide/provide-payment/provide-payment.component"
@@ -44,6 +45,11 @@ export const routes: Routes = [
     { path: "payment", component: PaymentInfoComponent, canActivate: [authGuard] },
     { path: "payment/edit", component: EditPaymentComponent, canActivate: [authGuard] },
     { path: "provider/profile", component: ProviderProfileComponent, canActivate: [authGuard, roleGuard(["provider"])] },
+    {
+        path: "provider/dashboard",
+        component: ProviderDashboardComponent,
+        canActivate: [authGuard, roleGuard(["provider"])],
+    },
     { path: "provide", component: ProvideComponent, canActivate: [authGuard, roleGuard(["provider"])] },
     { path: "provide/success", component: ProvideSuccessComponent, canActivate: [authGuard, roleGuard(["provider"])] },
     { path: "provide/payment", component: ProvidePaymentComponent, canActivate: [authGuard, roleGuard(["provider"])] },

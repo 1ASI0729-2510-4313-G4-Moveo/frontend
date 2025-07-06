@@ -1,10 +1,11 @@
 <header class="header-bar">
-    <div class="logo-section">
+    <div class="logo-section" (click)="toggleSidebar()">
         <img class="logo-Moveo" src="/assets/moveo2.png" alt="Moveo logo" />
-        <span>MOVEO</span>
+        <span class="logo-text">MOVEO</span>
     </div>
     <nav class="nav-links">
-        <a routerLink="/provide">Provide</a>
+        <a routerLink="/provider/dashboard">Dashboard</a>
+        <a routerLink="/provide">Add Car</a>
         <a routerLink="/provide/your-cars">Your Cars</a>
         <a routerLink="/provide/payment">Payment</a>
     </nav>
@@ -15,3 +16,4 @@
     </div>
 </header>
 
+<app-sidebar [isOpen]="sidebarOpen" (closeEvent)="closeSidebar()"></app-sidebar>

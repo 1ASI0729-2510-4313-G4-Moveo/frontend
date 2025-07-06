@@ -1,33 +1,147 @@
 <app-header-bar></app-header-bar>
 
-<div class="record-detail-wrapper">
-    <button class="back-button" (click)="goBack()">
-        <img src="/assets/arrowleft.png" alt="Back" />
-    </button>
+<div class="record-detail-container">
+    <div class="header-section">
+        <button class="back-button" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            <span>Back to Records</span>
+        </button>
 
-    <div class="record-detail">
-        <div class="info-left">
-            <h2>{{ car.model }} – {{ car.plate }}</h2>
+        <div class="status-badge" [style.background-color]="getStatusColor(booking?.status)">
+            {{ booking?.status | titlecase }}
+        </div>
+    </div>
 
-            <div class="info-grid">
-                <div><strong>Date</strong><p>{{ car.date }}</p></div>
-                <div><strong>Start Hour</strong><p>{{ car.startHour }}</p></div>
-                <div><strong>End Hour</strong><p>{{ car.endHour }}</p></div>
-                <div><strong>Price</strong><p>S/ {{ car.price }}</p></div>
-                <div class="pickup"><strong>Pickup Point</strong><p>{{ car.pickup }}</p></div>
+    <div class="detail-content" *ngIf="!loading && booking && car">
+        <div class="main-info">
+            <div class="car-section">
+                <img [src]="car.image" [alt]="car.model" class="car-image">
+                <div class="car-details">
+                    <h1>{{ car.brand }} {{ car.model }}</h1>
+                    <p class="license-plate">{{ car.licensePlate }}</p>
+                    <div class="car-rating">
+                        <div class="stars">
+                            <mat-icon class="star" *ngFor="let star of getStars(car.rating)">star</mat-icon>
+                        </div>
+                        <span>{{ car.rating }} ({{ car.reviews }} reviews)</span>
+                    </div>
+                </div>
             </div>
 
-            <h3>More Information</h3>
-            <div class="info-grid">
-                <div><strong>Distance Travelled</strong><p>{{ car.distance }}</p></div>
-                <div><strong>Rating</strong><p>{{ car.rating }}</p></div>
-                <div class="reservation"><strong>Reservation ID</strong><p>{{ car.reservationId }}</p></div>
+            <div class="trip-summary">
+                <h2>Trip Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <mat-icon>schedule</mat-icon>
+                        <div>
+                            <span class="label">Duration</span>
+                            <span class="value">{{ calculateDuration() }}</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <mat-icon>attach_money</mat-icon>
+                        <div>
+                            <span class="label">Total Cost</span>
+                            <span class="value">S/ {{ booking.totalPrice.toFixed(2) }}</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <mat-icon>location_on</mat-icon>
+                        <div>
+                            <span class="label">Pickup Location</span>
+                            <span class="value">{{ booking.pickupLocation }}</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <mat-icon>payment</mat-icon>
+                        <div>
+                            <span class="label">Payment Method</span>
+                            <span class="value">{{ booking.paymentMethod }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="info-right">
-            <img [src]="car.image" [alt]="car.model" />
-            <button class="archive-btn" (click)="archiveRecord()">Archive it</button>
+        <div class="timeline-section">
+            <h2>Trip Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon start">
+                        <mat-icon>play_arrow</mat-icon>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Trip Started</h3>
+                        <p>{{ formatDate(booking.startDate) }}</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" *ngIf="booking.status === 'completed'">
+                    <div class="timeline-icon end">
+                        <mat-icon>stop</mat-icon>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Trip Completed</h3>
+                        <p>{{ formatDate(booking.endDate) }}</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" *ngIf="booking.status === 'cancelled'">
+                    <div class="timeline-icon cancelled">
+                        <mat-icon>cancel</mat-icon>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Trip Cancelled</h3>
+                        <p>{{ formatDate(booking.endDate) }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div class="rating-section" *ngIf="booking.status === 'completed'">
+            <h2>Your Rating & Review</h2>
+            <div class="rating-content" *ngIf="booking.rating; else noRating">
+                <div class="rating-display">
+                    <div class="stars">
+                        <mat-icon class="star" *ngFor="let star of getStars(booking.rating)">star</mat-icon>
+                    </div>
+                    <span class="rating-text">{{ booking.rating }}/5 stars</span>
+                </div>
+                <p class="review-text" *ngIf="booking.review">{{ booking.review }}</p>
+                <button mat-button color="primary" (click)="openRatingDialog()">
+                    <mat-icon>edit</mat-icon>
+                    Edit Rating
+                </button>
+            </div>
+            <ng-template #noRating>
+                <div class="no-rating">
+                    <p>Share your experience with other users</p>
+                    <button mat-raised-button color="primary" (click)="openRatingDialog()">
+                        <mat-icon>star</mat-icon>
+                        Rate This Trip
+                    </button>
+                </div>
+            </ng-template>
+        </div>
+
+        <div class="actions-section">
+            <button mat-button *ngIf="booking.status === 'active'" (click)="completeTrip()" class="complete-btn">
+                <mat-icon>check_circle</mat-icon>
+                Complete Trip
+            </button>
+
+            <button mat-button (click)="archiveRecord()" class="archive-btn">
+                <mat-icon>archive</mat-icon>
+                Archive Record
+            </button>
+        </div>
+    </div>
+
+    <div class="loading-container" *ngIf="loading">
+        <mat-icon>hourglass_empty</mat-icon>
+        <p>Loading trip details...</p>
     </div>
 </div>
