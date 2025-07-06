@@ -1,82 +1,273 @@
 .provider-profile {
     padding: 2rem;
-    background-color: #f9f9f9;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
 }
 
-.container {
-    max-width: 1000px;
+.profile-card {
+    max-width: 1200px;
     margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.profile-header {
+    background: linear-gradient(135deg, #00bfa6 0%, #00a693 100%);
+    color: white;
+    padding: 3rem 2rem;
     text-align: center;
+    position: relative;
 }
 
-h1 {
-    font-size: 2rem;
-    margin-bottom: 0.2rem;
-    color: #333;
+.profile-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
 }
 
-p {
-    color: #777;
+.avatar-section {
+    position: relative;
+    z-index: 1;
     margin-bottom: 1.5rem;
 }
 
-.stats {
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+}
+
+.avatar-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    margin: 0 auto;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-.card {
-    background: #fff;
-    padding: 1.5rem;
-    width: 200px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+.avatar-placeholder mat-icon {
+    font-size: 4rem;
+    height: 4rem;
+    width: 4rem;
+    color: white;
 }
 
-.card h3 {
-    color: #00bfa6;
-    font-size: 1rem;
+.user-info {
+    position: relative;
+    z-index: 1;
+}
+
+.user-info h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
-.card p {
+.user-info p {
     font-size: 1.2rem;
-    font-weight: bold;
+    opacity: 0.9;
+    margin: 0.25rem 0;
 }
 
-.edit-btn {
-    background-color: #00bfa6;
-    border: none;
-    padding: 10px 30px;
-    font-size: 1rem;
-    border-radius: 6px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
+.provider-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    display: inline-block;
 }
 
-.edit-btn:hover {
-    background-color: #019c8a;
+.profile-content {
+    padding: 3rem 2rem;
 }
 
-
-:host {
-    display: block;
-    background-color: #f9f9f9;
-    min-height: 100vh;
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
 }
 
-body, html {
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-}
-
-.provider-profile {
+.stat-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: 2rem;
-    background-color: #f9f9f9;
-    min-height: 100vh;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card mat-icon {
+    font-size: 3rem;
+    height: 3rem;
+    width: 3rem;
+    color: #00bfa6;
+    margin-bottom: 1rem;
+}
+
+.stat-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #00bfa6;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.actions-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.action-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.action-card:hover {
+    border-color: #00bfa6;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 191, 166, 0.2);
+}
+
+.action-card mat-icon {
+    font-size: 3rem;
+    height: 3rem;
+    width: 3rem;
+    color: #00bfa6;
+    margin-bottom: 1rem;
+}
+
+.action-card h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.action-card p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.recent-activity {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.recent-activity h3 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #00bfa6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.25rem;
+}
+
+.activity-time {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .provider-profile {
+        padding: 1rem;
+    }
+
+    .profile-header {
+        padding: 2rem 1rem;
+    }
+
+    .user-info h1 {
+        font-size: 2rem;
+    }
+
+    .profile-content {
+        padding: 2rem 1rem;
+    }
+
+    .stats-grid,
+    .actions-section {
+        grid-template-columns: 1fr;
+    }
 }

@@ -1,49 +1,112 @@
 <app-header-bar></app-header-bar>
 
 <div class="edit-payment-container">
-    <h1>Payment<br />Information</h1>
-
-    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
-        <label>Number of Card</label>
-        <input type="text" formControlName="cardNumber" />
-        <div *ngIf="paymentForm.get('cardNumber')?.touched && paymentForm.get('cardNumber')?.invalid" style="color: red; font-size: 0.8rem;">
-            Card number must be 16 digits.
+    <div class="payment-card">
+        <div class="card-header">
+            <h1>{{ isEditing ? 'Edit' : 'Add' }} Payment Method</h1>
+            <p>{{ isEditing ? 'Update your payment information' : 'Add a new payment method to your account' }}</p>
         </div>
 
-        <label>Holder</label>
-        <input type="text" formControlName="holder" />
-        <div *ngIf="paymentForm.get('holder')?.touched && paymentForm.get('holder')?.invalid" style="color: red; font-size: 0.8rem;">
-            Holder is required.
-        </div>
-
-        <div class="row">
-            <div class="column">
-                <label>FV</label>
-                <input type="text" formControlName="expiration" />
-                <div *ngIf="paymentForm.get('expiration')?.touched && paymentForm.get('expiration')?.invalid" style="color: red; font-size: 0.8rem;">
-                    Expiration date is required.
+        <div class="card-content">
+            <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+                <div class="payment-type-section">
+                    <h3>Payment Type</h3>
+                    <div class="payment-types">
+                        <div class="payment-type"
+                             [class.selected]="selectedType === 'credit'"
+                             (click)="selectPaymentType('credit')">
+                            <mat-icon>credit_card</mat-icon>
+                            <span>Credit Card</span>
+                        </div>
+                        <div class="payment-type"
+                             [class.selected]="selectedType === 'debit'"
+                             (click)="selectPaymentType('debit')">
+                            <mat-icon>payment</mat-icon>
+                            <span>Debit Card</span>
+                        </div>
+                        <div class="payment-type"
+                             [class.selected]="selectedType === 'paypal'"
+                             (click)="selectPaymentType('paypal')">
+                            <mat-icon>account_balance_wallet</mat-icon>
+                            <span>PayPal</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="column">
-                <label>CVV</label>
-                <input type="text" formControlName="cvv" />
-                <div *ngIf="paymentForm.get('cvv')?.touched && paymentForm.get('cvv')?.invalid" style="color: red; font-size: 0.8rem;">
-                    CVV must be at least 3 digits.
+
+                <div class="form-grid" *ngIf="selectedType !== 'paypal'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Card Number</mat-label>
+                        <input matInput formControlName="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                        <mat-icon matSuffix>credit_card</mat-icon>
+                        <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('required')">
+                            Card number is required
+                        </mat-error>
+                        <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('pattern')">
+                            Please enter a valid card number
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cardholder Name</mat-label>
+                        <input matInput formControlName="holderName" placeholder="John Doe">
+                        <mat-icon matSuffix>person</mat-icon>
+                        <mat-error *ngIf="paymentForm.get('holderName')?.hasError('required')">
+                            Cardholder name is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <div class="form-row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Expiry Date</mat-label>
+                            <input matInput formControlName="expiryDate" placeholder="MM/YY" maxlength="5">
+                            <mat-icon matSuffix>event</mat-icon>
+                            <mat-error *ngIf="paymentForm.get('expiryDate')?.hasError('required')">
+                                Expiry date is required
+                            </mat-error>
+                            <mat-error *ngIf="paymentForm.get('expiryDate')?.hasError('pattern')">
+                                Please enter a valid expiry date (MM/YY)
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>CVV</mat-label>
+                            <input matInput formControlName="cvv" placeholder="123" maxlength="4">
+                            <mat-icon matSuffix>lock</mat-icon>
+                            <mat-error *ngIf="paymentForm.get('cvv')?.hasError('required')">
+                                CVV is required
+                            </mat-error>
+                            <mat-error *ngIf="paymentForm.get('cvv')?.hasError('pattern')">
+                                Please enter a valid CVV
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <mat-checkbox formControlName="isDefault" *ngIf="!isEditing">
+                        Set as default payment method
+                    </mat-checkbox>
                 </div>
-            </div>
+
+                <div class="paypal-section" *ngIf="selectedType === 'paypal'">
+                    <h3>Connect PayPal Account</h3>
+                    <p>You'll be redirected to PayPal to authorize the connection</p>
+                    <button type="button" class="paypal-btn" (click)="connectPaypal()">
+                        <mat-icon>account_balance_wallet</mat-icon>
+                        <span>Connect with PayPal</span>
+                    </button>
+                </div>
+
+                <div class="submit-section" *ngIf="selectedType !== 'paypal'">
+                    <button type="submit" class="submit-btn" [disabled]="paymentForm.invalid || isLoading">
+                        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                        <mat-icon *ngIf="!isLoading">{{ isEditing ? 'save' : 'add' }}</mat-icon>
+                        <span>{{ isLoading ? 'Processing...' : (isEditing ? 'Update Payment Method' : 'Add Payment Method') }}</span>
+                    </button>
+                </div>
+
+                <div class="disclaimer">
+                    <p>Your payment information is encrypted and secure. We use industry-standard security measures to protect your data.</p>
+                </div>
+            </form>
         </div>
-
-        <button type="submit" [disabled]="paymentForm.invalid">
-            Confirm Payment Information
-        </button>
-    </form>
-
-    <div class="paypal-connect" (click)="connectPaypal()" style="cursor: pointer;">
-        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" />
-        <span>Connect Paypal*</span>
     </div>
-
-    <p class="disclaimer">
-        The respective commissions are charged.<br />*Charged in US dollars (USD).
-    </p>
 </div>

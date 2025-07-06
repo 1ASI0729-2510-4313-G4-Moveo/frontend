@@ -11,15 +11,25 @@
         <div class="car-preview">
             <img [src]="data.image" alt="Selected car" />
         </div>
+
         <div class="info">
             <p><strong>Time:</strong> {{ data.hours }} Hours</p>
             <p><strong>Car Choosed:</strong> {{ data.model }}</p>
-            <p><strong>Price:</strong> {{ data.price }} S/.</p>
+            <p><strong>Price:</strong> S/ {{ data.price }}</p>
             <p><strong>Place:</strong> {{ data.location }}</p>
             <p><strong>Payment Method:</strong> VISA</p>
-            <p class="confirm-text">A confirmation email has been sent</p>
+            <p class="confirm-text">✅ Booking confirmed! A confirmation email has been sent</p>
 
-            <button class="cancel-btn" (click)="cancel()">Cancel Reservation</button>
+            <div class="action-buttons">
+                <button class="primary-btn" (click)="goToRecords()">
+                    <mat-icon>history</mat-icon>
+                    View My Records
+                </button>
+                <button class="cancel-btn" (click)="cancel()">
+                    <mat-icon>cancel</mat-icon>
+                    Cancel Reservation
+                </button>
+            </div>
         </div>
     </div>
 

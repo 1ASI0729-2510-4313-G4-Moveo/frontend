@@ -1,37 +1,116 @@
 <app-header-bar-provider></app-header-bar-provider>
 
-<main class="provider-profile">
-    <div class="container">
-        <h1>Hello, {{ providerName }}</h1>
-        <p>{{ providerEmail }}</p>
+<div class="provider-profile">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="avatar-section">
+                <img *ngIf="providerAvatar; else avatarPlaceholder"
+                     [src]="providerAvatar"
+                     alt="Provider Avatar"
+                     class="avatar" />
+                <ng-template #avatarPlaceholder>
+                    <div class="avatar-placeholder">
+                        <mat-icon>person</mat-icon>
+                    </div>
+                </ng-template>
+            </div>
 
-        <section class="stats">
-            <div class="card">
-                <h3>Cars Listed</h3>
-                <p>{{ stats.carsListed }}</p>
+            <div class="user-info">
+                <h1>Welcome, {{ providerName }}!</h1>
+                <p><mat-icon>email</mat-icon> {{ providerEmail }}</p>
+                <p><mat-icon>phone</mat-icon> {{ providerPhone }}</p>
+                <div class="provider-badge">
+                    <mat-icon>verified</mat-icon>
+                    Verified Car Provider
+                </div>
             </div>
-            <div class="card">
-                <h3>Total Earnings</h3>
-                <p>$ {{ stats.totalEarnings }}</p>
-            </div>
-            <div class="card">
-                <h3>Last Rented</h3>
-                <p>{{ stats.lastRented }}</p>
-            </div>
-            <div class="card">
-                <h3>Cars Sold</h3>
-                <p>{{ stats.carsSold }}</p>
-            </div>
-            <div class="card">
-                <h3>Bookings</h3>
-                <p>{{ stats.bookings }}</p>
-            </div>
-            <div class="card">
-                <h3>Avg. Rating</h3>
-                <p>{{ stats.avgRating }}/5</p>
-            </div>
-        </section>
+        </div>
 
-        <button class="edit-btn" (click)="goToEditProfile()">Edit Profile</button>
+        <div class="profile-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <mat-icon>directions_car</mat-icon>
+                    <h3>Cars Listed</h3>
+                    <div class="stat-value">{{ stats.carsListed }}</div>
+                    <div class="stat-label">Active vehicles</div>
+                </div>
+
+                <div class="stat-card">
+                    <mat-icon>attach_money</mat-icon>
+                    <h3>Total Earnings</h3>
+                    <div class="stat-value">S/ {{ stats.totalEarnings }}</div>
+                    <div class="stat-label">This month</div>
+                </div>
+
+                <div class="stat-card">
+                    <mat-icon>event</mat-icon>
+                    <h3>Bookings</h3>
+                    <div class="stat-value">{{ stats.bookings }}</div>
+                    <div class="stat-label">Total bookings</div>
+                </div>
+
+                <div class="stat-card">
+                    <mat-icon>star</mat-icon>
+                    <h3>Rating</h3>
+                    <div class="stat-value">{{ stats.avgRating }}</div>
+                    <div class="stat-label">Average rating</div>
+                </div>
+
+                <div class="stat-card">
+                    <mat-icon>trending_up</mat-icon>
+                    <h3>This Month</h3>
+                    <div class="stat-value">{{ stats.monthlyBookings }}</div>
+                    <div class="stat-label">New bookings</div>
+                </div>
+
+                <div class="stat-card">
+                    <mat-icon>schedule</mat-icon>
+                    <h3>Active Hours</h3>
+                    <div class="stat-value">{{ stats.activeHours }}</div>
+                    <div class="stat-label">Cars in use</div>
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <div class="action-card" (click)="goToAddCar()">
+                    <mat-icon>add_circle</mat-icon>
+                    <h4>Add New Car</h4>
+                    <p>List a new vehicle for rent</p>
+                </div>
+
+                <div class="action-card" (click)="goToMyCars()">
+                    <mat-icon>garage</mat-icon>
+                    <h4>Manage Cars</h4>
+                    <p>View and edit your vehicles</p>
+                </div>
+
+                <div class="action-card" (click)="goToEarnings()">
+                    <mat-icon>analytics</mat-icon>
+                    <h4>Earnings Report</h4>
+                    <p>Track your income and analytics</p>
+                </div>
+
+                <div class="action-card" (click)="goToEditProfile()">
+                    <mat-icon>edit</mat-icon>
+                    <h4>Edit Profile</h4>
+                    <p>Update your information</p>
+                </div>
+            </div>
+
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <div class="activity-list">
+                    <div class="activity-item" *ngFor="let activity of recentActivities">
+                        <div class="activity-icon">
+                            <mat-icon>{{ activity.icon }}</mat-icon>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">{{ activity.title }}</div>
+                            <div class="activity-time">{{ activity.time }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</main>
+</div>

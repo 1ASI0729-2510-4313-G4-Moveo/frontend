@@ -1,94 +1,276 @@
-:host {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #d4f5f6;
-    font-family: 'Poppins', sans-serif;
-}
-
 .provide-container {
-    max-width: 1100px;
-    margin: 0 auto;
     padding: 2rem;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
 }
 
-h2 {
+.form-card {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.form-header {
+    background: linear-gradient(135deg, #00bfa6 0%, #00a693 100%);
+    color: white;
+    padding: 3rem 2rem;
     text-align: center;
+}
+
+.form-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.form-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.form-content {
+    padding: 3rem 2rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.form-section {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 16px;
+    border-left: 4px solid #00bfa6;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-title mat-icon {
     color: #00bfa6;
-    font-size: 2rem;
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+.photo-upload-section {
+    grid-column: 1 / -1;
+    text-align: center;
+    background: linear-gradient(135deg, #f0fdfc 0%, #e6fffa 100%);
+    padding: 3rem;
+    border-radius: 16px;
+    border: 2px dashed #00bfa6;
+}
+
+.photo-upload-section h3 {
+    color: #00bfa6;
+    font-size: 1.5rem;
     margin-bottom: 2rem;
 }
 
-form.form-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    width: 100%;
-}
-
-.form-row {
+.photo-upload-area {
     display: flex;
     flex-direction: column;
-}
-
-.form-row.full-width {
-    grid-column: span 3;
     align-items: center;
+    gap: 2rem;
 }
 
-label {
-    margin-bottom: 0.5rem;
-    color: #333;
-    font-weight: 500;
+.photo-preview {
+    width: 300px;
+    height: 200px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"],
-input[type="number"],
-input[type="file"],
-select {
-    padding: 0.5rem;
-    border: none;
-    border-radius: 8px;
-    background-color: #f7f7f7;
-    font-size: 1rem;
+.photo-preview img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-input[type="file"] {
+.photo-placeholder {
+    width: 300px;
+    height: 200px;
+    border: 2px dashed #00bfa6;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(0, 191, 166, 0.05);
+}
+
+.photo-placeholder:hover {
+    border-color: #00a693;
+    background: rgba(0, 191, 166, 0.1);
+    transform: scale(1.02);
+}
+
+.photo-placeholder mat-icon {
+    font-size: 4rem;
+    height: 4rem;
+    width: 4rem;
+    color: #00bfa6;
+    margin-bottom: 1rem;
+}
+
+.photo-placeholder span {
+    color: #00bfa6;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.upload-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.upload-btn {
+    background: #00bfa6;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.upload-btn:hover {
+    background: #00a693;
+    transform: translateY(-2px);
+}
+
+.upload-btn.secondary {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.upload-btn.secondary:hover {
+    background: #e0e0e0;
+}
+
+.features-section {
+    grid-column: 1 / -1;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
-a {
+.feature-item:hover {
+    border-color: #00bfa6;
+}
+
+.feature-item.selected {
+    border-color: #00bfa6;
+    background: #f0fdfc;
+}
+
+.feature-item mat-icon {
+    color: #00bfa6;
+}
+
+.submit-section {
     text-align: center;
-    font-size: 0.9rem;
-    color: #0d1a26;
-    text-decoration: underline;
-    grid-column: span 3;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
 }
 
 .submit-btn {
-    grid-column: span 3;
-    background-color: #00c6ac;
+    background: linear-gradient(135deg, #00bfa6 0%, #00a693 100%);
     color: white;
+    padding: 1.2rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
     border: none;
-    padding: 0.8rem;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 50px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0, 191, 166, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 auto;
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 191, 166, 0.4);
 }
 
 .submit-btn:disabled {
-    background-color: #ccc;
+    background: #ccc;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
-.form-title {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #00bfa6;
-    margin-bottom: 2rem;
+
+@media (max-width: 768px) {
+    .provide-container {
+        padding: 1rem;
+    }
+
+    .form-content {
+        padding: 2rem 1rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-preview,
+    .photo-placeholder {
+        width: 250px;
+        height: 150px;
+    }
+
+    .upload-buttons {
+        flex-direction: column;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
 }

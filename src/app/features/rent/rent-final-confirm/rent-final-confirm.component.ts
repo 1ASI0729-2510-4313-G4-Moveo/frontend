@@ -1,61 +1,90 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import {HeaderBarComponent} from "../../../project/components/header-bar/header-bar.component";
-import { CommonModule } from '@angular/common';
-import { Location } from '@angular/common';
+import { Component, OnInit } from "@angular/core"
+import { ActivatedRoute, Router } from "@angular/router"
+import { CommonModule } from "@angular/common"
+import { Location } from "@angular/common"
+import { HeaderBarComponent } from "../../../project/components/header-bar/header-bar.component"
+import { CarService } from "../../../shared/services/car.service"
+import { BookingService } from "../../../shared/services/booking.service"
+import { NotificationService } from "../../../shared/services/notification.service"
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
-  selector: 'app-rent-final-confirm',
-  templateUrl: './rent-final-confirm.component.html',
-  imports: [
-    HeaderBarComponent,
-      CommonModule
-  ],
-  styleUrls: ['./rent-final-confirm.component.css']
+  selector: "app-rent-final-confirm",
+  templateUrl: "./rent-final-confirm.component.html",
+  styleUrls: ["./rent-final-confirm.component.css"],
+  standalone: true,
+  imports: [HeaderBarComponent, CommonModule, MatIcon],
 })
 export class RentFinalConfirmComponent implements OnInit {
-  data: any = null;
+  data: any = null
+  bookingId: string | null = null
 
-  cars = [
-    { id: 1, model: 'Toyota Corolla', image: 'assets/car1.png', pricePerHour: 3.06, plate: 'CZT–728' },
-    { id: 2, model: 'Kia Rio', image: 'assets/car2.png', pricePerHour: 3.50, plate: 'B7J–889' },
-    { id: 3, model: 'Hyundai Tucson', image: 'assets/car5.png', pricePerHour: 4.00, plate: 'C3M–210' },
-    { id: 4, model: 'Mazda CX-5', image: 'assets/car6.png', pricePerHour: 3.80, plate: 'E9X–547' },
-    { id: 5, model: 'Nissan Versa', image: 'assets/car7.png', pricePerHour: 3.20, plate: 'NV–901' }
-  ];
-
-  constructor(private route: ActivatedRoute, protected router: Router, private location: Location) {}
+  constructor(
+      private route: ActivatedRoute,
+      protected router: Router,
+      private location: Location,
+      private carService: CarService,
+      private bookingService: BookingService,
+      private notificationService: NotificationService,
+  ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    const hours = Number(localStorage.getItem('rentHours'));
-    const pickup = localStorage.getItem('pickupLocation') ?? '-';
-    const car = this.cars.find(c => c.id === id);
+    const id = this.route.snapshot.paramMap.get("id")
+    const hours = Number(localStorage.getItem("rentHours"))
+    const pickup = localStorage.getItem("pickupLocation") ?? "-"
+    this.bookingId = localStorage.getItem("currentBookingId")
 
-    if (!car || !hours) {
-      this.router.navigate(['/rent']);
-      return;
+    if (!id || !hours) {
+      this.router.navigate(["/rent"])
+      return
     }
 
-    this.data = {
-      id: id,
-      model: car.model,
-      plate: car.plate,
-      image: car.image,
-      hours: hours,
-      price: (car.pricePerHour * hours).toFixed(2),
-      location: pickup
-    };
+    this.carService.getCarById(id).subscribe({
+      next: (car) => {
+        this.data = {
+          id: id,
+          model: `${car.brand} ${car.model}`,
+          plate: car.licensePlate,
+          image: car.image,
+          hours: hours,
+          price: (car.pricePerHour * hours).toFixed(2),
+          location: pickup,
+        }
+      },
+      error: () => {
+        this.notificationService.showError("Error loading booking details")
+        this.router.navigate(["/rent"])
+      },
+    })
   }
 
   cancel(): void {
-    localStorage.setItem('hours', this.data.hours.toString());
-    localStorage.setItem('price', this.data.price.toString());
-    localStorage.setItem('pickupLocation', this.data.location);
-    this.router.navigate(['/rent/cancel', this.data.id]);
+    if (!this.bookingId) {
+      this.notificationService.showError("No booking found to cancel")
+      return
+    }
+
+    if (confirm("Are you sure you want to cancel this booking?")) {
+      this.bookingService.cancelBooking(this.bookingId).subscribe({
+        next: () => {
+          this.notificationService.showSuccess("Booking cancelled successfully")
+          localStorage.removeItem("currentBookingId")
+          localStorage.removeItem("rentHours")
+          localStorage.removeItem("pickupLocation")
+          this.router.navigate(["/rent/cancel", this.data.id])
+        },
+        error: () => {
+          this.notificationService.showError("Error cancelling booking")
+        },
+      })
+    }
   }
+
   goBack(): void {
-    this.location.back();
+    this.location.back()
+  }
+
+  goToRecords(): void {
+    this.router.navigate(["/record"])
   }
 }
-

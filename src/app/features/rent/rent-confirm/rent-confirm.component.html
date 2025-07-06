@@ -17,11 +17,15 @@
             <img [src]="data.image" alt="car" />
         </div>
 
-        <p class="price"><strong>Price:</strong> {{ data.total }} S/.</p>
+        <p class="price"><strong>Price:</strong> S/ {{ data.total }}</p>
         <p class="note">Based on: Time + Car Choosed</p>
 
-        <button class="rent-button" [disabled]="!selectedPlace" (click)="confirmRent()">
-            Rent
+        <button class="rent-button"
+                [disabled]="!selectedPlace || isLoading"
+                (click)="confirmRent()">
+            <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
+            <mat-icon *ngIf="!isLoading">calculate</mat-icon>
+            <span>{{ isLoading ? 'Processing...' : 'Confirm Booking' }}</span>
         </button>
     </div>
 
@@ -49,6 +53,20 @@
                 [class.selected]="isSelected('Playa De Estacionamiento Alcanfores')"
                 (click)="togglePickup('Playa De Estacionamiento Alcanfores')">
             Playa De Estacionamiento Alcanfores
+        </button>
+
+        <button
+                class="pickup-button"
+                [class.selected]="isSelected('Mall Aventura Santa Anita')"
+                (click)="togglePickup('Mall Aventura Santa Anita')">
+            Mall Aventura Santa Anita
+        </button>
+
+        <button
+                class="pickup-button"
+                [class.selected]="isSelected('Rambla San Borja')"
+                (click)="togglePickup('Rambla San Borja')">
+            Rambla San Borja
         </button>
     </div>
 </div>

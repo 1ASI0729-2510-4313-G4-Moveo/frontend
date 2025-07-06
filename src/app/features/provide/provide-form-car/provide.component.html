@@ -1,68 +1,214 @@
 <app-header-bar-provider></app-header-bar-provider>
 
 <div class="provide-container">
-        <h2 class="form-title">Lets Begin</h2>
-    <form [formGroup]="provideForm" (ngSubmit)="submitForm()" class="form-grid">
-
-        <div class="form-row">
-            <label>Brand</label>
-            <input type="text" formControlName="brand" placeholder="Brand" />
+    <div class="form-card">
+        <div class="form-header">
+            <h2>Add Your Vehicle</h2>
+            <p>Share your car with the Moveo community and start earning</p>
         </div>
 
-        <div class="form-row">
-            <label>Model</label>
-            <input type="text" formControlName="model" placeholder="Model" />
-        </div>
+        <div class="form-content">
+            <form [formGroup]="provideForm" (ngSubmit)="submitForm()">
+                <div class="form-grid">
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <mat-icon>info</mat-icon>
+                            <span>Basic Information</span>
+                        </div>
+                        <div class="form-fields">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Brand</mat-label>
+                                <mat-select formControlName="brand">
+                                    <mat-option value="Toyota">Toyota</mat-option>
+                                    <mat-option value="Honda">Honda</mat-option>
+                                    <mat-option value="Nissan">Nissan</mat-option>
+                                    <mat-option value="Hyundai">Hyundai</mat-option>
+                                    <mat-option value="Kia">Kia</mat-option>
+                                    <mat-option value="Mazda">Mazda</mat-option>
+                                    <mat-option value="Chevrolet">Chevrolet</mat-option>
+                                    <mat-option value="Ford">Ford</mat-option>
+                                </mat-select>
+                                <mat-icon matSuffix>directions_car</mat-icon>
+                            </mat-form-field>
 
-        <div class="form-row">
-            <label>Year</label>
-            <input type="text" formControlName="year" placeholder="Year" />
-        </div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Model</mat-label>
+                                <input matInput formControlName="model" placeholder="e.g., Corolla, Civic">
+                                <mat-icon matSuffix>model_training</mat-icon>
+                            </mat-form-field>
 
-        <div class="form-row">
-            <label>License plate</label>
-            <input type="text" formControlName="licensePlate" placeholder="License" />
-        </div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Year</mat-label>
+                                <input matInput type="number" formControlName="year" placeholder="e.g., 2022">
+                                <mat-icon matSuffix>calendar_today</mat-icon>
+                            </mat-form-field>
 
-        <div class="form-row">
-            <label>Color</label>
-            <input type="text" formControlName="color" placeholder="Color" />
-        </div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>License Plate</mat-label>
+                                <input matInput formControlName="licensePlate" placeholder="e.g., ABC-123">
+                                <mat-icon matSuffix>confirmation_number</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    </div>
 
-        <div class="form-row">
-            <label>Number of Seats</label>
-            <input type="number" formControlName="seats" placeholder="Number of Seats" />
-        </div>
+                    <!-- Vehicle Details -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <mat-icon>settings</mat-icon>
+                            <span>Vehicle Details</span>
+                        </div>
+                        <div class="form-fields">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Color</mat-label>
+                                <mat-select formControlName="color">
+                                    <mat-option value="White">White</mat-option>
+                                    <mat-option value="Black">Black</mat-option>
+                                    <mat-option value="Silver">Silver</mat-option>
+                                    <mat-option value="Gray">Gray</mat-option>
+                                    <mat-option value="Red">Red</mat-option>
+                                    <mat-option value="Blue">Blue</mat-option>
+                                    <mat-option value="Green">Green</mat-option>
+                                    <mat-option value="Yellow">Yellow</mat-option>
+                                </mat-select>
+                                <mat-icon matSuffix>palette</mat-icon>
+                            </mat-form-field>
 
-        <div class="form-row">
-            <label>(Manual/Automatic)</label>
-            <select formControlName="transmission">
-                <option value="" disabled selected>Select Transmission</option>
-                <option value="Manual">Manual</option>
-                <option value="Automatic">Automatic</option>
-            </select>
-        </div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Number of Seats</mat-label>
+                                <mat-select formControlName="seats">
+                                    <mat-option value="2">2 seats</mat-option>
+                                    <mat-option value="4">4 seats</mat-option>
+                                    <mat-option value="5">5 seats</mat-option>
+                                    <mat-option value="7">7 seats</mat-option>
+                                    <mat-option value="8">8 seats</mat-option>
+                                </mat-select>
+                                <mat-icon matSuffix>event_seat</mat-icon>
+                            </mat-form-field>
 
-        <div class="form-row">
-            <label>PickUp Place</label>
-            <select formControlName="pickupPlace">
-                <option value="" disabled selected>Select Pickup Place</option>
-                <option value="Playa de Estacionamiento Luis Alache Ascencio">
-                    Playa de Estacionamiento Luis Alache Ascencio
-                </option>
-                <option value="Playa De Estacionamiento Alcanfores">
-                    Playa De Estacionamiento Alcanfores
-                </option>
-            </select>
-        </div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Transmission</mat-label>
+                                <mat-select formControlName="transmission">
+                                    <mat-option value="Manual">Manual</mat-option>
+                                    <mat-option value="Automatic">Automatic</mat-option>
+                                </mat-select>
+                                <mat-icon matSuffix>settings</mat-icon>
+                            </mat-form-field>
 
-        <div class="form-row full-width">
-            <label>Take a photo of your car</label>
-            <input type="file" (change)="onFileChange($event)" />
-        </div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Price per Hour (S/)</mat-label>
+                                <input matInput type="number" step="0.1" formControlName="pricePerHour" placeholder="e.g., 3.50">
+                                <mat-icon matSuffix>attach_money</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    </div>
 
-        <button type="submit" class="submit-btn" [disabled]="!provideForm.valid">
-            Submit
-        </button>
-    </form>
+                    <!-- Location & Additional Info -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <mat-icon>location_on</mat-icon>
+                            <span>Location & Info</span>
+                        </div>
+                        <div class="form-fields">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Pickup Location</mat-label>
+                                <mat-select formControlName="pickupPlace">
+                                    <mat-option value="Playa De Estacionamiento Alcanfores">
+                                        Playa De Estacionamiento Alcanfores
+                                    </mat-option>
+                                    <mat-option value="Mall Aventura Santa Anita">
+                                        Mall Aventura Santa Anita
+                                    </mat-option>
+                                    <mat-option value="Rambla San Borja">
+                                        Rambla San Borja
+                                    </mat-option>
+                                    <mat-option value="Plaza San Miguel">
+                                        Plaza San Miguel
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon matSuffix>place</mat-icon>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Fuel Type</mat-label>
+                                <mat-select formControlName="fuelType">
+                                    <mat-option value="Gasoline">Gasoline</mat-option>
+                                    <mat-option value="Diesel">Diesel</mat-option>
+                                    <mat-option value="Electric">Electric</mat-option>
+                                    <mat-option value="Hybrid">Hybrid</mat-option>
+                                </mat-select>
+                                <mat-icon matSuffix>local_gas_station</mat-icon>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Mileage (km)</mat-label>
+                                <input matInput type="number" formControlName="mileage" placeholder="e.g., 45000">
+                                <mat-icon matSuffix>speed</mat-icon>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput formControlName="description" rows="3"
+                                          placeholder="Describe your vehicle..."></textarea>
+                                <mat-icon matSuffix>description</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Photo Upload -->
+                    <div class="photo-upload-section">
+                        <h3>Vehicle Photos</h3>
+                        <div class="photo-upload-area">
+                            <div class="photo-preview" *ngIf="carImage; else photoPlaceholder">
+                                <img [src]="carImage" alt="Car preview">
+                            </div>
+                            <ng-template #photoPlaceholder>
+                                <div class="photo-placeholder" (click)="fileInput.click()">
+                                    <mat-icon>add_a_photo</mat-icon>
+                                    <span>Click to upload car photo</span>
+                                </div>
+                            </ng-template>
+
+                            <div class="upload-buttons">
+                                <button type="button" class="upload-btn" (click)="fileInput.click()">
+                                    <mat-icon>cloud_upload</mat-icon>
+                                    Choose Photo
+                                </button>
+                                <button type="button" class="upload-btn secondary" *ngIf="carImage" (click)="removePhoto()">
+                                    <mat-icon>delete</mat-icon>
+                                    Remove Photo
+                                </button>
+                            </div>
+                            <input #fileInput type="file" (change)="onFileChange($event)" accept="image/*" hidden>
+                        </div>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="form-section features-section">
+                        <div class="section-title">
+                            <mat-icon>star</mat-icon>
+                            <span>Vehicle Features</span>
+                        </div>
+                        <div class="features-grid">
+                            <div class="feature-item"
+                                 *ngFor="let feature of availableFeatures"
+                                 [class.selected]="selectedFeatures.includes(feature.value)"
+                                 (click)="toggleFeature(feature.value)">
+                                <mat-icon>{{ feature.icon }}</mat-icon>
+                                <span>{{ feature.label }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn" [disabled]="!provideForm.valid || isLoading">
+                        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                        <mat-icon *ngIf="!isLoading">add_circle</mat-icon>
+                        <span>{{ isLoading ? 'Adding Vehicle...' : 'Add Vehicle to Fleet' }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
