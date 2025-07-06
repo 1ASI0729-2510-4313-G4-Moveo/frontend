@@ -1,0 +1,9 @@
+{
+  "/api/*": "/$1",
+  "/users/:id": "/users/:id",
+  "/cars/:id": "/cars/:id",
+  "/bookings/:id": "/bookings/:id",
+  "/reviews/:id": "/reviews/:id",
+  "/notifications/:id": "/notifications/:id",
+  "/locations/:id": "/locations/:id"
+}
