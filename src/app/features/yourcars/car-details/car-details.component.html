@@ -167,7 +167,7 @@
                                     Year is required
                                 </mat-error>
                                 <mat-error *ngIf="carForm.get('year')?.hasError('min') || carForm.get('year')?.hasError('max')">
-                                    Year must be between 1990 and {{ new Date().getFullYear() + 1 }}
+                                    Year must be between 1990 and {{ currentYear + 1 }}
                                 </mat-error>
                             </mat-form-field>
 

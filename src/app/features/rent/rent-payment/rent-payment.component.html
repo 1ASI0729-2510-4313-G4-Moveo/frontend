@@ -1,0 +1,154 @@
+<app-header-bar></app-header-bar>
+
+<div class="payment-container" *ngIf="data && selectedPaymentMethod">
+    <!-- Header Section -->
+    <div class="header-section">
+        <button class="back-button" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="header-content">
+            <h1>Processing Payment</h1>
+            <p>Please wait while we process your rental booking</p>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Left Column - Payment Processing -->
+        <div class="payment-processing">
+            <!-- Processing Steps -->
+            <mat-card class="processing-card" *ngIf="paymentStep === 1">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon class="processing-icon">payment</mat-icon>
+                        Processing Your Payment
+                    </mat-card-title>
+                    <mat-card-subtitle>This may take a few moments...</mat-card-subtitle>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div class="processing-steps">
+                        <div
+                                class="processing-step"
+                                *ngFor="let step of processingSteps; let i = index"
+                                [class.completed]="step.completed"
+                                [class.active]="step.active">
+
+                            <div class="step-indicator">
+                                <mat-spinner *ngIf="step.active" diameter="24"></mat-spinner>
+                                <mat-icon *ngIf="step.completed" class="check-icon">check_circle</mat-icon>
+                                <div *ngIf="!step.active && !step.completed" class="step-number">{{ i + 1 }}</div>
+                            </div>
+
+                            <div class="step-content">
+                                <span class="step-label">{{ step.label }}</span>
+                                <div class="step-progress" *ngIf="step.active">
+                                    <div class="progress-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- Success State -->
+            <mat-card class="success-card" *ngIf="paymentStep === 2">
+                <mat-card-content>
+                    <div class="success-content">
+                        <mat-icon class="success-icon">check_circle</mat-icon>
+                        <h2>Payment Successful!</h2>
+                        <p>Your booking has been confirmed and a confirmation email has been sent.</p>
+
+                        <button mat-raised-button color="primary" (click)="proceedToConfirmation()">
+                            <mat-icon>receipt</mat-icon>
+                            View Booking Details
+                        </button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- Error State -->
+            <mat-card class="error-card" *ngIf="paymentStep === 3">
+                <mat-card-content>
+                    <div class="error-content">
+                        <mat-icon class="error-icon">error</mat-icon>
+                        <h2>Payment Failed</h2>
+                        <p>We couldn't process your payment. Please try again or use a different payment method.</p>
+
+                        <div class="error-actions">
+                            <button mat-raised-button color="primary" (click)="retryPayment()">
+                                <mat-icon>refresh</mat-icon>
+                                Retry Payment
+                            </button>
+                            <button mat-button (click)="goBack()">
+                                <mat-icon>arrow_back</mat-icon>
+                                Go Back
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- Right Column - Booking Summary -->
+        <div class="booking-summary">
+            <mat-card class="summary-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>receipt</mat-icon>
+                        Booking Summary
+                    </mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div class="car-info">
+                        <img [src]="data.image" [alt]="data.model" class="car-image" />
+                        <div class="car-details">
+                            <h3>{{ data.model }}</h3>
+                            <div class="rental-info">
+                                <div class="info-item">
+                                    <mat-icon>schedule</mat-icon>
+                                    <span>{{ data.hours }} Hours</span>
+                                </div>
+                                <div class="info-item">
+                                    <mat-icon>location_on</mat-icon>
+                                    <span>{{ data.pickupLocation }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-method-info">
+                        <h4>Payment Method</h4>
+                        <div class="payment-method">
+                            <mat-icon>{{ getCardIcon(selectedPaymentMethod.type) }}</mat-icon>
+                            <div class="method-details">
+                                <span class="card-number">•••• •••• •••• {{ getLastFourDigits(selectedPaymentMethod.cardNumber) }}</span>
+                                <span class="card-holder">{{ selectedPaymentMethod.holderName }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="price-breakdown">
+                        <div class="price-item">
+                            <span>Rental ({{ data.hours }}h)</span>
+                            <span>S/ {{ data.subtotal }}</span>
+                        </div>
+                        <div class="price-item">
+                            <span>Service Fee</span>
+                            <span>S/ {{ data.serviceFee }}</span>
+                        </div>
+                        <div class="price-item">
+                            <span>Taxes (18%)</span>
+                            <span>S/ {{ data.taxes }}</span>
+                        </div>
+                        <div class="price-divider"></div>
+                        <div class="price-item total">
+                            <span>Total</span>
+                            <span>S/ {{ data.total }}</span>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

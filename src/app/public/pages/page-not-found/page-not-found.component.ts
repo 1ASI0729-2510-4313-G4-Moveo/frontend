@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
   selector: 'app-page-not-found',
   standalone: true,
   imports: [],
-  templateUrl: './pages-not-found.component.html',
-  styleUrls: ['./pages-not-found.component.css']
+  templateUrl: './page-not-found.component.html',
+  styleUrls: ['./page-not-found.component.css']
 })
 export class PageNotFoundComponent {
   requestedRoute: string;

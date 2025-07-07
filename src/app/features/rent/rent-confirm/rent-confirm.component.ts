@@ -1,30 +1,73 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute, Router } from "@angular/router"
 import { CommonModule } from "@angular/common"
+import { MatIconModule } from "@angular/material/icon"
+import { MatButtonModule } from "@angular/material/button"
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
+import { MatCardModule } from "@angular/material/card"
+import { MatChipsModule } from "@angular/material/chips"
+
 import { HeaderBarComponent } from "../../../project/components/header-bar/header-bar.component"
 import { CarService } from "../../../shared/services/car.service"
-import { BookingService } from "../../../shared/services/booking.service"
+import { PaymentService, PaymentMethod } from "../../../shared/services/payment.service"
 import { AuthService } from "../../auth/auth.service"
 import { NotificationService } from "../../../shared/services/notification.service"
-import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: "app-rent-confirm",
   standalone: true,
   templateUrl: "./rent-confirm.component.html",
   styleUrls: ["./rent-confirm.component.css"],
-  imports: [HeaderBarComponent, CommonModule, MatIcon],
+  imports: [
+    HeaderBarComponent,
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatChipsModule,
+  ],
 })
 export class RentConfirmComponent implements OnInit {
   data: any = null
   selectedPlace: string | null = null
   isLoading = false
+  paymentMethods: PaymentMethod[] = []
+  loadingPaymentMethods = true
+  selectedPaymentMethod: PaymentMethod | null = null
+
+  pickupLocations = [
+    {
+      name: "Playa de Estacionamiento Luis Alache Ascencio",
+      distance: "0.5 km",
+      time: "2 min",
+      available: true,
+    },
+    {
+      name: "Playa De Estacionamiento Alcanfores",
+      distance: "1.2 km",
+      time: "5 min",
+      available: true,
+    },
+    {
+      name: "Mall Aventura Santa Anita",
+      distance: "2.1 km",
+      time: "8 min",
+      available: false,
+    },
+    {
+      name: "Rambla San Borja",
+      distance: "1.8 km",
+      time: "7 min",
+      available: true,
+    },
+  ]
 
   constructor(
       private route: ActivatedRoute,
       protected router: Router,
       private carService: CarService,
-      private bookingService: BookingService,
+      private paymentService: PaymentService,
       private authService: AuthService,
       private notificationService: NotificationService,
   ) {}
@@ -38,14 +81,26 @@ export class RentConfirmComponent implements OnInit {
       return
     }
 
+    this.loadCarData(id, hours)
+    this.loadPaymentMethods()
+  }
+
+  private loadCarData(id: string, hours: number): void {
     this.carService.getCarById(id).subscribe({
       next: (car) => {
+        const total = car.pricePerHour * hours
+        const taxes = total * 0.18 // 18% tax
+        const serviceFee = 5.0 // Fixed service fee
+
         this.data = {
           id: car.id,
           model: `${car.brand} ${car.model}`,
           image: car.image,
           hours: hours,
-          total: (car.pricePerHour * hours).toFixed(2),
+          subtotal: total.toFixed(2),
+          taxes: taxes.toFixed(2),
+          serviceFee: serviceFee.toFixed(2),
+          total: (total + taxes + serviceFee).toFixed(2),
           car: car,
         }
       },
@@ -56,61 +111,79 @@ export class RentConfirmComponent implements OnInit {
     })
   }
 
-  togglePickup(place: string): void {
-    if (this.selectedPlace === place) {
+  private loadPaymentMethods(): void {
+    this.loadingPaymentMethods = true
+    this.paymentService.getUserPaymentMethods().subscribe({
+      next: (methods) => {
+        this.paymentMethods = methods
+        this.selectedPaymentMethod = methods.find((m) => m.isDefault) || methods[0] || null
+        this.loadingPaymentMethods = false
+      },
+      error: () => {
+        this.paymentMethods = []
+        this.loadingPaymentMethods = false
+      },
+    })
+  }
+
+  togglePickup(location: any): void {
+    if (!location.available) return
+
+    if (this.selectedPlace === location.name) {
       this.selectedPlace = null
       localStorage.removeItem("pickupLocation")
     } else {
-      this.selectedPlace = place
-      localStorage.setItem("pickupLocation", place)
+      this.selectedPlace = location.name
+      localStorage.setItem("pickupLocation", location.name)
     }
   }
 
-  isSelected(place: string): boolean {
-    return this.selectedPlace === place
+  isSelected(locationName: string): boolean {
+    return this.selectedPlace === locationName
   }
 
-  confirmRent(): void {
-    if (!this.selectedPlace || !this.data?.id) {
+  selectPaymentMethod(method: PaymentMethod): void {
+    this.selectedPaymentMethod = method
+  }
+
+  addPaymentMethod(): void {
+    this.router.navigate(["/payment/edit"], {
+      queryParams: { returnUrl: this.router.url },
+    })
+  }
+
+  proceedToPayment(): void {
+    if (!this.selectedPlace) {
       this.notificationService.showError("Please select a pickup location")
       return
     }
 
-    const currentUser = this.authService.getCurrentUser()
-    if (!currentUser) {
-      this.notificationService.showError("You must be logged in to make a booking")
+    if (!this.selectedPaymentMethod) {
+      this.notificationService.showError("Please select a payment method")
       return
     }
 
-    this.isLoading = true
+    // Store payment method for next step
+    localStorage.setItem("selectedPaymentMethodId", this.selectedPaymentMethod.id)
 
-    // Create booking
-    const startDate = new Date()
-    const endDate = new Date(startDate.getTime() + this.data.hours * 60 * 60 * 1000)
+    // Navigate to payment processing
+    this.router.navigate(["/rent/payment", this.data.id])
+  }
 
-    const bookingData = {
-      userId: currentUser.id,
-      carId: this.data.id,
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      hours: this.data.hours,
-      totalPrice: Number.parseFloat(this.data.total),
-      status: "active" as const,
-      pickupLocation: this.selectedPlace,
-      paymentMethod: "VISA", // Default payment method
+  getCardIcon(type: string): string {
+    switch (type) {
+      case "credit":
+        return "credit_card"
+      case "debit":
+        return "payment"
+      case "paypal":
+        return "account_balance_wallet"
+      default:
+        return "payment"
     }
+  }
 
-    this.bookingService.createBooking(bookingData).subscribe({
-      next: (booking) => {
-        this.notificationService.showSuccess("Booking confirmed successfully!")
-        localStorage.setItem("currentBookingId", booking.id)
-        this.router.navigate(["/rent/final-confirm", this.data.id])
-        this.isLoading = false
-      },
-      error: (error) => {
-        this.notificationService.showError("Error creating booking. Please try again.")
-        this.isLoading = false
-      },
-    })
+  getLastFourDigits(cardNumber: string): string {
+    return cardNumber.slice(-4)
   }
 }

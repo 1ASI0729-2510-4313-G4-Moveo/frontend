@@ -38,6 +38,7 @@ import { AuthService } from "../../auth/auth.service"
 export class CarDetailsComponent implements OnInit {
   car: Car | null = null
   carForm: FormGroup
+  currentYear: number;
   loading = false
   editing = false
   carId = ""
@@ -52,6 +53,9 @@ export class CarDetailsComponent implements OnInit {
       private authService: AuthService,
       private fb: FormBuilder,
   ) {
+
+    this.currentYear = new Date().getFullYear(); // Calculate the current year
+
     this.carForm = this.fb.group({
       brand: ["", Validators.required],
       model: ["", Validators.required],

@@ -1,72 +1,192 @@
 <app-header-bar></app-header-bar>
 
-<div class="header-wrapper">
-    <button class="back-button" (click)="router.navigate(['/rent'])">
-        <img src="/assets/arrowleft.png" alt="Back" />
-    </button>
-</div>
-
-<div class="confirmation-wrapper" *ngIf="data">
-    <div class="left">
-        <p class="time"><strong>Time:</strong> {{ data.hours }} Hours</p>
-        <p class="car"><strong>Car Choosed:</strong> {{ data.model }}</p>
-
-        <div class="car-img-group">
-            <img [src]="data.image" alt="car" />
-            <img [src]="data.image" alt="car" />
-            <img [src]="data.image" alt="car" />
-        </div>
-
-        <p class="price"><strong>Price:</strong> S/ {{ data.total }}</p>
-        <p class="note">Based on: Time + Car Choosed</p>
-
-        <button class="rent-button"
-                [disabled]="!selectedPlace || isLoading"
-                (click)="confirmRent()">
-            <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
-            <mat-icon *ngIf="!isLoading">calculate</mat-icon>
-            <span>{{ isLoading ? 'Processing...' : 'Confirm Booking' }}</span>
+<div class="confirm-container" *ngIf="data">
+    <!-- Header Section -->
+    <div class="header-section">
+        <button class="back-button" (click)="router.navigate(['/rent'])">
+            <mat-icon>arrow_back</mat-icon>
         </button>
+        <div class="header-content">
+            <h1>Confirm Your Rental</h1>
+            <p>Review your booking details and complete your reservation</p>
+        </div>
     </div>
 
-    <div class="right">
-        <h3>Where do you want it?</h3>
-        <div class="map">
-            <iframe width="100%" height="100%" style="border:0"
-                    allowfullscreen loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d975.1583520315637!2d-77.03519221421094!3d-12.08751351857761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c88f03cdefed%3A0xf49c8d74ee398cf3!2sUniversidad%20de%20Lima!5e0!3m2!1ses-419!2spe!4v1718720000000">
-            </iframe>
+    <div class="content-grid">
+        <!-- Left Column - Booking Summary -->
+        <div class="booking-summary">
+            <mat-card class="summary-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>directions_car</mat-icon>
+                        Booking Summary
+                    </mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div class="car-info">
+                        <img [src]="data.image" [alt]="data.model" class="car-image" />
+                        <div class="car-details">
+                            <h3>{{ data.model }}</h3>
+                            <div class="rental-duration">
+                                <mat-icon>schedule</mat-icon>
+                                <span>{{ data.hours }} Hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="price-breakdown">
+                        <div class="price-item">
+                            <span>Rental ({{ data.hours }}h × S/{{ (data.subtotal / data.hours).toFixed(2) }})</span>
+                            <span>S/ {{ data.subtotal }}</span>
+                        </div>
+                        <div class="price-item">
+                            <span>Service Fee</span>
+                            <span>S/ {{ data.serviceFee }}</span>
+                        </div>
+                        <div class="price-item">
+                            <span>Taxes (18%)</span>
+                            <span>S/ {{ data.taxes }}</span>
+                        </div>
+                        <div class="price-divider"></div>
+                        <div class="price-item total">
+                            <span>Total</span>
+                            <span>S/ {{ data.total }}</span>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- Payment Method Selection -->
+            <mat-card class="payment-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>payment</mat-icon>
+                        Payment Method
+                    </mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div *ngIf="loadingPaymentMethods" class="loading-payment">
+                        <mat-spinner diameter="40"></mat-spinner>
+                        <p>Loading payment methods...</p>
+                    </div>
+
+                    <div *ngIf="!loadingPaymentMethods && paymentMethods.length === 0" class="no-payment-methods">
+                        <mat-icon class="no-payment-icon">credit_card_off</mat-icon>
+                        <h3>No Payment Methods</h3>
+                        <p>You need to add a payment method to complete your booking</p>
+                        <button mat-raised-button color="primary" (click)="addPaymentMethod()">
+                            <mat-icon>add</mat-icon>
+                            Add Payment Method
+                        </button>
+                    </div>
+
+                    <div *ngIf="!loadingPaymentMethods && paymentMethods.length > 0" class="payment-methods">
+                        <div
+                                class="payment-method-item"
+                                *ngFor="let method of paymentMethods"
+                                [class.selected]="selectedPaymentMethod?.id === method.id"
+                                (click)="selectPaymentMethod(method)">
+
+                            <div class="method-info">
+                                <mat-icon>{{ getCardIcon(method.type) }}</mat-icon>
+                                <div class="method-details">
+                                    <span class="card-number">•••• •••• •••• {{ getLastFourDigits(method.cardNumber) }}</span>
+                                    <span class="card-holder">{{ method.holderName }}</span>
+                                </div>
+                            </div>
+
+                            <div class="method-badges">
+                                <mat-chip *ngIf="method.isDefault" color="primary" selected>Default</mat-chip>
+                                <mat-icon class="check-icon" *ngIf="selectedPaymentMethod?.id === method.id">check_circle</mat-icon>
+                            </div>
+                        </div>
+
+                        <button mat-button color="primary" (click)="addPaymentMethod()" class="add-method-btn">
+                            <mat-icon>add</mat-icon>
+                            Add New Payment Method
+                        </button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
         </div>
 
-        <p class="note">Recommendations based on your ubication</p>
+        <!-- Right Column - Location Selection -->
+        <div class="location-selection">
+            <mat-card class="location-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>location_on</mat-icon>
+                        Pickup Location
+                    </mat-card-title>
+                    <mat-card-subtitle>Choose where you'd like to pick up your vehicle</mat-card-subtitle>
+                </mat-card-header>
 
-        <button
-                class="pickup-button"
-                [class.selected]="isSelected('Playa de Estacionamiento Luis Alache Ascencio')"
-                (click)="togglePickup('Playa de Estacionamiento Luis Alache Ascencio')">
-            Playa de Estacionamiento Luis Alache Ascencio
-        </button>
+                <mat-card-content>
+                    <!-- Map -->
+                    <div class="map-container">
+                        <iframe
+                                width="100%"
+                                height="250"
+                                style="border:0; border-radius: 12px;"
+                                allowfullscreen
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d975.1583520315637!2d-77.03519221421094!3d-12.08751351857761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c88f03cdefed%3A0xf49c8d74ee398cf3!2sUniversidad%20de%20Lima!5e0!3m2!1ses-419!2spe!4v1718720000000">
+                        </iframe>
+                    </div>
 
-        <button
-                class="pickup-button"
-                [class.selected]="isSelected('Playa De Estacionamiento Alcanfores')"
-                (click)="togglePickup('Playa De Estacionamiento Alcanfores')">
-            Playa De Estacionamiento Alcanfores
-        </button>
+                    <!-- Location Options -->
+                    <div class="location-options">
+                        <h4>Available Locations</h4>
+                        <div
+                                class="location-option"
+                                *ngFor="let location of pickupLocations"
+                                [class.selected]="isSelected(location.name)"
+                                [class.unavailable]="!location.available"
+                                (click)="togglePickup(location)">
 
-        <button
-                class="pickup-button"
-                [class.selected]="isSelected('Mall Aventura Santa Anita')"
-                (click)="togglePickup('Mall Aventura Santa Anita')">
-            Mall Aventura Santa Anita
-        </button>
+                            <div class="location-info">
+                                <div class="location-header">
+                                    <h5>{{ location.name }}</h5>
+                                    <mat-chip
+                                            [color]="location.available ? 'primary' : 'warn'">
+                                        {{ location.available ? 'Available' : 'Unavailable' }}
+                                    </mat-chip>
+                                </div>
+                                <div class="location-details" *ngIf="location.available">
+                  <span class="distance">
+                    <mat-icon>near_me</mat-icon>
+                      {{ location.distance }}
+                  </span>
+                                    <span class="time">
+                    <mat-icon>schedule</mat-icon>
+                                        {{ location.time }}
+                  </span>
+                                </div>
+                            </div>
 
+                            <mat-icon class="check-icon" *ngIf="isSelected(location.name)">check_circle</mat-icon>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    <!-- Action Button -->
+    <div class="action-section">
         <button
-                class="pickup-button"
-                [class.selected]="isSelected('Rambla San Borja')"
-                (click)="togglePickup('Rambla San Borja')">
-            Rambla San Borja
+                mat-raised-button
+                color="primary"
+                class="proceed-button"
+                [disabled]="!selectedPlace || !selectedPaymentMethod || isLoading"
+                (click)="proceedToPayment()">
+
+            <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
+            <mat-icon *ngIf="!isLoading">payment</mat-icon>
+            <span>{{ isLoading ? 'Processing...' : 'Proceed to Payment' }}</span>
         </button>
     </div>
 </div>

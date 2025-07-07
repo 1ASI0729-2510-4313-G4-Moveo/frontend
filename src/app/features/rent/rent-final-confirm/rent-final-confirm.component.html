@@ -1,43 +1,224 @@
 <app-header-bar></app-header-bar>
 
-<div class="final-confirm-wrapper" *ngIf="data">
-    <div class="left">
-        <div class="back-wrapper">
-            <img src="/assets/arrowleft.png" alt="Back" class="back-icon" (click)="goBack()" />
+<div class="final-confirm-container" *ngIf="data">
+    <!-- Success Header -->
+    <div class="success-header">
+        <div class="success-animation">
+            <mat-icon class="success-icon">check_circle</mat-icon>
+            <div class="success-ripple"></div>
         </div>
-
-        <h2>{{ data.model }} {{ data.plate }} is waiting for you</h2>
-
-        <div class="car-preview">
-            <img [src]="data.image" alt="Selected car" />
-        </div>
-
-        <div class="info">
-            <p><strong>Time:</strong> {{ data.hours }} Hours</p>
-            <p><strong>Car Choosed:</strong> {{ data.model }}</p>
-            <p><strong>Price:</strong> S/ {{ data.price }}</p>
-            <p><strong>Place:</strong> {{ data.location }}</p>
-            <p><strong>Payment Method:</strong> VISA</p>
-            <p class="confirm-text">✅ Booking confirmed! A confirmation email has been sent</p>
-
-            <div class="action-buttons">
-                <button class="primary-btn" (click)="goToRecords()">
-                    <mat-icon>history</mat-icon>
-                    View My Records
-                </button>
-                <button class="cancel-btn" (click)="cancel()">
-                    <mat-icon>cancel</mat-icon>
-                    Cancel Reservation
-                </button>
-            </div>
-        </div>
+        <h1>Booking Confirmed!</h1>
+        <p>Your {{ data.model }} is ready and waiting for you</p>
     </div>
 
-    <div class="right">
-        <iframe
-                width="100%" height="420" style="border:0; border-radius: 16px;"
-                loading="lazy" allowfullscreen
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d975.1583520315637!2d-77.03519221421094!3d-12.08751351857761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c88f03cdefed%3A0xf49c8d74ee398cf3!2sUniversidad%20de%20Lima!5e0!3m2!1ses-419!2spe!4v1718720000000">
-        </iframe>
+    <div class="content-grid">
+        <!-- Left Column - Booking Details -->
+        <div class="booking-details">
+            <mat-card class="details-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon aria-hidden="true">receipt</mat-icon>
+                        <span>Booking Details</span>
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        Confirmation #{{ bookingId ? bookingId.slice(-8).toUpperCase() : 'N/A' }}
+                    </mat-card-subtitle>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <!-- Car Information -->
+                    <div class="car-section">
+                        <div class="car-image-container">
+                            <img [src]="data.image" [alt]="data.model" class="car-image" />
+                            <mat-chip class="status-chip" color="primary" selected>
+                                <mat-icon>check</mat-icon>
+                                Confirmed
+                            </mat-chip>
+                        </div>
+
+                        <div class="car-info">
+                            <h3>{{ data.model }}</h3>
+                            <p class="license-plate">License Plate: {{ data.plate }}</p>
+
+                            <div class="booking-info">
+                                <div class="info-row">
+                                    <mat-icon>schedule</mat-icon>
+                                    <div class="info-content">
+                                        <span class="info-label">Duration</span>
+                                        <span class="info-value">{{ data.hours }} Hours</span>
+                                    </div>
+                                </div>
+
+                                <div class="info-row">
+                                    <mat-icon>location_on</mat-icon>
+                                    <div class="info-content">
+                                        <span class="info-label">Pickup Location</span>
+                                        <span class="info-value">{{ data.location }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="info-row">
+                                    <mat-icon>event</mat-icon>
+                                    <div class="info-content">
+                                        <span class="info-label">Booking Date</span>
+                                        <span class="info-value">{{ data.bookingDate }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="info-row">
+                                    <mat-icon>access_time</mat-icon>
+                                    <div class="info-content">
+                                        <span class="info-label">Booking Time</span>
+                                        <span class="info-value">{{ data.bookingTime }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Summary -->
+                    <div class="payment-summary">
+                        <h4>Payment Summary</h4>
+                        <div class="price-breakdown">
+                            <div class="price-item">
+                                <span>Rental ({{ data.hours }}h)</span>
+                                <span>S/ {{ data.subtotal }}</span>
+                            </div>
+                            <div class="price-item">
+                                <span>Service Fee</span>
+                                <span>S/ {{ data.serviceFee }}</span>
+                            </div>
+                            <div class="price-item">
+                                <span>Taxes (18%)</span>
+                                <span>S/ {{ data.taxes }}</span>
+                            </div>
+                            <div class="price-divider"></div>
+                            <div class="price-item total">
+                                <span>Total Paid</span>
+                                <span>S/ {{ data.total }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Important Information -->
+                    <div class="important-info">
+                        <h4>
+                            <mat-icon>info</mat-icon>
+                            Important Information
+                        </h4>
+                        <ul>
+                            <li>Please arrive at the pickup location 15 minutes early</li>
+                            <li>Bring a valid driver's license and credit card</li>
+                            <li>Vehicle inspection will be conducted before handover</li>
+                            <li>Return the vehicle with the same fuel level</li>
+                        </ul>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- Right Column - Actions & Map -->
+        <div class="actions-section">
+            <!-- Quick Actions -->
+            <mat-card class="actions-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>settings</mat-icon>
+                        Quick Actions
+                    </mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div class="action-buttons">
+                        <button mat-raised-button color="primary" (click)="goToRecords()">
+                            <mat-icon>history</mat-icon>
+                            View All Bookings
+                        </button>
+
+                        <button mat-raised-button (click)="downloadReceipt()">
+                            <mat-icon>download</mat-icon>
+                            Download Receipt
+                        </button>
+
+                        <button mat-raised-button (click)="shareBooking()">
+                            <mat-icon>share</mat-icon>
+                            Share Booking
+                        </button>
+
+                        <button mat-raised-button (click)="goToRentMore()">
+                            <mat-icon>add</mat-icon>
+                            Rent Another Car
+                        </button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- Map -->
+            <mat-card class="map-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>map</mat-icon>
+                        Pickup Location
+                    </mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div class="map-container">
+                        <iframe
+                                width="100%"
+                                height="300"
+                                style="border:0; border-radius: 12px;"
+                                loading="lazy"
+                                allowfullscreen
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d975.1583520315637!2d-77.03519221421094!3d-12.08751351857761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c88f03cdefed%3A0xf49c8d74ee398cf3!2sUniversidad%20de%20Lima!5e0!3m2!1ses-419!2spe!4v1718720000000">
+                        </iframe>
+                    </div>
+
+                    <div class="location-info">
+                        <h5>{{ data.location }}</h5>
+                        <p>Please arrive 15 minutes before your scheduled time</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- Cancel Section -->
+            <mat-card class="cancel-card" *ngIf="!showCancelConfirm">
+                <mat-card-content>
+                    <div class="cancel-info">
+                        <mat-icon class="warning-icon">warning</mat-icon>
+                        <div class="cancel-text">
+                            <h4>Need to Cancel?</h4>
+                            <p>You can cancel your booking up to 1 hour before pickup time</p>
+                        </div>
+                    </div>
+                    <button mat-button color="warn" (click)="toggleCancelConfirm()">
+                        <mat-icon>cancel</mat-icon>
+                        Cancel Booking
+                    </button>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- Cancel Confirmation -->
+            <mat-card class="cancel-confirm-card" *ngIf="showCancelConfirm">
+                <mat-card-content>
+                    <div class="cancel-confirm-content">
+                        <mat-icon class="error-icon">error</mat-icon>
+                        <h4>Confirm Cancellation</h4>
+                        <p>Are you sure you want to cancel this booking? This action cannot be undone.</p>
+
+                        <div class="cancel-actions">
+                            <button mat-raised-button color="warn" (click)="cancelBooking()">
+                                <mat-icon>delete</mat-icon>
+                                Yes, Cancel Booking
+                            </button>
+                            <button mat-button (click)="toggleCancelConfirm()">
+                                <mat-icon>close</mat-icon>
+                                Keep Booking
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
 </div>
