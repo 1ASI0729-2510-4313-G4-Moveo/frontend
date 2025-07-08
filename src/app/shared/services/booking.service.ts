@@ -81,4 +81,10 @@ export class BookingService {
     cancelBooking(id: string): Observable<Booking> {
         return this.updateBooking(id, { status: "cancelled" })
     }
+
+    getBookingById(id: string): Observable<Booking> {
+        return this.http.get<Booking>(`${this.apiUrl}/bookings/${id}`)
+    }
+
+
 }

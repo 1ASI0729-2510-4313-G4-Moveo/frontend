@@ -44,31 +44,25 @@ export class RecordDetailComponent implements OnInit {
 
   private loadBookingDetails(id: string): void {
     this.loading = true
-    // Simulate loading booking details
-    this.booking = {
-      id: id,
-      carId: "1",
-      startDate: "2024-01-25T10:00:00Z",
-      endDate: "2024-01-25T15:00:00Z",
-      hours: 5,
-      totalPrice: 15.3,
-      status: "completed",
-      pickupLocation: "Playa De Estacionamiento Alcanfores",
-      paymentMethod: "VISA",
-      createdAt: "2024-01-24T14:30:00Z",
-      rating: 5,
-      review: "Excellent service and clean car!",
-    }
 
-    // Load car details
-    this.carService.getCarById(this.booking.carId).subscribe({
-      next: (car) => {
-        this.car = car
-        this.loading = false
+    this.bookingService.getBookingById(id).subscribe({
+      next: (booking) => {
+        this.booking = booking
+
+        this.carService.getCarById(this.booking.carId).subscribe({
+          next: (car) => {
+            this.car = car
+            this.loading = false
+          },
+          error: () => {
+            this.notificationService.showError("Error loading car details")
+            this.loading = false
+          },
+        })
       },
       error: () => {
-        this.notificationService.showError("Error loading car details")
-        this.loading = false
+        this.notificationService.showError("Error loading booking details")
+        this.router.navigate(["/record"])
       },
     })
   }
